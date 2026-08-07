@@ -5,36 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>برنامج العلاج المكتبي</title>
     
-    <!-- هذه هي الأداة السحرية لتشغيل الـ 3D بسهولة -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
     
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            color: #333;
-        }
-        .exercise-box {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-        /* إعدادات صندوق الـ 3D */
-        model-viewer {
-            width: 100%;
-            height: 350px;
-            background-color: #dbeaf0;
-            border-radius: 8px;
-            margin-top: 15px;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; display: flex; flex-direction: column; align-items: center; padding: 20px; color: #333; }
+        .exercise-box { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 500px; width: 100%; text-align: center; }
+        
+        model-viewer { width: 100%; height: 300px; background-color: #dbeaf0; border-radius: 8px; margin-top: 10px; }
+        
+        .instructions { background: #eef7fc; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: right; border-right: 4px solid #2c5e7b; font-size: 15px; line-height: 1.6; }
+        
+        .buttons-container { margin-top: 20px; }
+        .btn-start { background-color: #28a745; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; margin: 0 5px; font-weight: bold;}
+        .btn-end { background-color: #dc3545; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; margin: 0 5px; font-weight: bold;}
+        
+        #status-msg { font-weight: bold; margin-top: 15px; font-size: 16px; min-height: 25px; }
     </style>
 </head>
 <body>
@@ -43,18 +28,49 @@
 
     <div class="exercise-box">
         <h2>1. تمرين دوران الرقبة</h2>
-        <p>هذا مجسم تجريبي. يمكنك تحريكه بالماوس!</p>
         
-        <!-- هنا يتم عرض المجسم المتحرك -->
+        <!-- تمت إضافة time-scale لتبطيء الحركة -->
         <model-viewer 
             src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb" 
             alt="مجسم 3D للتمرين" 
             auto-rotate 
             camera-controls 
             autoplay 
-            animation-name="Dance">
+            animation-name="Dance"
+            time-scale="0.2">
         </model-viewer>
+
+        <!-- صندوق التعليمات الطبية -->
+        <div class="instructions">
+            <strong>طريقة التمرين الصحيحة:</strong>
+            <ul>
+                <li>اجلس باستقامة وحافظ على ظهرك مفروداً.</li>
+                <li>أدر رأسك ببطء إلى اليمين واثبت لمدة <strong>10 إلى 15 ثانية</strong>.</li>
+                <li>عُد للمنتصف، ثم أدر رأسك لليسار واثبت نفس المدة.</li>
+                <li><strong>التكرار:</strong> كرر الحركة 3 إلى 5 مرات لكل جهة.</li>
+            </ul>
+        </div>
+
+        <!-- أزرار التحكم -->
+        <div class="buttons-container">
+            <button class="btn-start" onclick="startExercise()">▶ البدء</button>
+            <button class="btn-end" onclick="endExercise()">■ إنهاء</button>
+        </div>
+        
+        <!-- نص الحالة الذي يتغير عند الضغط -->
+        <p id="status-msg"></p>
     </div>
 
+    <!-- برمجة الأزرار -->
+    <script>
+        function startExercise() {
+            document.getElementById('status-msg').innerText = "💪 التمرين بدأ! تنفس ببطء وركز على الشد...";
+            document.getElementById('status-msg').style.color = "#28a745"; // لون أخضر
+        }
+        function endExercise() {
+            document.getElementById('status-msg').innerText = "✅ أحسنت يا بطل! لقد أنهيت التمرين بنجاح.";
+            document.getElementById('status-msg').style.color = "#dc3545"; // لون أحمر
+        }
+    </script>
 </body>
 </html>
