@@ -29,15 +29,14 @@
     <div class="exercise-box">
         <h2>1. تمرين دوران الرقبة</h2>
         
-        <!-- تمت إضافة time-scale لتبطيء الحركة -->
+        <!-- تم وضع رابط مجسم الرجل المباشر هنا -->
         <model-viewer 
-            src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb" 
+            src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/CesiumMan/glTF-Binary/CesiumMan.glb" 
             alt="مجسم 3D للتمرين" 
             auto-rotate 
             camera-controls 
             autoplay 
-            animation-name="Dance"
-            time-scale="0.2">
+            time-scale="0.5">
         </model-viewer>
 
         <!-- صندوق التعليمات الطبية -->
@@ -65,11 +64,11 @@
     <script>
         function startExercise() {
             document.getElementById('status-msg').innerText = "💪 التمرين بدأ! تنفس ببطء وركز على الشد...";
-            document.getElementById('status-msg').style.color = "#28a745"; // لون أخضر
+            document.getElementById('status-msg').style.color = "#28a745"; 
         }
         function endExercise() {
             document.getElementById('status-msg').innerText = "✅ أحسنت يا بطل! لقد أنهيت التمرين بنجاح.";
-            document.getElementById('status-msg').style.color = "#dc3545"; // لون أحمر
+            document.getElementById('status-msg').style.color = "#dc3545"; 
         }
     </script>
 </body>
