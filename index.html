@@ -210,11 +210,9 @@
             
             const scriptURL = 'https://script.google.com/macros/s/AKfycbxZDutKVngTLGflzRWfzh4NjbqcLbZgaeXHbmva23Bd8Frmqb-CCYhKJb1RniZWrIHZ/exec';
             if (scriptURL) {
-                fetch(scriptURL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name: userName })
+                fetch(scriptURL + '?name=' + encodeURIComponent(userName), {
+                    method: 'GET',
+                    mode: 'no-cors'
                 }).catch(error => console.error('Error!', error.message));
             }
             
