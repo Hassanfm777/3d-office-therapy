@@ -158,6 +158,12 @@
 
     </div>
 
+    <!-- نموذج مخفي لضمان إرسال الاسم بنجاح تام بدون أخطاء CORS -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    <form id="visitorForm" action="https://script.google.com/macros/s/AKfycbxAzhWFgq8fk2qM-dPv1NZz7ySDVXti-odNCod020BASq2iJ-_2qAmSulUs4pzlHuyR/exec" method="GET" target="hidden_iframe" style="display:none;">
+        <input type="hidden" name="name" id="formNameInput">
+    </form>
+
     <script>
         let currentLang = 'ar';
         let currentCategory = '';
@@ -208,13 +214,9 @@
             }
             userName = inputVal;
             
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxZDutKVngTLGflzRWfzh4NjbqcLbZgaeXHbmva23Bd8Frmqb-CCYhKJb1RniZWrIHZ/exec';
-            if (scriptURL) {
-                fetch(scriptURL + '?name=' + encodeURIComponent(userName), {
-                    method: 'GET',
-                    mode: 'no-cors'
-                }).catch(error => console.error('Error!', error.message));
-            }
+            // إرسال الاسم عبر النموذج المخفي لضمان وصوله للشيت 100%
+            document.getElementById("formNameInput").value = userName;
+            document.getElementById("visitorForm").submit();
             
             document.getElementById("welcomeTitle").innerText = (currentLang === 'ar' ? "أهلاً بك، " : "Welcome, ") + userName + "!";
             document.getElementById("loginScreen").classList.remove("active");
