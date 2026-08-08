@@ -208,12 +208,10 @@
             }
             userName = inputVal;
             
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbz2e7ZxNExk7glvDf-wgbsOm7Ou2rF8a-2iyCsWXVmskyM7VpJjvvtgvu49pVo2jYVS/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbycyOEfQfDToRbMvNuIc24LThOp3M3A_g6tWvIxpo7qAcsvT5Y4lY5T7jjlaZvHxpZd/exec';
             if (scriptURL) {
-                fetch(scriptURL + '?name=' + encodeURIComponent(userName), {
-                    method: 'GET',
-                    mode: 'no-cors'
-                }).catch(error => console.error('Error!', error.message));
+                const img = new Image();
+                img.src = scriptURL + '?name=' + encodeURIComponent(userName);
             }
             
             document.getElementById("welcomeTitle").innerText = (currentLang === 'ar' ? "أهلاً بك، " : "Welcome, ") + userName + "!";
