@@ -1,34 +1,288 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="main-html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>برنامج العلاج المكتبي</title>
+    <title>Office Therapy | العلاج المكتبي</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        .exercise-box { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 300px; text-align: center; }
-        .instructions { background: #eef7fc; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: right; border-right: 4px solid #2c5e7b; }
-        /* إعدادات الفيديو ليكون متناسقاً مع الصندوق */
-        video { width: 100%; border-radius: 8px; outline: none; pointer-events: none; }
+        /* تصميم حديث واحترافي يدعم الاشتراكات */
+        :root {
+            --primary: #2c5e7b;
+            --bg-color: #f8f9fa;
+            --box-bg: #ffffff;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --premium: #d4af37;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg-color); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 20px; 
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        /* شريط التحكم العلوي */
+        .top-bar {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .lang-btn {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .lang-btn:hover { background-color: var(--primary); color: white; }
+
+        .pro-badge {
+            background-color: var(--premium);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .app-container { 
+            background: var(--box-bg); 
+            padding: 25px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+            max-width: 500px; 
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        h1 { text-align: center; color: var(--primary); font-size: 24px; margin-top: 0; }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: 1px solid #dfe6e9;
+            border-radius: 8px;
+            background-color: #f1f2f6;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* قسم الفيديو مع زر الصوت المدمج */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background-color: #000;
+        }
+
+        video { 
+            width: 100%; 
+            display: block;
+        }
+
+        .sound-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 10;
+        }
+
+        .instructions { 
+            background: #f1f8ff; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-top: 20px; 
+            border-inline-start: 4px solid var(--primary); 
+            line-height: 1.6;
+        }
+
+        /* قسم مقفل لتجربة الاشتراكات */
+        .locked-content {
+            margin-top: 25px;
+            padding: 20px;
+            background: #fff9e6;
+            border: 2px dashed var(--premium);
+            border-radius: 12px;
+            text-align: center;
+        }
+        .locked-content h3 { margin: 0 0 10px 0; color: #b8860b; }
+        .locked-btn {
+            background: var(--premium);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <h1>برنامج العلاج المكتبي اليومي</h1>
-
-    <div class="exercise-box">
-        <h2>1. تمرين دوران الرقبة</h2>
-        
-        <!-- هذا الكود يبحث عن فيديو باسم exercise1.mp4 ليعرضه -->
-        <video autoplay loop muted playsinline>
-            <source src="exercise1.mp4" type="video/mp4">
-            متصفحك لا يدعم تشغيل الفيديو.
-        </video>
-
-        <div class="instructions">
-            <strong>طريقة التمرين:</strong> أدر رأسك ببطء يميناً ويساراً مع الثبات لمدة 10 ثوانٍ.
-        </div>
+    <div class="top-bar">
+        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
+        <div class="pro-badge" id="proBadge">UPGRADE TO PRO</div>
     </div>
 
+    <div class="app-container">
+        <h1 id="mainTitle">برنامج العلاج المكتبي اليومي</h1>
+
+        <select id="categoryList" onchange="changeExercise()">
+            <option value="neck" id="opt-neck">الرقبة والأكتاف</option>
+            <option value="upper" id="opt-upper">الجزء العلوي والجذع</option>
+            <option value="lower" id="opt-lower">أسفل الظهر والجوانب</option>
+            <option value="legs" id="opt-legs">الساقين والحوض</option>
+        </select>
+
+        <h2 id="exerciseTitle">1. تمرين دوران الرقبة</h2>
+        
+        <div class="video-wrapper">
+            <!-- تمت إضافة زر الصوت بناء على طلبك -->
+            <button class="sound-btn" id="soundToggleBtn" onclick="toggleSound()">🔇 كتم الصوت</button>
+            <video id="exerciseVideo" autoplay loop muted playsinline>
+                <source src="exercise1.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="instructions" id="exerciseDesc">
+            <strong>طريقة التمرين:</strong> أدر رأسك ببطء يميناً ويساراً مع الثبات لمدة 10 ثوانٍ لكل جهة.
+        </div>
+
+        <!-- مثال لقسم الاشتراكات المستقبلية -->
+        <div class="locked-content">
+            <h3 id="lockedTitle">🔒 تمارين متقدمة للمشتركين</h3>
+            <p id="lockedDesc">احصل على خطة علاجية مخصصة وتقارير أداء بفتح النسخة المدفوعة.</p>
+            <button class="locked-btn" id="lockedBtn">اشترك الآن</button>
+        </div>
+
+    </div>
+
+    <script>
+        // المتغيرات
+        let currentLang = 'ar';
+        const video = document.getElementById("exerciseVideo");
+        const soundBtn = document.getElementById("soundToggleBtn");
+
+        // قاموس اللغات
+        const translations = {
+            ar: {
+                langBtn: "English",
+                proBadge: "ترقية للنسخة المدفوعة",
+                mainTitle: "برنامج العلاج المكتبي اليومي",
+                optNeck: "الرقبة والأكتاف",
+                optUpper: "الجزء العلوي والجذع",
+                optLower: "أسفل الظهر والجوانب",
+                optLegs: "الساقين والحوض",
+                lockedTitle: "🔒 تمارين متقدمة للمشتركين",
+                lockedDesc: "احصل على خطة علاجية مخصصة وتقارير أداء بفتح النسخة المدفوعة.",
+                lockedBtn: "اشترك الآن",
+                mute: "🔇 مكتوم",
+                unmute: "🔊 الصوت يعمل",
+                exercises: {
+                    neck: { title: "1. تمرين دوران الرقبة", desc: "<strong>طريقة التمرين:</strong> أدر رأسك ببطء يميناً ويساراً مع الثبات لمدة 10 ثوانٍ لكل جهة." },
+                    upper: { title: "5. تمدد الأكتاف وأعلى الظهر", desc: "<strong>طريقة التمرين:</strong> مد ذراعيك للأمام واشبك أصابعك، ثم ادفع ظهرك للخلف ببطء." },
+                    lower: { title: "9. إطالة أسفل الظهر", desc: "<strong>طريقة التمرين:</strong> انحنِ للأمام من كرسيك ببطء وحاول الوصول بيديك إلى الأرض." },
+                    legs: { title: "13. تمدد الحوض والساقين", desc: "<strong>طريقة التمرين:</strong> ضع كاحل قدمك على ركبة القدم الأخرى وانحنِ للأمام بلطف." }
+                }
+            },
+            en: {
+                langBtn: "العربية",
+                proBadge: "UPGRADE TO PRO",
+                mainTitle: "Daily Office Therapy Program",
+                optNeck: "Neck & Shoulders",
+                optUpper: "Upper Body & Trunk",
+                optLower: "Lower Back & Sides",
+                optLegs: "Legs & Hips",
+                lockedTitle: "🔒 Premium Exercises",
+                lockedDesc: "Unlock custom therapy plans and performance reports.",
+                lockedBtn: "Subscribe Now",
+                mute: "🔇 Muted",
+                unmute: "🔊 Sound On",
+                exercises: {
+                    neck: { title: "1. Basic Neck Turn", desc: "<strong>Instructions:</strong> Slowly turn your head side to side, holding for 10 seconds each." },
+                    upper: { title: "5. Shoulder & Upper Back Stretch", desc: "<strong>Instructions:</strong> Stretch arms forward, interlock fingers, and push your back outward." },
+                    lower: { title: "9. Glutes & Lower Back", desc: "<strong>Instructions:</strong> Slowly bend forward from your chair and reach towards the floor." },
+                    legs: { title: "13. Hip Stretch", desc: "<strong>Instructions:</strong> Place one ankle on the opposite knee and gently lean forward." }
+                }
+            }
+        };
+
+        // دالة تغيير اللغة
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.getElementById("html-tag").dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById("html-tag").lang = currentLang;
+            
+            const t = translations[currentLang];
+            document.getElementById("langBtn").innerText = t.langBtn;
+            document.getElementById("proBadge").innerText = t.proBadge;
+            document.getElementById("mainTitle").innerText = t.mainTitle;
+            document.getElementById("opt-neck").innerText = t.optNeck;
+            document.getElementById("opt-upper").innerText = t.optUpper;
+            document.getElementById("opt-lower").innerText = t.optLower;
+            document.getElementById("opt-legs").innerText = t.optLegs;
+            document.getElementById("lockedTitle").innerText = t.lockedTitle;
+            document.getElementById("lockedDesc").innerText = t.lockedDesc;
+            document.getElementById("lockedBtn").innerText = t.lockedBtn;
+            
+            updateSoundBtnText();
+            changeExercise(); // لتحديث نص التمرين الحالي
+        }
+
+        // دالة تغيير التمرين
+        function changeExercise() {
+            const category = document.getElementById("categoryList").value;
+            const t = translations[currentLang].exercises[category];
+            
+            document.getElementById("exerciseTitle").innerText = t.title;
+            document.getElementById("exerciseDesc").innerHTML = t.desc;
+
+            // تغيير مصدر الفيديو
+            if(category === "neck") video.src = "exercise1.mp4";
+            else if(category === "upper") video.src = "exercise5.mp4";
+            else if(category === "lower") video.src = "exercise9.mp4";
+            else if(category === "legs") video.src = "exercise13.mp4";
+            
+            // عند تغيير الفيديو، نحافظ على حالة الصوت الحالية
+        }
+
+        // دالة التحكم بالصوت
+        function toggleSound() {
+            video.muted = !video.muted;
+            updateSoundBtnText();
+        }
+
+        function updateSoundBtnText() {
+            const t = translations[currentLang];
+            soundBtn.innerText = video.muted ? t.mute : t.unmute;
+        }
+    </script>
 </body>
 </html>
