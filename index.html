@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Office Therapy | العلاج المكتبي</title>
+    <title>Office Therapy</title>
     <style>
         :root {
             --primary: #2c5e7b;
             --secondary: #34495e;
-            --bg-color: #f8f9fa;
+            --bg-color: #f4f7f6;
             --box-bg: #ffffff;
-            --text-dark: #2d3436;
             --highlight: #27ae60;
         }
 
@@ -21,88 +20,59 @@
             flex-direction: column; 
             align-items: center; 
             padding: 20px; 
-            color: var(--text-dark);
+            color: #333;
             margin: 0;
         }
 
-        .top-bar {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 20px;
-        }
-
-        .lang-btn {
-            background-color: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            padding: 5px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        .lang-btn:hover { background-color: var(--primary); color: white; }
+        /* زر تغيير اللغة */
+        .top-bar { width: 100%; max-width: 500px; display: flex; justify-content: flex-end; margin-bottom: 20px; }
+        .lang-btn { background: transparent; border: 2px solid var(--primary); color: var(--primary); padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+        .lang-btn:hover { background: var(--primary); color: white; }
 
         .app-container { 
             background: var(--box-bg); 
-            padding: 25px; 
+            padding: 30px; 
             border-radius: 16px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
             max-width: 500px; 
             width: 100%;
             box-sizing: border-box;
+            text-align: center;
         }
-        
-        h1 { text-align: center; color: var(--primary); font-size: 24px; margin-top: 0; margin-bottom: 25px; }
 
-        /* تنسيق الأزرار في الصفحة الرئيسية */
-        .category-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-        
-        .cat-btn {
-            background-color: #f1f2f6;
-            border: 2px solid #dfe6e9;
-            color: var(--secondary);
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .cat-btn:hover { border-color: var(--primary); background-color: #eef7fc; }
+        /* التحكم بالصفحات (إخفاء وإظهار) */
+        .screen { display: none; }
+        .screen.active { display: block; }
 
-        /* تنسيق صفحة التمرين */
-        .video-wrapper { position: relative; width: 100%; border-radius: 12px; overflow: hidden; background-color: #000; margin-bottom: 15px; }
+        /* تنسيق الأزرار الرئيسية */
+        h1 { color: var(--primary); margin-top: 0; }
+        .main-btn {
+            background-color: #f1f2f6; border: 2px solid #dfe6e9; color: var(--secondary);
+            padding: 15px; border-radius: 10px; font-size: 18px; font-weight: bold;
+            cursor: pointer; width: 100%; margin-bottom: 15px; transition: 0.3s;
+        }
+        .main-btn:hover { border-color: var(--primary); background-color: #eef7fc; }
+
+        /* تنسيق قائمة التمارين */
+        .exercise-list-item {
+            background: var(--primary); color: white; padding: 15px; border-radius: 8px;
+            margin-bottom: 10px; cursor: pointer; font-weight: bold; border: none; width: 100%;
+        }
+
+        /* تنسيق الفيديو */
+        .video-wrapper { position: relative; width: 100%; border-radius: 12px; overflow: hidden; background: #000; margin-bottom: 15px; }
         video { width: 100%; display: block; }
-        .sound-btn { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; z-index: 10; }
+        .sound-btn { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
         
-        .instructions { background: #f1f8ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-inline-start: 4px solid var(--primary); line-height: 1.6; }
+        .instructions { background: #f1f8ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: right; border-inline-start: 4px solid var(--primary); }
 
-        /* تنسيق العداد */
-        .counter-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-        }
-        .count-btn { background: var(--highlight); color: white; border: none; padding: 10px 25px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; }
+        /* تنسيق العداد الكبير */
+        .counter-box { background: #e8f5e9; border: 2px solid var(--highlight); padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .count-number { font-size: 40px; font-weight: bold; color: var(--highlight); margin: 10px 0; }
+        .count-btn { background: var(--highlight); color: white; border: none; padding: 12px 30px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; }
         .count-btn:active { transform: scale(0.95); }
-        .count-display { font-size: 24px; font-weight: bold; color: var(--secondary); }
 
-        .back-btn { background: #95a5a6; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px;}
-        
-        /* التحكم في إظهار وإخفاء الصفحات */
-        .page { display: none; }
-        .page.active { display: block; }
+        .back-btn { background: #95a5a6; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px;}
     </style>
 </head>
 <body>
@@ -113,90 +83,83 @@
 
     <div class="app-container">
         
-        <!-- الصفحة الرئيسية (اختيار التمرين) -->
-        <div id="homePage" class="page active">
-            <h1 id="mainTitle">برنامج العلاج المكتبي اليومي</h1>
-            <p id="subTitle" style="text-align: center; color: #666; margin-bottom: 20px;">اختر فئة التمرين للبدء:</p>
+        <!-- الشاشة الأولى: صفحة الترحيب (3 خيارات) -->
+        <div id="welcomeScreen" class="screen active">
+            <h1 id="welcomeTitle">أهلاً بك في برنامج العلاج المكتبي</h1>
+            <p id="welcomeSub" style="color: #666; margin-bottom: 25px;">اختر القسم الذي ترغب بتمرينه اليوم:</p>
             
-            <div class="category-grid">
-                <button class="cat-btn" id="btn-neck" onclick="openExercise('neck')">الرقبة والأكتاف</button>
-                <button class="cat-btn" id="btn-upper" onclick="openExercise('upper')">الجزء العلوي والجذع</button>
-                <button class="cat-btn" id="btn-lower" onclick="openExercise('lower')">أسفل الظهر والجوانب</button>
-                <button class="cat-btn" id="btn-legs" onclick="openExercise('legs')">الساقين والحوض</button>
-            </div>
+            <button class="main-btn" id="btnCat1" onclick="openCategory('neck')">1. تمارين الرقبة والأكتاف</button>
+            <button class="main-btn" id="btnCat2" onclick="openCategory('back')">2. تمارين الظهر والجذع</button>
+            <button class="main-btn" id="btnCat3" onclick="openCategory('legs')">3. تمارين الساقين والحوض</button>
         </div>
 
-        <!-- صفحة التمرين (الفيديو والعداد) -->
-        <div id="exercisePage" class="page">
-            <h1 id="exerciseTitle">عنوان التمرين</h1>
+        <!-- الشاشة الثانية: قائمة التمارين للقسم المختار -->
+        <div id="listScreen" class="screen">
+            <h2 id="listTitle" style="color: var(--primary);">اختر التمرين</h2>
+            <div id="exercisesContainer">
+                <!-- سيتم تعبئة الأزرار هنا برمجياً بناء على القسم -->
+            </div>
+            <button class="back-btn" id="backToWelcomeBtn" onclick="goHome()">🔙 العودة للرئيسية</button>
+        </div>
+
+        <!-- الشاشة الثالثة: صفحة الفيديو والعداد -->
+        <div id="videoScreen" class="screen">
+            <h2 id="videoTitle">عنوان التمرين</h2>
             
             <div class="video-wrapper">
-                <button class="sound-btn" id="soundToggleBtn" onclick="toggleSound()">🔇 كتم الصوت</button>
-                <video id="exerciseVideo" autoplay loop muted playsinline>
-                    <source src="" type="video/mp4">
+                <button class="sound-btn" id="soundBtn" onclick="toggleSound()">🔇 مكتوم</button>
+                <video id="exVideo" autoplay loop muted playsinline>
+                    <source id="videoSource" src="" type="video/mp4">
                 </video>
             </div>
 
-            <div class="instructions" id="exerciseDesc">تعليمات التمرين هنا</div>
+            <div class="instructions" id="videoDesc" style="text-align: inherit;">تعليمات التمرين</div>
 
-            <!-- قسم العداد -->
-            <div class="counter-section">
-                <button class="count-btn" id="addCountBtn" onclick="incrementCounter()">+ عدّ التمرين</button>
-                <div class="count-display"><span id="countText">التكرارات:</span> <span id="counterValue">0</span></div>
+            <!-- العداد الواضح -->
+            <div class="counter-box">
+                <div id="counterLabel" style="font-weight: bold; color: #333;">عدد التكرارات التي قمت بها:</div>
+                <div class="count-number" id="counterValue">0</div>
+                <button class="count-btn" id="addCountBtn" onclick="addCount()">+ عدّ تمرين واحد</button>
             </div>
 
-            <button class="back-btn" id="backBtn" onclick="goBack()">🔙 العودة للقائمة الرئيسية</button>
+            <button class="back-btn" id="backToListBtn" onclick="goToList()">🔙 العودة للقائمة</button>
         </div>
 
     </div>
 
     <script>
-        // المتغيرات
         let currentLang = 'ar';
-        let currentRepCount = 0;
-        const video = document.getElementById("exerciseVideo");
+        let currentCategory = '';
+        let count = 0;
+        const video = document.getElementById("exVideo");
 
-        // القاموس الشامل للغتين
-        const translations = {
+        // قاعدة بيانات التمارين (هنا أضفت الفيديو الثاني للرقبة بالاسم الذي طلبته)
+        const db = {
+            neck: [
+                { id: 'n1', vid: 'exercise1.mp4', titleAr: '1. تمرين دوران الرقبة', titleEn: '1. Basic Neck Turn', descAr: 'أدر رأسك يميناً ويساراً مع الثبات 10 ثوانٍ.', descEn: 'Turn head side to side, hold 10 seconds.' },
+                { id: 'n2', vid: 'nexkexercise2.mp4', titleAr: '2. إمالة الرقبة', titleEn: '2. Neck Tilt', descAr: 'أمل رأسك نحو كتفك ببطء واثبت.', descEn: 'Tilt head towards shoulder and hold.' }
+            ],
+            back: [
+                { id: 'b1', vid: 'exercise5.mp4', titleAr: '1. تمدد الأكتاف', titleEn: '1. Shoulder Stretch', descAr: 'مد ذراعيك للأمام وادفع ظهرك للخلف.', descEn: 'Stretch arms forward and push back.' }
+            ],
+            legs: [
+                { id: 'l1', vid: 'exercise13.mp4', titleAr: '1. تمدد الحوض', titleEn: '1. Hip Stretch', descAr: 'ضع كاحلك على ركبتك وانحنِ للأمام.', descEn: 'Place ankle on knee and lean forward.' }
+            ]
+        };
+
+        // قاموس النصوص الأساسية
+        const trans = {
             ar: {
-                langBtn: "English",
-                mainTitle: "برنامج العلاج المكتبي اليومي",
-                subTitle: "اختر فئة التمرين للبدء:",
-                btnNeck: "الرقبة والأكتاف",
-                btnUpper: "الجزء العلوي والجذع",
-                btnLower: "أسفل الظهر والجوانب",
-                btnLegs: "الساقين والحوض",
-                addCount: "+ عدّ التمرين",
-                countText: "التكرارات:",
-                backBtn: "🔙 العودة للقائمة",
-                mute: "🔇 مكتوم",
-                unmute: "🔊 الصوت يعمل",
-                exercises: {
-                    neck: { title: "1. تمرين دوران الرقبة", desc: "<strong>طريقة التمرين:</strong> أدر رأسك ببطء يميناً ويساراً مع الثبات لمدة 10 ثوانٍ لكل جهة." },
-                    upper: { title: "5. تمدد الأكتاف وأعلى الظهر", desc: "<strong>طريقة التمرين:</strong> مد ذراعيك للأمام واشبك أصابعك، ثم ادفع ظهرك للخلف ببطء." },
-                    lower: { title: "9. إطالة أسفل الظهر", desc: "<strong>طريقة التمرين:</strong> انحنِ للأمام من كرسيك ببطء وحاول الوصول بيديك إلى الأرض." },
-                    legs: { title: "13. تمدد الحوض والساقين", desc: "<strong>طريقة التمرين:</strong> ضع كاحل قدمك على ركبة القدم الأخرى وانحنِ للأمام بلطف." }
-                }
+                lang: "English", welcomeTitle: "أهلاً بك في برنامج العلاج المكتبي", welcomeSub: "اختر القسم الذي ترغب بتمرينه اليوم:",
+                cat1: "1. تمارين الرقبة والأكتاف", cat2: "2. تمارين الظهر والجذع", cat3: "3. تمارين الساقين والحوض",
+                listTitle: "اختر التمرين:", backHome: "🔙 العودة للرئيسية", backList: "🔙 العودة للقائمة",
+                countLabel: "عدد التكرارات التي قمت بها:", countBtn: "+ عدّ تمرين واحد", mute: "🔇 مكتوم", unmute: "🔊 يعمل"
             },
             en: {
-                langBtn: "العربية",
-                mainTitle: "Daily Office Therapy",
-                subTitle: "Select an exercise category to start:",
-                btnNeck: "Neck & Shoulders",
-                btnUpper: "Upper Body & Trunk",
-                btnLower: "Lower Back & Sides",
-                btnLegs: "Legs & Hips",
-                addCount: "+ Add Rep",
-                countText: "Reps:",
-                backBtn: "🔙 Back to Menu",
-                mute: "🔇 Muted",
-                unmute: "🔊 Sound On",
-                exercises: {
-                    neck: { title: "1. Basic Neck Turn", desc: "<strong>Instructions:</strong> Slowly turn your head side to side, holding for 10 seconds each." },
-                    upper: { title: "5. Shoulder & Upper Back Stretch", desc: "<strong>Instructions:</strong> Stretch arms forward, interlock fingers, and push your back outward." },
-                    lower: { title: "9. Glutes & Lower Back", desc: "<strong>Instructions:</strong> Slowly bend forward from your chair and reach towards the floor." },
-                    legs: { title: "13. Hip Stretch", desc: "<strong>Instructions:</strong> Place one ankle on the opposite knee and gently lean forward." }
-                }
+                lang: "العربية", welcomeTitle: "Welcome to Office Therapy", welcomeSub: "Choose a category to start:",
+                cat1: "1. Neck & Shoulders", cat2: "2. Back & Trunk", cat3: "3. Legs & Hips",
+                listTitle: "Select Exercise:", backHome: "🔙 Back to Home", backList: "🔙 Back to List",
+                countLabel: "Repetitions completed:", countBtn: "+ Add 1 Rep", mute: "🔇 Muted", unmute: "🔊 On"
             }
         };
 
@@ -206,74 +169,82 @@
             document.getElementById("html-tag").dir = currentLang === 'ar' ? 'rtl' : 'ltr';
             document.getElementById("html-tag").lang = currentLang;
             
-            const t = translations[currentLang];
+            const t = trans[currentLang];
+            document.getElementById("langBtn").innerText = t.lang;
+            document.getElementById("welcomeTitle").innerText = t.welcomeTitle;
+            document.getElementById("welcomeSub").innerText = t.welcomeSub;
+            document.getElementById("btnCat1").innerText = t.cat1;
+            document.getElementById("btnCat2").innerText = t.cat2;
+            document.getElementById("btnCat3").innerText = t.cat3;
+            document.getElementById("listTitle").innerText = t.listTitle;
+            document.getElementById("backToWelcomeBtn").innerText = t.backHome;
+            document.getElementById("backToListBtn").innerText = t.backList;
+            document.getElementById("counterLabel").innerText = t.countLabel;
+            document.getElementById("addCountBtn").innerText = t.countBtn;
             
-            // تحديث نصوص الصفحة الرئيسية
-            document.getElementById("langBtn").innerText = t.langBtn;
-            document.getElementById("mainTitle").innerText = t.mainTitle;
-            document.getElementById("subTitle").innerText = t.subTitle;
-            document.getElementById("btn-neck").innerText = t.btnNeck;
-            document.getElementById("btn-upper").innerText = t.btnUpper;
-            document.getElementById("btn-lower").innerText = t.btnLower;
-            document.getElementById("btn-legs").innerText = t.btnLegs;
+            updateSoundBtn();
             
-            // تحديث نصوص العداد والرجوع
-            document.getElementById("addCountBtn").innerText = t.addCount;
-            document.getElementById("countText").innerText = t.countText;
-            document.getElementById("backBtn").innerText = t.backBtn;
-            
-            updateSoundBtnText();
-
-            // تحديث عنوان وتعليمات التمرين إذا كان المستخدم داخل صفحة التمرين
-            const activeExercise = video.getAttribute("data-current-category");
-            if (activeExercise) {
-                document.getElementById("exerciseTitle").innerText = t.exercises[activeExercise].title;
-                document.getElementById("exerciseDesc").innerHTML = t.exercises[activeExercise].desc;
+            // تحديث القائمة المعروضة حالياً إن وجدت
+            if(document.getElementById("listScreen").classList.contains("active")) {
+                openCategory(currentCategory); 
             }
         }
 
-        // دالة فتح صفحة التمرين
-        function openExercise(category) {
-            const t = translations[currentLang].exercises[category];
+        // فتح الشاشة الثانية (قائمة التمارين)
+        function openCategory(cat) {
+            currentCategory = cat;
+            const container = document.getElementById("exercisesContainer");
+            container.innerHTML = ""; // مسح الأزرار القديمة
             
-            document.getElementById("exerciseTitle").innerText = t.title;
-            document.getElementById("exerciseDesc").innerHTML = t.desc;
-            video.setAttribute("data-current-category", category);
+            // إنشاء أزرار التمارين برمجياً
+            db[cat].forEach(ex => {
+                let btn = document.createElement("button");
+                btn.className = "exercise-list-item";
+                btn.innerText = currentLang === 'ar' ? ex.titleAr : ex.titleEn;
+                btn.onclick = () => openVideo(ex);
+                container.appendChild(btn);
+            });
 
-            if(category === "neck") video.src = "exercise1.mp4";
-            else if(category === "upper") video.src = "exercise5.mp4";
-            else if(category === "lower") video.src = "exercise9.mp4";
-            else if(category === "legs") video.src = "exercise13.mp4";
+            document.getElementById("welcomeScreen").classList.remove("active");
+            document.getElementById("videoScreen").classList.remove("active");
+            document.getElementById("listScreen").classList.add("active");
+        }
+
+        // فتح الشاشة الثالثة (الفيديو والعداد)
+        function openVideo(ex) {
+            document.getElementById("videoTitle").innerText = currentLang === 'ar' ? ex.titleAr : ex.titleEn;
+            document.getElementById("videoDesc").innerHTML = "<strong>" + (currentLang === 'ar' ? "التعليمات: " : "Instructions: ") + "</strong>" + (currentLang === 'ar' ? ex.descAr : ex.descEn);
             
-            // تصفير العداد عند الدخول لتمرين جديد
-            currentRepCount = 0;
-            document.getElementById("counterValue").innerText = currentRepCount;
+            video.src = ex.vid;
+            
+            // تصفير العداد للتمرين الجديد
+            count = 0;
+            document.getElementById("counterValue").innerText = count;
 
-            // إخفاء الرئيسية وإظهار التمرين
-            document.getElementById("homePage").classList.remove("active");
-            document.getElementById("exercisePage").classList.add("active");
+            document.getElementById("listScreen").classList.remove("active");
+            document.getElementById("videoScreen").classList.add("active");
         }
 
-        // دالة الرجوع للصفحة الرئيسية
-        function goBack() {
-            video.pause(); // إيقاف الفيديو لتوفير الموارد
-            document.getElementById("exercisePage").classList.remove("active");
-            document.getElementById("homePage").classList.add("active");
+        // دوال التنقل والعداد والصوت
+        function goHome() {
+            document.getElementById("listScreen").classList.remove("active");
+            document.getElementById("welcomeScreen").classList.add("active");
         }
-
-        // دالة العداد
-        function incrementCounter() {
-            currentRepCount++;
-            document.getElementById("counterValue").innerText = currentRepCount;
+        function goToList() {
+            video.pause();
+            document.getElementById("videoScreen").classList.remove("active");
+            document.getElementById("listScreen").classList.add("active");
         }
-
-        // دالة الصوت
+        function addCount() {
+            count++;
+            document.getElementById("counterValue").innerText = count;
+        }
         function toggleSound() {
             video.muted = !video.muted;
-            updateSoundBtnText();
+            updateSoundBtn();
         }
-        function updateSoundBtnText() {
-            document.getElementById("soundToggleBtn").innerText = video.muted ? translations[currentLang].mute : translations[currentLang].unmute;
+        function updateSoundBtn() {
+            document.getElementById("soundBtn").innerText = video.muted ? trans[currentLang].mute : trans[currentLang].unmute;
         }
     </script>
 </body>
