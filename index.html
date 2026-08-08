@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" id="main-html">
+<html lang="ar" dir="rtl" id="html-tag">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Office Therapy | العلاج المكتبي</title>
     <style>
-        /* تصميم حديث واحترافي يدعم الاشتراكات */
         :root {
             --primary: #2c5e7b;
+            --secondary: #34495e;
             --bg-color: #f8f9fa;
             --box-bg: #ffffff;
             --text-dark: #2d3436;
-            --text-light: #636e72;
-            --premium: #d4af37;
+            --highlight: #27ae60;
         }
 
         body { 
@@ -26,13 +25,11 @@
             margin: 0;
         }
 
-        /* شريط التحكم العلوي */
         .top-bar {
             width: 100%;
             max-width: 500px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: flex-end;
             margin-bottom: 20px;
         }
 
@@ -40,23 +37,13 @@
             background-color: transparent;
             border: 2px solid var(--primary);
             color: var(--primary);
-            padding: 5px 15px;
+            padding: 5px 20px;
             border-radius: 20px;
             cursor: pointer;
             font-weight: bold;
             transition: 0.3s;
         }
         .lang-btn:hover { background-color: var(--primary); color: white; }
-
-        .pro-badge {
-            background-color: var(--premium);
-            color: #fff;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
 
         .app-container { 
             background: var(--box-bg); 
@@ -68,118 +55,97 @@
             box-sizing: border-box;
         }
         
-        h1 { text-align: center; color: var(--primary); font-size: 24px; margin-top: 0; }
+        h1 { text-align: center; color: var(--primary); font-size: 24px; margin-top: 0; margin-bottom: 25px; }
 
-        select {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            border: 1px solid #dfe6e9;
-            border-radius: 8px;
+        /* تنسيق الأزرار في الصفحة الرئيسية */
+        .category-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .cat-btn {
             background-color: #f1f2f6;
-            color: var(--text-dark);
-            margin-bottom: 20px;
-            cursor: pointer;
-            outline: none;
-        }
-
-        /* قسم الفيديو مع زر الصوت المدمج */
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            background-color: #000;
-        }
-
-        video { 
-            width: 100%; 
-            display: block;
-        }
-
-        .sound-btn {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            z-index: 10;
-        }
-
-        .instructions { 
-            background: #f1f8ff; 
-            padding: 15px; 
-            border-radius: 8px; 
-            margin-top: 20px; 
-            border-inline-start: 4px solid var(--primary); 
-            line-height: 1.6;
-        }
-
-        /* قسم مقفل لتجربة الاشتراكات */
-        .locked-content {
-            margin-top: 25px;
-            padding: 20px;
-            background: #fff9e6;
-            border: 2px dashed var(--premium);
-            border-radius: 12px;
-            text-align: center;
-        }
-        .locked-content h3 { margin: 0 0 10px 0; color: #b8860b; }
-        .locked-btn {
-            background: var(--premium);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+            border: 2px solid #dfe6e9;
+            color: var(--secondary);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
+            transition: 0.2s;
         }
+        .cat-btn:hover { border-color: var(--primary); background-color: #eef7fc; }
+
+        /* تنسيق صفحة التمرين */
+        .video-wrapper { position: relative; width: 100%; border-radius: 12px; overflow: hidden; background-color: #000; margin-bottom: 15px; }
+        video { width: 100%; display: block; }
+        .sound-btn { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; z-index: 10; }
+        
+        .instructions { background: #f1f8ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-inline-start: 4px solid var(--primary); line-height: 1.6; }
+
+        /* تنسيق العداد */
+        .counter-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+        .count-btn { background: var(--highlight); color: white; border: none; padding: 10px 25px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; }
+        .count-btn:active { transform: scale(0.95); }
+        .count-display { font-size: 24px; font-weight: bold; color: var(--secondary); }
+
+        .back-btn { background: #95a5a6; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px;}
+        
+        /* التحكم في إظهار وإخفاء الصفحات */
+        .page { display: none; }
+        .page.active { display: block; }
     </style>
 </head>
 <body>
 
     <div class="top-bar">
         <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
-        <div class="pro-badge" id="proBadge">UPGRADE TO PRO</div>
     </div>
 
     <div class="app-container">
-        <h1 id="mainTitle">برنامج العلاج المكتبي اليومي</h1>
-
-        <select id="categoryList" onchange="changeExercise()">
-            <option value="neck" id="opt-neck">الرقبة والأكتاف</option>
-            <option value="upper" id="opt-upper">الجزء العلوي والجذع</option>
-            <option value="lower" id="opt-lower">أسفل الظهر والجوانب</option>
-            <option value="legs" id="opt-legs">الساقين والحوض</option>
-        </select>
-
-        <h2 id="exerciseTitle">1. تمرين دوران الرقبة</h2>
         
-        <div class="video-wrapper">
-            <!-- تمت إضافة زر الصوت بناء على طلبك -->
-            <button class="sound-btn" id="soundToggleBtn" onclick="toggleSound()">🔇 كتم الصوت</button>
-            <video id="exerciseVideo" autoplay loop muted playsinline>
-                <source src="exercise1.mp4" type="video/mp4">
-            </video>
+        <!-- الصفحة الرئيسية (اختيار التمرين) -->
+        <div id="homePage" class="page active">
+            <h1 id="mainTitle">برنامج العلاج المكتبي اليومي</h1>
+            <p id="subTitle" style="text-align: center; color: #666; margin-bottom: 20px;">اختر فئة التمرين للبدء:</p>
+            
+            <div class="category-grid">
+                <button class="cat-btn" id="btn-neck" onclick="openExercise('neck')">الرقبة والأكتاف</button>
+                <button class="cat-btn" id="btn-upper" onclick="openExercise('upper')">الجزء العلوي والجذع</button>
+                <button class="cat-btn" id="btn-lower" onclick="openExercise('lower')">أسفل الظهر والجوانب</button>
+                <button class="cat-btn" id="btn-legs" onclick="openExercise('legs')">الساقين والحوض</button>
+            </div>
         </div>
 
-        <div class="instructions" id="exerciseDesc">
-            <strong>طريقة التمرين:</strong> أدر رأسك ببطء يميناً ويساراً مع الثبات لمدة 10 ثوانٍ لكل جهة.
-        </div>
+        <!-- صفحة التمرين (الفيديو والعداد) -->
+        <div id="exercisePage" class="page">
+            <h1 id="exerciseTitle">عنوان التمرين</h1>
+            
+            <div class="video-wrapper">
+                <button class="sound-btn" id="soundToggleBtn" onclick="toggleSound()">🔇 كتم الصوت</button>
+                <video id="exerciseVideo" autoplay loop muted playsinline>
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
 
-        <!-- مثال لقسم الاشتراكات المستقبلية -->
-        <div class="locked-content">
-            <h3 id="lockedTitle">🔒 تمارين متقدمة للمشتركين</h3>
-            <p id="lockedDesc">احصل على خطة علاجية مخصصة وتقارير أداء بفتح النسخة المدفوعة.</p>
-            <button class="locked-btn" id="lockedBtn">اشترك الآن</button>
+            <div class="instructions" id="exerciseDesc">تعليمات التمرين هنا</div>
+
+            <!-- قسم العداد -->
+            <div class="counter-section">
+                <button class="count-btn" id="addCountBtn" onclick="incrementCounter()">+ عدّ التمرين</button>
+                <div class="count-display"><span id="countText">التكرارات:</span> <span id="counterValue">0</span></div>
+            </div>
+
+            <button class="back-btn" id="backBtn" onclick="goBack()">🔙 العودة للقائمة الرئيسية</button>
         </div>
 
     </div>
@@ -187,22 +153,22 @@
     <script>
         // المتغيرات
         let currentLang = 'ar';
+        let currentRepCount = 0;
         const video = document.getElementById("exerciseVideo");
-        const soundBtn = document.getElementById("soundToggleBtn");
 
-        // قاموس اللغات
+        // القاموس الشامل للغتين
         const translations = {
             ar: {
                 langBtn: "English",
-                proBadge: "ترقية للنسخة المدفوعة",
                 mainTitle: "برنامج العلاج المكتبي اليومي",
-                optNeck: "الرقبة والأكتاف",
-                optUpper: "الجزء العلوي والجذع",
-                optLower: "أسفل الظهر والجوانب",
-                optLegs: "الساقين والحوض",
-                lockedTitle: "🔒 تمارين متقدمة للمشتركين",
-                lockedDesc: "احصل على خطة علاجية مخصصة وتقارير أداء بفتح النسخة المدفوعة.",
-                lockedBtn: "اشترك الآن",
+                subTitle: "اختر فئة التمرين للبدء:",
+                btnNeck: "الرقبة والأكتاف",
+                btnUpper: "الجزء العلوي والجذع",
+                btnLower: "أسفل الظهر والجوانب",
+                btnLegs: "الساقين والحوض",
+                addCount: "+ عدّ التمرين",
+                countText: "التكرارات:",
+                backBtn: "🔙 العودة للقائمة",
                 mute: "🔇 مكتوم",
                 unmute: "🔊 الصوت يعمل",
                 exercises: {
@@ -214,15 +180,15 @@
             },
             en: {
                 langBtn: "العربية",
-                proBadge: "UPGRADE TO PRO",
-                mainTitle: "Daily Office Therapy Program",
-                optNeck: "Neck & Shoulders",
-                optUpper: "Upper Body & Trunk",
-                optLower: "Lower Back & Sides",
-                optLegs: "Legs & Hips",
-                lockedTitle: "🔒 Premium Exercises",
-                lockedDesc: "Unlock custom therapy plans and performance reports.",
-                lockedBtn: "Subscribe Now",
+                mainTitle: "Daily Office Therapy",
+                subTitle: "Select an exercise category to start:",
+                btnNeck: "Neck & Shoulders",
+                btnUpper: "Upper Body & Trunk",
+                btnLower: "Lower Back & Sides",
+                btnLegs: "Legs & Hips",
+                addCount: "+ Add Rep",
+                countText: "Reps:",
+                backBtn: "🔙 Back to Menu",
                 mute: "🔇 Muted",
                 unmute: "🔊 Sound On",
                 exercises: {
@@ -234,54 +200,80 @@
             }
         };
 
-        // دالة تغيير اللغة
+        // دالة تبديل اللغة
         function toggleLanguage() {
             currentLang = currentLang === 'ar' ? 'en' : 'ar';
             document.getElementById("html-tag").dir = currentLang === 'ar' ? 'rtl' : 'ltr';
             document.getElementById("html-tag").lang = currentLang;
             
             const t = translations[currentLang];
+            
+            // تحديث نصوص الصفحة الرئيسية
             document.getElementById("langBtn").innerText = t.langBtn;
-            document.getElementById("proBadge").innerText = t.proBadge;
             document.getElementById("mainTitle").innerText = t.mainTitle;
-            document.getElementById("opt-neck").innerText = t.optNeck;
-            document.getElementById("opt-upper").innerText = t.optUpper;
-            document.getElementById("opt-lower").innerText = t.optLower;
-            document.getElementById("opt-legs").innerText = t.optLegs;
-            document.getElementById("lockedTitle").innerText = t.lockedTitle;
-            document.getElementById("lockedDesc").innerText = t.lockedDesc;
-            document.getElementById("lockedBtn").innerText = t.lockedBtn;
+            document.getElementById("subTitle").innerText = t.subTitle;
+            document.getElementById("btn-neck").innerText = t.btnNeck;
+            document.getElementById("btn-upper").innerText = t.btnUpper;
+            document.getElementById("btn-lower").innerText = t.btnLower;
+            document.getElementById("btn-legs").innerText = t.btnLegs;
+            
+            // تحديث نصوص العداد والرجوع
+            document.getElementById("addCountBtn").innerText = t.addCount;
+            document.getElementById("countText").innerText = t.countText;
+            document.getElementById("backBtn").innerText = t.backBtn;
             
             updateSoundBtnText();
-            changeExercise(); // لتحديث نص التمرين الحالي
+
+            // تحديث عنوان وتعليمات التمرين إذا كان المستخدم داخل صفحة التمرين
+            const activeExercise = video.getAttribute("data-current-category");
+            if (activeExercise) {
+                document.getElementById("exerciseTitle").innerText = t.exercises[activeExercise].title;
+                document.getElementById("exerciseDesc").innerHTML = t.exercises[activeExercise].desc;
+            }
         }
 
-        // دالة تغيير التمرين
-        function changeExercise() {
-            const category = document.getElementById("categoryList").value;
+        // دالة فتح صفحة التمرين
+        function openExercise(category) {
             const t = translations[currentLang].exercises[category];
             
             document.getElementById("exerciseTitle").innerText = t.title;
             document.getElementById("exerciseDesc").innerHTML = t.desc;
+            video.setAttribute("data-current-category", category);
 
-            // تغيير مصدر الفيديو
             if(category === "neck") video.src = "exercise1.mp4";
             else if(category === "upper") video.src = "exercise5.mp4";
             else if(category === "lower") video.src = "exercise9.mp4";
             else if(category === "legs") video.src = "exercise13.mp4";
             
-            // عند تغيير الفيديو، نحافظ على حالة الصوت الحالية
+            // تصفير العداد عند الدخول لتمرين جديد
+            currentRepCount = 0;
+            document.getElementById("counterValue").innerText = currentRepCount;
+
+            // إخفاء الرئيسية وإظهار التمرين
+            document.getElementById("homePage").classList.remove("active");
+            document.getElementById("exercisePage").classList.add("active");
         }
 
-        // دالة التحكم بالصوت
+        // دالة الرجوع للصفحة الرئيسية
+        function goBack() {
+            video.pause(); // إيقاف الفيديو لتوفير الموارد
+            document.getElementById("exercisePage").classList.remove("active");
+            document.getElementById("homePage").classList.add("active");
+        }
+
+        // دالة العداد
+        function incrementCounter() {
+            currentRepCount++;
+            document.getElementById("counterValue").innerText = currentRepCount;
+        }
+
+        // دالة الصوت
         function toggleSound() {
             video.muted = !video.muted;
             updateSoundBtnText();
         }
-
         function updateSoundBtnText() {
-            const t = translations[currentLang];
-            soundBtn.innerText = video.muted ? t.mute : t.unmute;
+            document.getElementById("soundToggleBtn").innerText = video.muted ? translations[currentLang].mute : translations[currentLang].unmute;
         }
     </script>
 </body>
