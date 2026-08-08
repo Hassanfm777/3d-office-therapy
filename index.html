@@ -46,28 +46,33 @@
 
         h1 { color: var(--primary); font-size: 28px; margin-top: 0; }
         
-        /* تصميم الـ 3D الحقيقي والبارز للصفحة الرئيسية */
-        .category-grid { display: flex; flex-direction: column; gap: 25px; margin-top: 35px; }
+        /* حقل إدخال الاسم */
+        .name-input {
+            width: 100%; padding: 15px; font-size: 18px; border: 2px solid #dfe6e9;
+            border-radius: 12px; box-sizing: border-box; margin: 20px 0; text-align: center;
+            outline: none; transition: 0.2s;
+        }
+        .name-input:focus { border-color: var(--primary); }
+
+        .submit-name-btn {
+            background: var(--primary); color: white; border: none; padding: 15px;
+            font-size: 18px; font-weight: bold; border-radius: 12px; cursor: pointer;
+            width: 100%; box-shadow: 0 4px 0 var(--primary-dark); transition: 0.1s;
+        }
+        .submit-name-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--primary-dark); }
+
+        /* أزرار 3D للصفحة الرئيسية */
+        .category-grid { display: flex; flex-direction: column; gap: 25px; margin-top: 25px; }
         .btn-3d {
             background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            padding: 25px 20px;
-            font-size: 22px;
-            font-weight: 900;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-            /* هنا سر الـ 3D: الظل السفلي الصلب */
-            box-shadow: 0 10px 0 #1a5276, 0 15px 20px rgba(0,0,0,0.2);
-            cursor: pointer;
-            transition: all 0.1s ease-in-out;
-            position: relative;
-            width: 100%;
+            color: white; border: none; border-radius: 16px; padding: 22px 20px;
+            font-size: 20px; font-weight: 900; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 0 #1a5276, 0 12px 15px rgba(0,0,0,0.2);
+            cursor: pointer; transition: all 0.1s ease-in-out; width: 100%;
         }
         .btn-3d:active {
-            /* تأثير الانضغاط للداخل عند النقر */
-            transform: translateY(10px);
-            box-shadow: 0 0 0 #1a5276, 0 5px 10px rgba(0,0,0,0.2);
+            transform: translateY(8px);
+            box-shadow: 0 0 0 #1a5276, 0 4px 8px rgba(0,0,0,0.2);
         }
 
         /* قائمة التمارين */
@@ -107,9 +112,17 @@
 
     <div class="app-container">
         
-        <!-- الشاشة الرئيسية (أزرار 3D) -->
-        <div id="welcomeScreen" class="screen active">
-            <h1 id="welcomeTitle">أهلاً بك في برنامج العلاج المكتبي</h1>
+        <!-- الشاشة الأولى: إدخال الاسم فقط -->
+        <div id="loginScreen" class="screen active">
+            <h1 id="loginTitle">مرحباً بك في العلاج المكتبي</h1>
+            <p id="loginSub" style="color: #666; font-size: 16px;">الرجاء إدخال اسمك الكريم للبدء:</p>
+            <input type="text" id="userNameInput" class="name-input" placeholder="اكتب اسمك هنا...">
+            <button class="submit-name-btn" id="startAppBtn" onclick="saveNameAndEnter()">دخول</button>
+        </div>
+
+        <!-- الشاشة الثانية: الصفحة الرئيسية (أزرار 3D) -->
+        <div id="welcomeScreen" class="screen">
+            <h1 id="welcomeTitle">أهلاً بك</h1>
             <p id="welcomeSub" style="color: #666; font-size: 16px;">اختر القسم الذي ترغب بتمرينه اليوم:</p>
             
             <div class="category-grid">
@@ -157,7 +170,8 @@
     <script>
         let currentLang = 'ar';
         let currentCategory = '';
-        let activeExercise = null; // يحفظ التمرين الحالي لضمان عدم خطأ الترجمة
+        let activeExercise = null;
+        let userName = '';
         let count = 0;
         const video = document.getElementById("exVideo");
 
@@ -176,14 +190,18 @@
 
         const trans = {
             ar: {
-                langBtn: "English", welcomeTitle: "أهلاً بك في برنامج العلاج المكتبي", welcomeSub: "اختر القسم الذي ترغب بتمرينه اليوم:",
+                langBtn: "English", 
+                loginTitle: "مرحباً بك في العلاج المكتبي", loginSub: "الرجاء إدخال اسمك الكريم للبدء:", inputPlaceholder: "اكتب اسمك هنا...", startBtn: "دخول",
+                welcomeTitle: "أهلاً بك", welcomeSub: "اختر القسم الذي ترغب بتمرينه اليوم:",
                 cat1: "1. تمارين الرقبة والأكتاف", cat2: "2. تمارين الظهر والجذع", cat3: "3. تمارين الساقين والحوض",
                 listTitle: "اختر التمرين:", backHome: "🔙 العودة للرئيسية", backList: "🔙 للقائمة", jumpHome: "🏠 للرئيسية",
                 countLabel: "عدد التكرارات المنجزة:", countBtn: "+ عدّ تمرين واحد", mute: "🔇 مكتوم", unmute: "🔊 يعمل",
                 guidance: "🎯 الهدف: يُنصح بعمل 3 إلى 5 تكرارات لكل جهة لضمان الفائدة.", instructionPrefix: "التعليمات: "
             },
             en: {
-                langBtn: "العربية", welcomeTitle: "Welcome to Office Therapy", welcomeSub: "Choose a category to start:",
+                langBtn: "العربية", 
+                loginTitle: "Welcome to Office Therapy", loginSub: "Please enter your name to start:", inputPlaceholder: "Type your name here...", startBtn: "Enter",
+                welcomeTitle: "Welcome", welcomeSub: "Choose a category to start:",
                 cat1: "1. Neck & Shoulders", cat2: "2. Back & Trunk", cat3: "3. Legs & Hips",
                 listTitle: "Select Exercise:", backHome: "🔙 Back to Home", backList: "🔙 To List", jumpHome: "🏠 To Home",
                 countLabel: "Repetitions completed:", countBtn: "+ Add 1 Rep", mute: "🔇 Muted", unmute: "🔊 Sound On",
@@ -191,13 +209,39 @@
             }
         };
 
-        // دالة مركزية لتحديث جميع النصوص في الشاشة بناءً على اللغة الحالية
+        function saveNameAndEnter() {
+            const inputVal = document.getElementById("userNameInput").value.trim();
+            if(inputVal === "") {
+                alert(currentLang === 'ar' ? "الرجاء إدخال الاسم أولاً" : "Please enter your name first");
+                return;
+            }
+            userName = inputVal;
+            
+            // تخصيص عنوان الترحيب باسم المستخدم
+            document.getElementById("welcomeTitle").innerText = (currentLang === 'ar' ? "أهلاً بك، " : "Welcome, ") + userName + "!";
+            
+            // الانتقال للشاشة الرئيسية
+            document.getElementById("loginScreen").classList.remove("active");
+            document.getElementById("welcomeScreen").classList.add("active");
+        }
+
         function updateUITexts() {
             const t = trans[currentLang];
             
-            // نصوص الرئيسية
             document.getElementById("langBtn").innerText = t.langBtn;
-            document.getElementById("welcomeTitle").innerText = t.welcomeTitle;
+            
+            // نصوص شاشة تسجيل الدخول
+            document.getElementById("loginTitle").innerText = t.loginTitle;
+            document.getElementById("loginSub").innerText = t.loginSub;
+            document.getElementById("userNameInput").placeholder = t.inputPlaceholder;
+            document.getElementById("startAppBtn").innerText = t.startBtn;
+
+            // نصوص الرئيسية
+            if(userName !== "") {
+                document.getElementById("welcomeTitle").innerText = (currentLang === 'ar' ? "أهلاً بك، " : "Welcome, ") + userName + "!";
+            } else {
+                document.getElementById("welcomeTitle").innerText = t.welcomeTitle;
+            }
             document.getElementById("welcomeSub").innerText = t.welcomeSub;
             document.getElementById("btnCat1").innerText = t.cat1;
             document.getElementById("btnCat2").innerText = t.cat2;
@@ -207,7 +251,6 @@
             document.getElementById("listTitle").innerText = t.listTitle;
             document.getElementById("backToWelcomeBtn").innerText = t.backHome;
             
-            // تحديث أزرار القائمة المعروضة حالياً
             if(currentCategory !== '') {
                 const container = document.getElementById("exercisesContainer");
                 container.innerHTML = ""; 
@@ -220,7 +263,6 @@
                 });
             }
 
-            // نصوص شاشة الفيديو (يتم تحديثها فقط إذا كان هناك تمرين مفتوح)
             if(activeExercise) {
                 document.getElementById("videoTitle").innerText = currentLang === 'ar' ? activeExercise.titleAr : activeExercise.titleEn;
                 document.getElementById("videoDesc").innerHTML = "<strong>" + t.instructionPrefix + "</strong>" + (currentLang === 'ar' ? activeExercise.descAr : activeExercise.descEn);
@@ -238,12 +280,12 @@
             currentLang = currentLang === 'ar' ? 'en' : 'ar';
             document.getElementById("html-tag").dir = currentLang === 'ar' ? 'rtl' : 'ltr';
             document.getElementById("html-tag").lang = currentLang;
-            updateUITexts(); // تحديث فوري وآمن لكل النصوص
+            updateUITexts();
         }
 
         function openCategory(cat) {
             currentCategory = cat;
-            updateUITexts(); // لرسم الأزرار باللغة الصحيحة
+            updateUITexts();
             
             document.getElementById("welcomeScreen").classList.remove("active");
             document.getElementById("videoScreen").classList.remove("active");
@@ -251,8 +293,8 @@
         }
 
         function openVideo(ex) {
-            activeExercise = ex; // حفظ التمرين الحالي برمجياً
-            updateUITexts(); // تحديث العنوان والوصف للغة الصحيحة
+            activeExercise = ex;
+            updateUITexts();
             
             video.src = ex.vid;
             count = 0;
@@ -264,7 +306,7 @@
 
         function goHome() {
             video.pause();
-            activeExercise = null; // تفريغ التمرين
+            activeExercise = null;
             document.getElementById("listScreen").classList.remove("active");
             document.getElementById("videoScreen").classList.remove("active");
             document.getElementById("welcomeScreen").classList.add("active");
@@ -291,7 +333,6 @@
             document.getElementById("soundBtn").innerText = video.muted ? trans[currentLang].mute : trans[currentLang].unmute;
         }
 
-        // تشغيل التحديث أول مرة لضمان تحميل النصوص الأساسية
         updateUITexts();
     </script>
 </body>
