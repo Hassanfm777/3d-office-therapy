@@ -107,7 +107,7 @@
         .home-btn { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; box-shadow: 0 4px 0 var(--primary-dark);}
         .home-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--primary-dark); }
 
-        /* تنسيقات الحاسبة الداخلية */
+        /* تنسيقات الحاسبة والنظام الغذائي */
         .calc-form { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; text-align: start; max-width: 100%; }
         .calc-form label { font-weight: bold; color: var(--calc-color); font-size: 15px; margin-bottom: -5px; }
         .calc-form input, .calc-form select { 
@@ -120,11 +120,37 @@
             margin-top: 15px; transition: 0.2s; box-shadow: 0 4px 0 #9c3f00; width: 100%;
         }
         .calc-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #9c3f00; }
+        
+        .diet-btn {
+            background: var(--highlight); color: white; border: none; padding: 15px;
+            font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer;
+            margin-top: 15px; transition: 0.2s; box-shadow: 0 4px 0 var(--highlight-dark); width: 100%;
+            display: none;
+        }
+        .diet-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--highlight-dark); }
+
         .calc-result {
             margin-top: 20px; padding: 15px; background: #fff3e0; 
             border-radius: 8px; font-weight: bold; color: #d35400;
             display: none; font-size: 16px; line-height: 1.8; border: 2px solid var(--calc-color); text-align: center;
         }
+
+        .diet-section {
+            margin-top: 20px; padding: 15px; background: #ffffff; border-radius: 12px;
+            border: 2px solid #ecf0f1; text-align: start; display: none; animation: fadeIn 0.4s ease-in-out;
+        }
+        .macros-grid {
+            display: flex; gap: 10px; margin-top: 15px; margin-bottom: 25px;
+        }
+        .macro-box {
+            flex: 1; padding: 12px 5px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 14px;
+        }
+        .macro-box span { font-size: 22px; display: block; margin-top: 5px; }
+        .meal-card {
+            background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 12px;
+            border-inline-start: 5px solid;
+        }
+        .meal-card p { margin: 8px 0 0 0; font-size: 15px; line-height: 1.5; font-weight: normal; color: #444; }
     </style>
 </head>
 <body>
@@ -150,7 +176,7 @@
                 <button class="btn-3d" id="btnCat1" onclick="openCategory('neck')">1. تمارين الرقبة والأكتاف</button>
                 <button class="btn-3d" id="btnCat2" onclick="openCategory('back')">2. تمارين الظهر والجذع</button>
                 <button class="btn-3d" id="btnCat3" onclick="openCategory('legs')">3. تمارين الساقين والحوض</button>
-                <button class="btn-3d btn-calc-main" id="btnCalcMain" onclick="openCalcScreen()">4. حاسبة السعرات الدقيقة 🔥</button>
+                <button class="btn-3d btn-calc-main" id="btnCalcMain" onclick="openCalcScreen()">4. حاسبة السعرات والوجبات 🔥</button>
             </div>
         </div>
 
@@ -185,7 +211,7 @@
             </div>
         </div>
 
-        <!-- شاشة حاسبة السعرات الجديدة -->
+        <!-- شاشة حاسبة السعرات والوجبات -->
         <div id="calcScreen" class="screen">
             <h2 id="calcTitleText" style="color: var(--calc-color); margin-top: 0;">حاسبة السعرات الدقيقة</h2>
             
@@ -214,7 +240,49 @@
                 </select>
                 
                 <button class="calc-btn" id="btnCalcCalories" onclick="calculateCalories()">احسب السعرات</button>
+                
                 <div id="calcResult" class="calc-result"></div>
+
+                <!-- زر اقتراح النظام الغذائي (يظهر بعد الحساب) -->
+                <button class="diet-btn" id="btnShowDiet" onclick="toggleDietPlan()">عرض النظام الغذائي المقترح 🥗</button>
+
+                <!-- قسم النظام الغذائي والماكروز -->
+                <div id="dietSection" class="diet-section">
+                    <h3 id="macrosTitle" style="color: var(--primary); margin-top: 0;">توزيع الماكروز (للمحافظة على الوزن):</h3>
+                    
+                    <div class="macros-grid">
+                        <div class="macro-box" style="background: #ffeaa7; color: #d35400;">
+                            <div id="lblCarbs">كربوهيدرات (40%)</div>
+                            <span id="valCarbs">0g</span>
+                        </div>
+                        <div class="macro-box" style="background: #fab1a0; color: #c0392b;">
+                            <div id="lblProtein">بروتين (30%)</div>
+                            <span id="valProtein">0g</span>
+                        </div>
+                        <div class="macro-box" style="background: #a29bfe; color: #6c5ce7;">
+                            <div id="lblFats">دهون (30%)</div>
+                            <span id="valFats">0g</span>
+                        </div>
+                    </div>
+
+                    <h3 id="mealsTitle" style="color: var(--primary);">أمثلة لوجبات صحية مرنة:</h3>
+                    
+                    <div class="meal-card" style="border-color: var(--highlight);">
+                        <strong id="meal1Title" style="color: var(--primary);">الغداء (عالي البروتين):</strong>
+                        <p id="meal1Desc">سلطة متكاملة (بيض مسلوق، شرائح لحم عجل، خس، طماطم، خيار، وتفاح أخضر) مع تتبيلة من الزبادي اليوناني وزيت الزيتون.</p>
+                    </div>
+                    
+                    <div class="meal-card" style="border-color: #f39c12;">
+                        <strong id="meal2Title" style="color: var(--primary);">وجبة خفيفة (سناك طاقة):</strong>
+                        <p id="meal2Desc">سموثي الفواكه المنعش (فراولة، توت أزرق، موز، مانجو، حليب، وقليل من العسل).</p>
+                    </div>
+                    
+                    <div class="meal-card" style="border-color: #e74c3c;">
+                        <strong id="meal3Title" style="color: var(--primary);">العشاء (كارب معتدل):</strong>
+                        <p id="meal3Desc">مكس سباغيتي وبيني باستا مع صوص الطماطم والثوم والفطر، ومزينة برشة من جبن القشقوان.</p>
+                    </div>
+                </div>
+
             </div>
 
             <button class="back-btn" id="backFromCalcBtn" onclick="goHome()" style="margin-top: 20px;">🔙 العودة للرئيسية</button>
@@ -228,6 +296,7 @@
         let activeExercise = null;
         let userName = '';
         let count = 0;
+        let currentTDEE = 0; // لحفظ السعرات واستخدامها في الماكروز
         const video = document.getElementById("exVideo");
 
         const db = {
@@ -249,32 +318,44 @@
                 loginTitle: "مرحباً بك في العلاج المكتبي", loginSub: "الرجاء إدخال اسمك الكريم للبدء:", inputPlaceholder: "اكتب اسمك هنا...", startBtn: "دخول",
                 welcomeTitle: "أهلاً بك", welcomeSub: "اختر القسم الذي ترغب بتمرينه اليوم:",
                 cat1: "1. تمارين الرقبة والأكتاف", cat2: "2. تمارين الظهر والجذع", cat3: "3. تمارين الساقين والحوض",
-                btnCalcMain: "4. حاسبة السعرات الدقيقة 🔥",
+                btnCalcMain: "4. حاسبة السعرات والوجبات 🔥",
                 listTitle: "اختر التمرين:", backHome: "🔙 العودة للرئيسية", backList: "🔙 للقائمة", jumpHome: "🏠 للرئيسية",
                 countLabel: "عدد التكرارات المنجزة:", countBtn: "+ عدّ تمرين واحد", mute: "🔇 مكتوم", unmute: "🔊 يعمل",
                 guidance: "🎯 الهدف: يُنصح بعمل 3 إلى 5 تكرارات لكل جهة لضمان الفائدة.", instructionPrefix: "التعليمات: ",
-                // نصوص الحاسبة
+                // نصوص الحاسبة والوجبات
                 calcTitle: "حاسبة السعرات الدقيقة", lblGender: "الجنس:", optMale: "ذكر", optFemale: "أنثى",
                 lblAge: "العمر (سنة):", lblWeight: "الوزن (كجم):", lblHeight: "الطول (سم):", lblActivity: "معدل النشاط:",
                 optAct1: "خامل (عمل مكتبي/بدون رياضة)", optAct2: "نشاط خفيف (رياضة 1-3 أيام)", optAct3: "نشاط متوسط (رياضة 3-5 أيام)", optAct4: "نشط جداً (رياضة يومية)",
                 btnCalc: "احسب السعرات", calcError: "الرجاء إدخال الوزن والطول بشكل صحيح.",
-                resMaint: "🔥 للمحافظة على الوزن:", resLoss: "📉 لإنقاص الوزن (عجز 500 سعرة):", resGain: "📈 لزيادة الوزن (فائض 500 سعرة):"
+                resMaint: "🔥 للمحافظة على الوزن:", resLoss: "📉 لإنقاص الوزن (عجز 500 سعرة):", resGain: "📈 لزيادة الوزن (فائض 500 سعرة):",
+                btnShowDiet: "عرض النظام الغذائي المقترح 🥗", btnHideDiet: "إخفاء النظام الغذائي ❌",
+                macrosTitle: "توزيع الماكروز (للمحافظة على الوزن):", lblCarbs: "كربوهيدرات (40%)", lblProtein: "بروتين (30%)", lblFats: "دهون (30%)",
+                mealsTitle: "أمثلة لوجبات صحية مرنة:", 
+                meal1Title: "الغداء (عالي البروتين):", meal1Desc: "سلطة متكاملة (بيض مسلوق، شرائح لحم عجل، خس، طماطم، خيار، وتفاح أخضر) مع تتبيلة من الزبادي اليوناني وزيت الزيتون.",
+                meal2Title: "وجبة خفيفة (سناك طاقة):", meal2Desc: "سموثي الفواكه المنعش (فراولة، توت أزرق، موز، مانجو، حليب، وقليل من العسل).",
+                meal3Title: "العشاء (كارب معتدل):", meal3Desc: "مكس سباغيتي وبيني باستا مع صوص الطماطم والثوم والفطر، ومزينة برشة من جبن القشقوان."
             },
             en: {
                 langBtn: "العربية", 
                 loginTitle: "Welcome to Office Therapy", loginSub: "Please enter your name to start:", inputPlaceholder: "Type your name here...", startBtn: "Enter",
                 welcomeTitle: "Welcome", welcomeSub: "Choose a category to start:",
                 cat1: "1. Neck & Shoulders", cat2: "2. Back & Trunk", cat3: "3. Legs & Hips",
-                btnCalcMain: "4. Accurate Calorie Calc 🔥",
+                btnCalcMain: "4. Calories & Diet Calc 🔥",
                 listTitle: "Select Exercise:", backHome: "🔙 Back to Home", backList: "🔙 To List", jumpHome: "🏠 To Home",
                 countLabel: "Repetitions completed:", countBtn: "+ Add 1 Rep", mute: "🔇 Muted", unmute: "🔊 Sound On",
                 guidance: "🎯 Goal: Recommended 3 to 5 repetitions per side.", instructionPrefix: "Instructions: ",
-                // Calculator texts
+                // Calculator & Diet texts
                 calcTitle: "Accurate Calorie Calc", lblGender: "Gender:", optMale: "Male", optFemale: "Female",
                 lblAge: "Age (Years):", lblWeight: "Weight (kg):", lblHeight: "Height (cm):", lblActivity: "Activity Level:",
                 optAct1: "Sedentary (Office job)", optAct2: "Lightly active (1-3 days)", optAct3: "Moderately active (3-5 days)", optAct4: "Very active (daily)",
                 btnCalc: "Calculate Calories", calcError: "Please enter your weight and height correctly.",
-                resMaint: "🔥 Maintenance:", resLoss: "📉 Weight Loss (-500 cal):", resGain: "📈 Weight Gain (+500 cal):"
+                resMaint: "🔥 Maintenance:", resLoss: "📉 Weight Loss (-500 cal):", resGain: "📈 Weight Gain (+500 cal):",
+                btnShowDiet: "Show Suggested Diet Plan 🥗", btnHideDiet: "Hide Diet Plan ❌",
+                macrosTitle: "Macro Distribution (Maintenance):", lblCarbs: "Carbs (40%)", lblProtein: "Protein (30%)", lblFats: "Fats (30%)",
+                mealsTitle: "Healthy Flexible Meal Examples:", 
+                meal1Title: "Lunch (High Protein):", meal1Desc: "Full salad (boiled eggs, veal slices, lettuce, tomato, cucumber, green apple) with Greek yogurt and olive oil dressing.",
+                meal2Title: "Snack (Energy Boost):", meal2Desc: "Fruit smoothie (strawberries, blueberries, banana, mango, milk, and a little honey).",
+                meal3Title: "Dinner (Moderate Carbs):", meal3Desc: "Mixed Spaghetti and Penne pasta with tomato, garlic, and mushroom sauce, topped with Kashkaval cheese."
             }
         };
 
@@ -315,7 +396,7 @@
             document.getElementById("backToWelcomeBtn").innerText = t.backHome;
             document.getElementById("backFromCalcBtn").innerText = t.backHome;
 
-            // تحديث نصوص الحاسبة
+            // تحديث نصوص الحاسبة والوجبات
             document.getElementById("calcTitleText").innerText = t.calcTitle;
             document.getElementById("lblGender").innerText = t.lblGender;
             document.getElementById("optMale").innerText = t.optMale;
@@ -330,6 +411,28 @@
             document.getElementById("optAct4").innerText = t.optAct4;
             document.getElementById("btnCalcCalories").innerText = t.btnCalc;
             
+            // نصوص الوجبات
+            const dietSec = document.getElementById("dietSection");
+            const dietBtn = document.getElementById("btnShowDiet");
+            if (dietSec.style.display === "block") {
+                dietBtn.innerText = t.btnHideDiet;
+            } else {
+                dietBtn.innerText = t.btnShowDiet;
+            }
+            
+            document.getElementById("macrosTitle").innerText = t.macrosTitle;
+            document.getElementById("lblCarbs").innerText = t.lblCarbs;
+            document.getElementById("lblProtein").innerText = t.lblProtein;
+            document.getElementById("lblFats").innerText = t.lblFats;
+            document.getElementById("mealsTitle").innerText = t.mealsTitle;
+            
+            document.getElementById("meal1Title").innerText = t.meal1Title;
+            document.getElementById("meal1Desc").innerText = t.meal1Desc;
+            document.getElementById("meal2Title").innerText = t.meal2Title;
+            document.getElementById("meal2Desc").innerText = t.meal2Desc;
+            document.getElementById("meal3Title").innerText = t.meal3Title;
+            document.getElementById("meal3Desc").innerText = t.meal3Desc;
+
             // إعادة حساب النتيجة باللغة الجديدة إن كانت ظاهرة
             if(document.getElementById("calcResult").style.display === "block") {
                 calculateCalories();
@@ -367,13 +470,11 @@
             updateUITexts();
         }
 
-        // دالة إظهار شاشة الحاسبة
         function openCalcScreen() {
             document.getElementById("welcomeScreen").classList.remove("active");
             document.getElementById("calcScreen").classList.add("active");
         }
 
-        // دالة حساب السعرات الحرارية
         function calculateCalories() {
             const gender = document.getElementById("calcGender").value;
             const age = parseFloat(document.getElementById("calcAge").value);
@@ -389,6 +490,8 @@
                 resultDiv.style.borderColor = "#ffeeba";
                 resultDiv.style.color = "#856404";
                 resultDiv.innerHTML = t.calcError;
+                document.getElementById("btnShowDiet").style.display = "none";
+                document.getElementById("dietSection").style.display = "none";
                 return;
             }
 
@@ -399,10 +502,9 @@
                 bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
             }
 
-            const tdee = Math.round(bmr * activity);
-            const maintenance = tdee;
-            const weightLoss = tdee - 500;
-            const weightGain = tdee + 500;
+            currentTDEE = Math.round(bmr * activity);
+            const weightLoss = currentTDEE - 500;
+            const weightGain = currentTDEE + 500;
 
             resultDiv.style.display = "block";
             resultDiv.style.background = "#fff3e0";
@@ -410,11 +512,49 @@
             resultDiv.style.color = "#d35400";
             
             resultDiv.innerHTML = `
-                <div style="font-size: 18px; margin-bottom: 8px;">${t.resMaint} <strong style="color:var(--calc-color); font-size:22px;">${maintenance}</strong></div>
+                <div style="font-size: 18px; margin-bottom: 8px;">${t.resMaint} <strong style="color:var(--calc-color); font-size:22px;">${currentTDEE}</strong></div>
                 <hr style="border: 1px solid rgba(230, 126, 34, 0.2); margin: 10px 0;">
                 <div style="font-size: 15px;">${t.resLoss} <strong style="color:#27ae60;">${weightLoss}</strong></div>
                 <div style="font-size: 15px; margin-top: 5px;">${t.resGain} <strong style="color:#c0392b;">${weightGain}</strong></div>
             `;
+
+            // إظهار زر النظام الغذائي
+            document.getElementById("btnShowDiet").style.display = "block";
+            
+            // إذا كان النظام الغذائي مفتوحاً بالفعل، قم بتحديث الماكروز
+            if(document.getElementById("dietSection").style.display === "block"){
+                calculateMacros();
+            }
+        }
+
+        function toggleDietPlan() {
+            const dietSec = document.getElementById("dietSection");
+            const dietBtn = document.getElementById("btnShowDiet");
+            const t = trans[currentLang];
+            
+            if (dietSec.style.display === "none" || dietSec.style.display === "") {
+                calculateMacros();
+                dietSec.style.display = "block";
+                dietBtn.innerText = t.btnHideDiet;
+            } else {
+                dietSec.style.display = "none";
+                dietBtn.innerText = t.btnShowDiet;
+            }
+        }
+
+        function calculateMacros() {
+            // توزيع السعرات: 40% كارب (1غ = 4 سعرة)، 30% بروتين (1غ = 4 سعرة)، 30% دهون (1غ = 9 سعرة)
+            const carbsCal = currentTDEE * 0.40;
+            const proteinCal = currentTDEE * 0.30;
+            const fatsCal = currentTDEE * 0.30;
+
+            const carbsGrams = Math.round(carbsCal / 4);
+            const proteinGrams = Math.round(proteinCal / 4);
+            const fatsGrams = Math.round(fatsCal / 9);
+
+            document.getElementById("valCarbs").innerText = carbsGrams + "g";
+            document.getElementById("valProtein").innerText = proteinGrams + "g";
+            document.getElementById("valFats").innerText = fatsGrams + "g";
         }
 
         function openCategory(cat) {
