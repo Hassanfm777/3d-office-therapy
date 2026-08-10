@@ -187,7 +187,6 @@
         .pomo-progress { stroke: var(--accent); stroke-dasharray: 879; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear, stroke 0.3s; }
         .pomo-time { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 64px; font-weight: 900; color: var(--text-main); font-variant-numeric: tabular-nums; }
 
-        /* تم إبراز الكلام التحفيزي بلون وتدرج ساطع وجذاب جداً */
         .quote-box {
             font-style: italic; font-size: 18px; line-height: 1.6;
             background: linear-gradient(135deg, rgba(230, 126, 34, 0.2), rgba(37, 99, 235, 0.2));
@@ -197,7 +196,6 @@
             margin: 15px 0 25px 0;
         }
 
-        /* تنسيق قسم تمرين التنفس الجديد */
         .breath-card {
             background: var(--bg-surface); padding: 40px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
             text-align: center; border: 2px solid var(--info); margin-bottom: 30px;
@@ -419,7 +417,6 @@
                 </div>
             </div>
 
-            <!-- شاشة تمرين التنفس الجديدة -->
             <div id="breathScreen" class="screen-container">
                 <div class="top-action-bar">
                     <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
@@ -634,7 +631,6 @@
             } catch (e) { console.error("LocalStorage Save Error:", e); }
         }
 
-        // --- WEB AUDIO API (Tick & Beep Sounds) ---
         let audioCtx = null;
         function getAudioContext() {
             if (!audioCtx) {
@@ -962,8 +958,8 @@
 
             if(ex.vid !== '') {
                 document.getElementById('videoBoxWrapper').style.display = 'block';
-                // استخدام المسار النسبي الصحيح مع بادئة ./ لضمان تشغيل الفيديو على GitHub Pages
-                vidPlayer.src = "./" + ex.vid;
+                // استخدام الرابط المطلق المباشر لـ GitHub Pages لضمان عدم ضياع المسار نهائياً
+                vidPlayer.src = "https://hasanfm777.github.io/3d-office-therapy/" + ex.vid;
                 vidPlayer.load();
                 vidPlayer.play().catch(e => console.log("Autoplay handled", e));
 
@@ -1021,14 +1017,13 @@
         }
         function resetTimer() { setTimerMode(currentPomoMode); }
 
-        // --- تمرين التنفس العميق ---
         let breathInterval;
         function startBreathing() {
             const circle = document.getElementById('breathCircle');
             const btn = document.getElementById('btnStartBreath');
             btn.disabled = true;
             
-            let phase = 0; // 0: استنشق, 1: امسك, 2: ازفر
+            let phase = 0;
             const phasesAr = ["استنشق (4 ثوانٍ)", "امسك الهواء (4 ثوانٍ)", "ازفر ببطء (4 ثوانٍ)"];
             const phasesEn = ["Inhale (4s)", "Hold (4s)", "Exhale (4s)"];
             
