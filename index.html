@@ -35,8 +35,8 @@
 
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            /* خلفية صورة مكتبية احترافية مع طبقة شفافة تتناسب مع الثيم */
-            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1920&q=80');
+            /* استخدام صورتك المحلية background.jpg مع طبقة التدرج والشفافية */
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('background.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -126,12 +126,10 @@
         .count-btn { background: var(--highlight); color: white; border: none; padding: 15px; font-size: 20px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; box-shadow: 0 6px 0 var(--highlight-dark); transition: 0.1s;}
         .count-btn:active { transform: translateY(6px); box-shadow: 0 0 0 var(--highlight-dark); }
 
-        /* أزرار الرجوع في الأعلى */
         .top-action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; width: 100%; }
         .back-btn-top { background: #95a5a6; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; box-shadow: 0 3px 0 #7f8c8d; }
         .back-btn-top:active { transform: translateY(3px); box-shadow: 0 0 0 #7f8c8d; }
 
-        /* شاشة الحاسبة والنظام الغذائي */
         .calc-form { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; text-align: start; max-width: 100%; }
         .calc-form label { font-weight: bold; color: var(--calc-color); font-size: 15px; margin-bottom: -5px; }
         .calc-form input, .calc-form select { 
@@ -196,7 +194,6 @@
 
     <div class="app-container">
         
-        <!-- شاشة تسجيل الدخول -->
         <div id="loginScreen" class="screen active">
             <h1 id="loginTitle">مرحباً بك في العلاج المكتبي</h1>
             <p id="loginSub" style="color: var(--sub-text); font-size: 16px;">الرجاء إدخال اسمك الكريم للبدء:</p>
@@ -204,7 +201,6 @@
             <button class="submit-name-btn" id="startAppBtn" onclick="saveNameAndEnter()">دخول</button>
         </div>
 
-        <!-- الشاشة الرئيسية -->
         <div id="welcomeScreen" class="screen">
             <div id="streakDisplay" class="streak-badge">🔥 الأيام المتتالية: 1 يوم</div>
             <h1 id="welcomeTitle">أهلاً بك</h1>
@@ -219,7 +215,6 @@
             </div>
         </div>
 
-        <!-- شاشة قائمة التمارين (زر الرجوع في الأعلى) -->
         <div id="listScreen" class="screen">
             <div class="top-action-bar">
                 <button class="back-btn-top" id="backToWelcomeBtn" onclick="goHome()">🔙 الرئيسية</button>
@@ -229,7 +224,6 @@
             <div id="exercisesContainer"></div>
         </div>
 
-        <!-- شاشة الفيديو (أزرار الرجوع والتحكم في الأعلى) -->
         <div id="videoScreen" class="screen">
             <div class="top-action-bar">
                 <button class="back-btn-top" id="backToListBtn" onclick="goToList()">🔙 القائمة</button>
@@ -254,7 +248,6 @@
             </div>
         </div>
 
-        <!-- شاشة الحاسبة (زر الرجوع في الأعلى) -->
         <div id="calcScreen" class="screen">
             <div class="top-action-bar">
                 <button class="back-btn-top" id="backFromCalcBtn" onclick="goHome()">🔙 الرئيسية</button>
@@ -351,7 +344,6 @@
         let currentTDEE = 0;
         const video = document.getElementById("exVideo");
 
-        // 50 جملة تحفيزية بالعربية والإنجليزية
         const quotesAr = [
             "الصحة تاج على رؤوس الصحيحين لا يراه إلا المرضى.",
             "حركة بسيطة اليوم تحميك من آلام كثيرة غداً.",
@@ -531,14 +523,12 @@
             }
         };
 
-        // اختيار جملة تحفيزية عشوائية حسب اللغة
         function setRandomQuote() {
             const list = currentLang === 'ar' ? quotesAr : quotesEn;
             const randomQuote = list[Math.floor(Math.random() * list.length)];
             document.getElementById("motivationalQuote").innerText = `💡 "${randomQuote}"`;
         }
 
-        // نظام حساب الأيام المتتالية (Streaks)
         function updateStreak() {
             let lastVisit = localStorage.getItem('ot_last_visit');
             let streak = parseInt(localStorage.getItem('ot_streak') || '1');
