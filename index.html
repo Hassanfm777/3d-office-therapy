@@ -134,9 +134,7 @@
             box-shadow: var(--shadow-lg); text-align: center; border: 1px solid var(--border-light);
         }
 
-        .lang-select-box {
-            display: flex; justify-content: center; gap: 15px; margin-bottom: 25px;
-        }
+        .lang-select-box { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
         .lang-option-btn {
             background: var(--bg-base); border: 2px solid var(--border-heavy); color: var(--text-muted);
             padding: 10px 25px; border-radius: var(--radius-full); font-weight: bold; cursor: pointer; transition: var(--transition-smooth);
@@ -189,7 +187,6 @@
         .pomo-progress { stroke: var(--accent); stroke-dasharray: 879; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear, stroke 0.3s; }
         .pomo-time { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 64px; font-weight: 900; color: var(--text-main); font-variant-numeric: tabular-nums; }
 
-        /* تحسين شكل ولون الكلام التحفيزي (أكثر بروزاً وحيوية) */
         .quote-box {
             font-style: italic; font-size: 17px; line-height: 1.6;
             background: linear-gradient(135deg, rgba(230, 126, 34, 0.15), rgba(37, 99, 235, 0.15));
@@ -452,7 +449,6 @@
 
                     <button class="fancy-btn" style="background: var(--calc-color); box-shadow: 0 6px 0 #b95c00;" onclick="executeCalc()" id="btnDoCalc">احسب السعرات</button>
 
-                    <!-- إصلاح مشكلة Undefined وتخريب التنسيق -->
                     <div id="calcResultsBox" style="display: none; margin-top: 30px; padding: 25px; background: rgba(230, 126, 34, 0.05); border: 2px dashed var(--calc-color); border-radius: var(--radius-md);">
                         <h3 style="text-align: center; color: var(--calc-color); margin-bottom: 20px;" id="lblResTitle">النتائج اليومية</h3>
                         
@@ -657,7 +653,6 @@
                 poTitle: "مؤقت التركيز", poSub: "نظم وقتك لزيادة الإنتاجية وتقليل الجهد.", btnW: "العمل", btnB: "استراحة",
                 calcH: "حاسبة السعرات الدقيقة", lG: "الجنس:", m: "ذكر", f: "أنثى", lA: "العمر:", lW: "الوزن (كجم):", lH: "الطول (سم):", lAct: "النشاط:",
                 a1: "خامل", a2: "خفيف", a3: "متوسط", a4: "نشط", btnCalc: "احسب السعرات", resT: "النتائج اليومية", rM: "المحافظة على الوزن:", rL: "إنقاص الوزن:", rG: "زيادة الوزن:", mac: "الماكروز المقترح:",
-                lblCarbs: "كارب", lblProtein: "بروتين", lblFats: "دهون",
                 waH: "متتبع شرب الماء 💧", waS: "الهدف اليومي:", waT: "المنجز:", ergH: "دليل الجلسة الصحية 🪑",
                 setH: "إعدادات المنصة ⚙️", sPw: "زمن العمل (دقيقة):", sPb: "زمن الراحة (دقيقة):", sW: "هدف الماء (أكواب):", btnS: "حفظ الإعدادات", btnOut: "تسجيل الخروج",
                 toastWelcome: "تم تسجيل الدخول بنجاح!", toastSave: "تم الحفظ بنجاح!", toastWater: "عاش! استمر في شرب الماء.", toastRep: "بطل! استمر.", toastDone: "انتهى الوقت!",
@@ -673,7 +668,6 @@
                 poTitle: "Focus Timer", poSub: "Organize time to boost productivity.", btnW: "Work", btnB: "Break",
                 calcH: "Accurate Calorie Calc", lG: "Gender:", m: "Male", f: "Female", lA: "Age:", lW: "Weight (kg):", lH: "Height (cm):", lAct: "Activity:",
                 a1: "Sedentary", a2: "Light", a3: "Moderate", a4: "Active", btnCalc: "Calculate", resT: "Daily Results", rM: "Maintenance:", rL: "Weight Loss:", rG: "Weight Gain:", mac: "Suggested Macros:",
-                lblCarbs: "Carbs", lblProtein: "Protein", lblFats: "Fats",
                 waH: "Water Tracker 💧", waS: "Daily Goal:", waT: "Completed:", ergH: "Ergonomic Guide 🪑",
                 setH: "Platform Settings ⚙️", sPw: "Work Time (min):", sPb: "Break Time (min):", sW: "Water Goal (cups):", btnS: "Save Settings", btnOut: "Logout",
                 toastWelcome: "Logged in successfully!", toastSave: "Saved successfully!", toastWater: "Great! Keep hydrating.", toastRep: "Hero! Keep going.", toastDone: "Time's Up!",
@@ -756,12 +750,9 @@
             } catch(e) {}
         }
 
-        // اختيار اللغة قبل الدخول
         function preSelectLang(lang) {
             currentLang = lang;
             document.getElementById('html-tag').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-            document.getElementById('btnLang').innerText = currentLang === 'ar' ? 'EN' : 'AR';
-            
             if(lang === 'ar') {
                 document.getElementById('optLangAr').classList.add('selected');
                 document.getElementById('optLangEn').classList.remove('selected');
@@ -922,7 +913,8 @@
 
             if(ex.vid !== '') {
                 document.getElementById('videoBoxWrapper').style.display = 'block';
-                vidPlayer.src = ex.vid + "?t=" + new Date().getTime();
+                // رابط نظيف وصريح بدون أي استعلامات تعطل تشغيل الفيديو
+                vidPlayer.src = ex.vid;
                 vidPlayer.load();
                 vidPlayer.play().catch(e => console.log("Autoplay handled", e));
 
