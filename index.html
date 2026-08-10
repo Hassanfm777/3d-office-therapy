@@ -10,9 +10,27 @@
             --primary-dark: #1a3a4c;
             --bg-color: #f0f4f8;
             --box-bg: #ffffff;
+            --text-color: #333333;
+            --sub-text: #666666;
             --highlight: #27ae60;
             --highlight-dark: #1e8449;
             --calc-color: #e67e22;
+            --border-color: #dfe6e9;
+            --box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        [data-theme="dark"] {
+            --primary: #5ba4d9;
+            --primary-dark: #2c5e7b;
+            --bg-color: #121212;
+            --box-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --sub-text: #a0a0a0;
+            --highlight: #2ecc71;
+            --highlight-dark: #27ae60;
+            --calc-color: #f39c12;
+            --border-color: #333333;
+            --box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
         body { 
@@ -22,23 +40,25 @@
             flex-direction: column; 
             align-items: center; 
             padding: 20px; 
-            color: #333;
+            color: var(--text-color);
             margin: 0;
             min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        .top-bar { width: 100%; max-width: 600px; display: flex; justify-content: flex-end; margin-bottom: 20px; }
-        .lang-btn { 
+        .top-bar { width: 100%; max-width: 600px; display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 20px; }
+        .top-btn { 
             background: var(--box-bg); border: 2px solid var(--primary); color: var(--primary); 
-            padding: 8px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; 
+            padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; 
             box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.2s;
         }
-        .lang-btn:hover { background: var(--primary); color: white; }
+        .top-btn:hover { background: var(--primary); color: white; }
 
         .app-container { 
             background: var(--box-bg); padding: 40px 30px; border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); max-width: 600px; width: 100%;
+            box-shadow: var(--box-shadow); max-width: 600px; width: 100%;
             box-sizing: border-box; text-align: center;
+            transition: background-color 0.3s, box-shadow 0.3s;
         }
 
         .screen { display: none; }
@@ -48,7 +68,8 @@
         h1 { color: var(--primary); font-size: 28px; margin-top: 0; }
         
         .name-input {
-            width: 100%; padding: 15px; font-size: 18px; border: 2px solid #dfe6e9;
+            width: 100%; padding: 15px; font-size: 18px; border: 2px solid var(--border-color);
+            background: var(--box-bg); color: var(--text-color);
             border-radius: 12px; box-sizing: border-box; margin: 20px 0; text-align: center;
             outline: none; transition: 0.2s;
         }
@@ -83,9 +104,9 @@
         }
 
         .exercise-list-item {
-            background: #f8f9fa; color: var(--primary); padding: 18px; border-radius: 12px;
+            background: var(--box-bg); color: var(--primary); padding: 18px; border-radius: 12px;
             margin-bottom: 12px; cursor: pointer; font-weight: bold; font-size: 18px; width: 100%;
-            border: 2px solid #e9ecef; transition: 0.2s;
+            border: 2px solid var(--border-color); transition: 0.2s;
         }
         .exercise-list-item:hover { background: var(--primary); color: white; border-color: var(--primary); }
 
@@ -93,10 +114,10 @@
         video { width: 100%; display: block; }
         .sound-btn { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight: bold;}
         
-        .instructions { background: #f1f8ff; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: start; border-inline-start: 4px solid var(--primary); line-height: 1.6; font-size: 16px;}
-        .guidance-box { background: #fff3cd; color: #856404; padding: 12px; border-radius: 8px; font-weight: bold; margin-bottom: 20px; border-inline-start: 4px solid #ffeeba; text-align: start; }
+        .instructions { background: rgba(44, 94, 123, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: start; border-inline-start: 4px solid var(--primary); line-height: 1.6; font-size: 16px;}
+        .guidance-box { background: rgba(243, 156, 18, 0.15); color: var(--calc-color); padding: 12px; border-radius: 8px; font-weight: bold; margin-bottom: 20px; border-inline-start: 4px solid var(--calc-color); text-align: start; }
 
-        .counter-box { background: #e8f5e9; border: 2px solid var(--highlight); padding: 25px; border-radius: 15px; margin-bottom: 20px;}
+        .counter-box { background: rgba(39, 174, 96, 0.1); border: 2px solid var(--highlight); padding: 25px; border-radius: 15px; margin-bottom: 20px;}
         .count-number { font-size: 45px; font-weight: bold; color: var(--highlight); margin: 10px 0; }
         .count-btn { background: var(--highlight); color: white; border: none; padding: 15px; font-size: 20px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; box-shadow: 0 6px 0 var(--highlight-dark); transition: 0.1s;}
         .count-btn:active { transform: translateY(6px); box-shadow: 0 0 0 var(--highlight-dark); }
@@ -107,11 +128,12 @@
         .home-btn { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; box-shadow: 0 4px 0 var(--primary-dark);}
         .home-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--primary-dark); }
 
-        /* تنسيقات الحاسبة والنظام الغذائي */
+        /* شاشة الحاسبة والنظام الغذائي */
         .calc-form { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; text-align: start; max-width: 100%; }
         .calc-form label { font-weight: bold; color: var(--calc-color); font-size: 15px; margin-bottom: -5px; }
         .calc-form input, .calc-form select { 
-            padding: 12px; border: 2px solid #dfe6e9; border-radius: 8px; font-size: 16px; outline: none; transition: 0.2s; width: 100%; box-sizing: border-box;
+            padding: 12px; border: 2px solid var(--border-color); background: var(--box-bg); color: var(--text-color);
+            border-radius: 8px; font-size: 16px; outline: none; transition: 0.2s; width: 100%; box-sizing: border-box;
         }
         .calc-form input:focus, .calc-form select:focus { border-color: var(--calc-color); }
         .calc-btn {
@@ -130,14 +152,14 @@
         .diet-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--highlight-dark); }
 
         .calc-result {
-            margin-top: 20px; padding: 15px; background: #fff3e0; 
-            border-radius: 8px; font-weight: bold; color: #d35400;
+            margin-top: 20px; padding: 15px; background: rgba(230, 126, 34, 0.1); 
+            border-radius: 8px; font-weight: bold; color: var(--calc-color);
             display: none; font-size: 16px; line-height: 1.8; border: 2px solid var(--calc-color); text-align: center;
         }
 
         .diet-section {
-            margin-top: 20px; padding: 15px; background: #ffffff; border-radius: 12px;
-            border: 2px solid #ecf0f1; text-align: start; display: none; animation: fadeIn 0.4s ease-in-out;
+            margin-top: 20px; padding: 15px; background: var(--box-bg); border-radius: 12px;
+            border: 2px solid var(--border-color); text-align: start; display: none; animation: fadeIn 0.4s ease-in-out;
         }
         .macros-grid {
             display: flex; gap: 10px; margin-top: 15px; margin-bottom: 25px;
@@ -147,30 +169,37 @@
         }
         .macro-box span { font-size: 22px; display: block; margin-top: 5px; }
         .meal-card {
-            background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 12px;
+            background: var(--bg-color); padding: 15px; border-radius: 8px; margin-bottom: 12px;
             border-inline-start: 5px solid;
         }
-        .meal-card p { margin: 8px 0 0 0; font-size: 15px; line-height: 1.5; font-weight: normal; color: #444; }
+        .meal-card p { margin: 8px 0 0 0; font-size: 15px; line-height: 1.5; font-weight: normal; color: var(--sub-text); }
+        
+        .streak-badge {
+            background: rgba(231, 76, 60, 0.15); color: #e74c3c; padding: 8px 15px; border-radius: 20px;
+            font-weight: bold; display: inline-block; margin-bottom: 15px; border: 1px solid #e74c3c;
+        }
     </style>
 </head>
 <body>
 
     <div class="top-bar">
-        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
+        <button class="top-btn" onclick="toggleDarkMode()" id="darkModeBtn">🌙</button>
+        <button class="top-btn" onclick="toggleLanguage()" id="langBtn">English</button>
     </div>
 
     <div class="app-container">
         
         <div id="loginScreen" class="screen active">
             <h1 id="loginTitle">مرحباً بك في العلاج المكتبي</h1>
-            <p id="loginSub" style="color: #666; font-size: 16px;">الرجاء إدخال اسمك الكريم للبدء:</p>
+            <p id="loginSub" style="color: var(--sub-text); font-size: 16px;">الرجاء إدخال اسمك الكريم للبدء:</p>
             <input type="text" id="userNameInput" class="name-input" placeholder="اكتب اسمك هنا...">
             <button class="submit-name-btn" id="startAppBtn" onclick="saveNameAndEnter()">دخول</button>
         </div>
 
         <div id="welcomeScreen" class="screen">
+            <div id="streakDisplay" class="streak-badge">🔥 الأيام المتتالية: 1 يوم</div>
             <h1 id="welcomeTitle">أهلاً بك</h1>
-            <p id="welcomeSub" style="color: #666; font-size: 16px;">اختر القسم الذي ترغب بتمرينه اليوم:</p>
+            <p id="welcomeSub" style="color: var(--sub-text); font-size: 16px;">اختر القسم الذي ترغب بتمرينه اليوم:</p>
             
             <div class="category-grid">
                 <button class="btn-3d" id="btnCat1" onclick="openCategory('neck')">1. تمارين الرقبة والأكتاف</button>
@@ -200,7 +229,7 @@
             <div class="instructions" id="videoDesc"></div>
 
             <div class="counter-box">
-                <div id="counterLabel" style="font-weight: bold; color: #333; font-size: 18px;"></div>
+                <div id="counterLabel" style="font-weight: bold; color: var(--text-color); font-size: 18px;"></div>
                 <div class="count-number" id="counterValue">0</div>
                 <button class="count-btn" id="addCountBtn" onclick="addCount()"></button>
             </div>
@@ -243,23 +272,21 @@
                 
                 <div id="calcResult" class="calc-result"></div>
 
-                <!-- زر اقتراح النظام الغذائي (يظهر بعد الحساب) -->
                 <button class="diet-btn" id="btnShowDiet" onclick="toggleDietPlan()">عرض النظام الغذائي المقترح 🥗</button>
 
-                <!-- قسم النظام الغذائي والماكروز الموسع -->
                 <div id="dietSection" class="diet-section">
                     <h3 id="macrosTitle" style="color: var(--primary); margin-top: 0;">توزيع الماكروز (للمحافظة على الوزن):</h3>
                     
                     <div class="macros-grid">
-                        <div class="macro-box" style="background: #ffeaa7; color: #d35400;">
+                        <div class="macro-box" style="background: rgba(255, 234, 167, 0.2); color: #d35400;">
                             <div id="lblCarbs">كربوهيدرات (40%)</div>
                             <span id="valCarbs">0g</span>
                         </div>
-                        <div class="macro-box" style="background: #fab1a0; color: #c0392b;">
+                        <div class="macro-box" style="background: rgba(250, 177, 160, 0.2); color: #c0392b;">
                             <div id="lblProtein">بروتين (30%)</div>
                             <span id="valProtein">0g</span>
                         </div>
-                        <div class="macro-box" style="background: #a29bfe; color: #6c5ce7;">
+                        <div class="macro-box" style="background: rgba(162, 155, 254, 0.2); color: #6c5ce7;">
                             <div id="lblFats">دهون (30%)</div>
                             <span id="valFats">0g</span>
                         </div>
@@ -382,6 +409,52 @@
             }
         };
 
+        // نظام حساب الأيام المتتالية (Streaks)
+        function updateStreak() {
+            let lastVisit = localStorage.getItem('ot_last_visit');
+            let streak = parseInt(localStorage.getItem('ot_streak') || '1');
+            let today = new Date().toDateString();
+
+            if (lastVisit !== today) {
+                let yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+
+                if (lastVisit === yesterday.toDateString()) {
+                    streak++;
+                } else if (!lastVisit) {
+                    streak = 1;
+                } else {
+                    streak = 1; // إعادة العداد لو فات يوم كامل
+                }
+                localStorage.setItem('ot_last_visit', today);
+                localStorage.setItem('ot_streak', streak);
+            }
+
+            const streakText = currentLang === 'ar' ? `🔥 الأيام المتتالية: ${streak} أيام` : `🔥 Streak: ${streak} Days`;
+            document.getElementById("streakDisplay").innerText = streakText;
+        }
+
+        // تبديل الوضع الليلي والنهاري
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute("data-theme");
+            if (currentTheme === "dark") {
+                html.removeAttribute("data-theme");
+                localStorage.setItem("theme", "light");
+                document.getElementById("darkModeBtn").innerText = "🌙";
+            } else {
+                html.setAttribute("data-theme", "dark");
+                localStorage.setItem("theme", "dark");
+                document.getElementById("darkModeBtn").innerText = "☀️";
+            }
+        }
+
+        // استرجاع الثيم المحفوظ مسبقاً
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+            document.getElementById("darkModeBtn").innerText = "☀️";
+        }
+
         function saveNameAndEnter() {
             const inputVal = document.getElementById("userNameInput").value.trim();
             if(inputVal === "") {
@@ -390,6 +463,14 @@
             }
             userName = inputVal;
             
+            // إرسال الاسم ووقت الدخول للشيت كما هو مطلوب
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbycyOEfQfDToRbMvNuIc24LThOp3M3A_g6tWvIxpo7qAcsvT5Y4lY5T7jjlaZvHxpZd/exec';
+            if (scriptURL) {
+                const img = new Image();
+                img.src = scriptURL + '?name=' + encodeURIComponent(userName);
+            }
+            
+            updateStreak();
             document.getElementById("welcomeTitle").innerText = (currentLang === 'ar' ? "أهلاً بك، " : "Welcome, ") + userName + "!";
             document.getElementById("loginScreen").classList.remove("active");
             document.getElementById("welcomeScreen").classList.add("active");
@@ -485,6 +566,7 @@
             document.getElementById("jumpHomeBtn").innerText = t.jumpHome;
             
             updateSoundBtn();
+            updateStreak();
         }
 
         function toggleLanguage() {
@@ -510,7 +592,7 @@
 
             if(!age || !weight || !height) {
                 resultDiv.style.display = "block";
-                resultDiv.style.background = "#fff3cd";
+                resultDiv.style.background = "rgba(255, 243, 205, 0.2)";
                 resultDiv.style.borderColor = "#ffeeba";
                 resultDiv.style.color = "#856404";
                 resultDiv.innerHTML = t.calcError;
@@ -531,9 +613,9 @@
             const weightGain = currentTDEE + 500;
 
             resultDiv.style.display = "block";
-            resultDiv.style.background = "#fff3e0";
+            resultDiv.style.background = "rgba(230, 126, 34, 0.1)";
             resultDiv.style.borderColor = "var(--calc-color)";
-            resultDiv.style.color = "#d35400";
+            resultDiv.style.color = "var(--calc-color)";
             
             resultDiv.innerHTML = `
                 <div style="font-size: 18px; margin-bottom: 8px;">${t.resMaint} <strong style="color:var(--calc-color); font-size:22px;">${currentTDEE}</strong></div>
