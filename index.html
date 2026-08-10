@@ -246,7 +246,7 @@
                 <!-- زر اقتراح النظام الغذائي (يظهر بعد الحساب) -->
                 <button class="diet-btn" id="btnShowDiet" onclick="toggleDietPlan()">عرض النظام الغذائي المقترح 🥗</button>
 
-                <!-- قسم النظام الغذائي والماكروز -->
+                <!-- قسم النظام الغذائي والماكروز الموسع -->
                 <div id="dietSection" class="diet-section">
                     <h3 id="macrosTitle" style="color: var(--primary); margin-top: 0;">توزيع الماكروز (للمحافظة على الوزن):</h3>
                     
@@ -265,8 +265,13 @@
                         </div>
                     </div>
 
-                    <h3 id="mealsTitle" style="color: var(--primary);">أمثلة لوجبات صحية مرنة:</h3>
+                    <h3 id="mealsTitle" style="color: var(--primary);">أمثلة لوجبات صحية مرنة ومتنوعة:</h3>
                     
+                    <div class="meal-card" style="border-color: #3498db;">
+                        <strong id="mealBreakfastTitle" style="color: var(--primary);">الفطور (طاقة الصباح):</strong>
+                        <p id="mealBreakfastDesc">شوفان بالحليب، مع شرائح الموز، قطرات العسل، ورشة قرفة مع حبات التوت.</p>
+                    </div>
+
                     <div class="meal-card" style="border-color: var(--highlight);">
                         <strong id="meal1Title" style="color: var(--primary);">الغداء (عالي البروتين):</strong>
                         <p id="meal1Desc">سلطة متكاملة (بيض مسلوق، شرائح لحم عجل، خس، طماطم، خيار، وتفاح أخضر) مع تتبيلة من الزبادي اليوناني وزيت الزيتون.</p>
@@ -280,6 +285,11 @@
                     <div class="meal-card" style="border-color: #e74c3c;">
                         <strong id="meal3Title" style="color: var(--primary);">العشاء (كارب معتدل):</strong>
                         <p id="meal3Desc">مكس سباغيتي وبيني باستا مع صوص الطماطم والثوم والفطر، ومزينة برشة من جبن القشقوان.</p>
+                    </div>
+
+                    <div class="meal-card" style="border-color: #9b59b6;">
+                        <strong id="mealExtraTitle" style="color: var(--primary);">بديل خفيف (قبل النوم):</strong>
+                        <p id="mealExtraDesc">كوب زبادي يوناني مع بذور الشيا وبضع قطرات من العسل لتعزيز الاستشفاء الليلي.</p>
                     </div>
                 </div>
 
@@ -296,13 +306,14 @@
         let activeExercise = null;
         let userName = '';
         let count = 0;
-        let currentTDEE = 0; // لحفظ السعرات واستخدامها في الماكروز
+        let currentTDEE = 0;
         const video = document.getElementById("exVideo");
 
         const db = {
             neck: [
                 { id: 'n1', vid: 'exercise1.mp4', titleAr: '1. تمرين دوران الرقبة', titleEn: '1. Basic Neck Turn', descAr: 'أدر رأسك يميناً ويساراً مع الثبات 10 ثوانٍ.', descEn: 'Turn head side to side, hold for 10 seconds.' },
-                { id: 'n2', vid: 'nexkexercise2.mp4', titleAr: '2. إمالة الرقبة', titleEn: '2. Neck Tilt', descAr: 'أمل رأسك نحو كتفك ببطء واثبت.', descEn: 'Tilt head towards shoulder slowly and hold.' }
+                { id: 'n2', vid: 'nexkexercise2.mp4', titleAr: '2. إمالة الرقبة', titleEn: '2. Neck Tilt', descAr: 'أمل رأسك نحو كتفك ببطء واثبت.', descEn: 'Tilt head towards shoulder slowly and hold.' },
+                { id: 'n3', vid: 'shoulder .mp4', titleAr: '3. تمرين تحريك الكتفين', titleEn: '3. Shoulder Mobility', descAr: 'ارفع كتفيك نحو أذنيك ثم أنزلهما ببطء لإرخاء التوتر.', descEn: 'Lift shoulders toward ears and slowly lower to release tension.' }
             ],
             back: [
                 { id: 'b1', vid: 'exercise5.mp4', titleAr: '1. تمدد الأكتاف', titleEn: '1. Shoulder Stretch', descAr: 'مد ذراعيك للأمام وادفع ظهرك للخلف.', descEn: 'Stretch arms forward and push back.' }
@@ -322,7 +333,6 @@
                 listTitle: "اختر التمرين:", backHome: "🔙 العودة للرئيسية", backList: "🔙 للقائمة", jumpHome: "🏠 للرئيسية",
                 countLabel: "عدد التكرارات المنجزة:", countBtn: "+ عدّ تمرين واحد", mute: "🔇 مكتوم", unmute: "🔊 يعمل",
                 guidance: "🎯 الهدف: يُنصح بعمل 3 إلى 5 تكرارات لكل جهة لضمان الفائدة.", instructionPrefix: "التعليمات: ",
-                // نصوص الحاسبة والوجبات
                 calcTitle: "حاسبة السعرات الدقيقة", lblGender: "الجنس:", optMale: "ذكر", optFemale: "أنثى",
                 lblAge: "العمر (سنة):", lblWeight: "الوزن (كجم):", lblHeight: "الطول (سم):", lblActivity: "معدل النشاط:",
                 optAct1: "خامل (عمل مكتبي/بدون رياضة)", optAct2: "نشاط خفيف (رياضة 1-3 أيام)", optAct3: "نشاط متوسط (رياضة 3-5 أيام)", optAct4: "نشط جداً (رياضة يومية)",
@@ -330,10 +340,17 @@
                 resMaint: "🔥 للمحافظة على الوزن:", resLoss: "📉 لإنقاص الوزن (عجز 500 سعرة):", resGain: "📈 لزيادة الوزن (فائض 500 سعرة):",
                 btnShowDiet: "عرض النظام الغذائي المقترح 🥗", btnHideDiet: "إخفاء النظام الغذائي ❌",
                 macrosTitle: "توزيع الماكروز (للمحافظة على الوزن):", lblCarbs: "كربوهيدرات (40%)", lblProtein: "بروتين (30%)", lblFats: "دهون (30%)",
-                mealsTitle: "أمثلة لوجبات صحية مرنة:", 
-                meal1Title: "الغداء (عالي البروتين):", meal1Desc: "سلطة متكاملة (بيض مسلوق، شرائح لحم عجل، خس، طماطم، خيار، وتفاح أخضر) مع تتبيلة من الزبادي اليوناني وزيت الزيتون.",
-                meal2Title: "وجبة خفيفة (سناك طاقة):", meal2Desc: "سموثي الفواكه المنعش (فراولة، توت أزرق، موز، مانجو، حليب، وقليل من العسل).",
-                meal3Title: "العشاء (كارب معتدل):", meal3Desc: "مكس سباغيتي وبيني باستا مع صوص الطماطم والثوم والفطر، ومزينة برشة من جبن القشقوان."
+                mealsTitle: "أمثلة لوجبات صحية مرنة ومتنوعة:", 
+                mealBreakfastTitle: "الفطور (طاقة الصباح):",
+                mealBreakfastDesc: "شوفان بالحليب، مع شرائح الموز، قطرات العسل، ورشة قرفة مع حبات التوت.",
+                meal1Title: "الغداء (عالي البروتين):", 
+                meal1Desc: "سلطة متكاملة (بيض مسلوق، شرائح لحم عجل، خس، طماطم، خيار، وتفاح أخضر) مع تتبيلة من الزبادي اليوناني وزيت الزيتون.",
+                meal2Title: "وجبة خفيفة (سناك طاقة):", 
+                meal2Desc: "سموثي الفواكه المنعش (فراولة، توت أزرق، موز، مانجو، حليب، وقليل من العسل).",
+                meal3Title: "العشاء (كارب معتدل):", 
+                meal3Desc: "مكس سباغيتي وبيني باستا مع صوص الطماطم والثوم والفطر، ومزينة برشة من جبن القشقوان.",
+                mealExtraTitle: "بديل خفيف (قبل النوم):",
+                mealExtraDesc: "كوب زبادي يوناني مع بذور الشيا وبضع قطرات من العسل لتعزيز الاستشفاء الليلي."
             },
             en: {
                 langBtn: "العربية", 
@@ -344,7 +361,6 @@
                 listTitle: "Select Exercise:", backHome: "🔙 Back to Home", backList: "🔙 To List", jumpHome: "🏠 To Home",
                 countLabel: "Repetitions completed:", countBtn: "+ Add 1 Rep", mute: "🔇 Muted", unmute: "🔊 Sound On",
                 guidance: "🎯 Goal: Recommended 3 to 5 repetitions per side.", instructionPrefix: "Instructions: ",
-                // Calculator & Diet texts
                 calcTitle: "Accurate Calorie Calc", lblGender: "Gender:", optMale: "Male", optFemale: "Female",
                 lblAge: "Age (Years):", lblWeight: "Weight (kg):", lblHeight: "Height (cm):", lblActivity: "Activity Level:",
                 optAct1: "Sedentary (Office job)", optAct2: "Lightly active (1-3 days)", optAct3: "Moderately active (3-5 days)", optAct4: "Very active (daily)",
@@ -353,9 +369,16 @@
                 btnShowDiet: "Show Suggested Diet Plan 🥗", btnHideDiet: "Hide Diet Plan ❌",
                 macrosTitle: "Macro Distribution (Maintenance):", lblCarbs: "Carbs (40%)", lblProtein: "Protein (30%)", lblFats: "Fats (30%)",
                 mealsTitle: "Healthy Flexible Meal Examples:", 
-                meal1Title: "Lunch (High Protein):", meal1Desc: "Full salad (boiled eggs, veal slices, lettuce, tomato, cucumber, green apple) with Greek yogurt and olive oil dressing.",
-                meal2Title: "Snack (Energy Boost):", meal2Desc: "Fruit smoothie (strawberries, blueberries, banana, mango, milk, and a little honey).",
-                meal3Title: "Dinner (Moderate Carbs):", meal3Desc: "Mixed Spaghetti and Penne pasta with tomato, garlic, and mushroom sauce, topped with Kashkaval cheese."
+                mealBreakfastTitle: "Breakfast (Morning Energy):",
+                mealBreakfastDesc: "Oatmeal with milk, banana slices, honey drops, a dash of cinnamon, and fresh berries.",
+                meal1Title: "Lunch (High Protein):", 
+                meal1Desc: "Full salad (boiled eggs, veal slices, lettuce, tomato, cucumber, green apple) with Greek yogurt and olive oil dressing.",
+                meal2Title: "Snack (Energy Boost):", 
+                meal2Desc: "Fruit smoothie (strawberries, blueberries, banana, mango, milk, and a little honey).",
+                meal3Title: "Dinner (Moderate Carbs):", 
+                meal3Desc: "Mixed Spaghetti and Penne pasta with tomato, garlic, and mushroom sauce, topped with Kashkaval cheese.",
+                mealExtraTitle: "Light Option (Before Bed):",
+                mealExtraDesc: "A cup of Greek yogurt with chia seeds and a few drops of honey to support overnight recovery."
             }
         };
 
@@ -396,7 +419,6 @@
             document.getElementById("backToWelcomeBtn").innerText = t.backHome;
             document.getElementById("backFromCalcBtn").innerText = t.backHome;
 
-            // تحديث نصوص الحاسبة والوجبات
             document.getElementById("calcTitleText").innerText = t.calcTitle;
             document.getElementById("lblGender").innerText = t.lblGender;
             document.getElementById("optMale").innerText = t.optMale;
@@ -411,7 +433,6 @@
             document.getElementById("optAct4").innerText = t.optAct4;
             document.getElementById("btnCalcCalories").innerText = t.btnCalc;
             
-            // نصوص الوجبات
             const dietSec = document.getElementById("dietSection");
             const dietBtn = document.getElementById("btnShowDiet");
             if (dietSec.style.display === "block") {
@@ -426,14 +447,17 @@
             document.getElementById("lblFats").innerText = t.lblFats;
             document.getElementById("mealsTitle").innerText = t.mealsTitle;
             
+            document.getElementById("mealBreakfastTitle").innerText = t.mealBreakfastTitle;
+            document.getElementById("mealBreakfastDesc").innerText = t.mealBreakfastDesc;
             document.getElementById("meal1Title").innerText = t.meal1Title;
             document.getElementById("meal1Desc").innerText = t.meal1Desc;
             document.getElementById("meal2Title").innerText = t.meal2Title;
             document.getElementById("meal2Desc").innerText = t.meal2Desc;
             document.getElementById("meal3Title").innerText = t.meal3Title;
             document.getElementById("meal3Desc").innerText = t.meal3Desc;
+            document.getElementById("mealExtraTitle").innerText = t.mealExtraTitle;
+            document.getElementById("mealExtraDesc").innerText = t.mealExtraDesc;
 
-            // إعادة حساب النتيجة باللغة الجديدة إن كانت ظاهرة
             if(document.getElementById("calcResult").style.display === "block") {
                 calculateCalories();
             }
@@ -518,10 +542,8 @@
                 <div style="font-size: 15px; margin-top: 5px;">${t.resGain} <strong style="color:#c0392b;">${weightGain}</strong></div>
             `;
 
-            // إظهار زر النظام الغذائي
             document.getElementById("btnShowDiet").style.display = "block";
             
-            // إذا كان النظام الغذائي مفتوحاً بالفعل، قم بتحديث الماكروز
             if(document.getElementById("dietSection").style.display === "block"){
                 calculateMacros();
             }
@@ -543,7 +565,6 @@
         }
 
         function calculateMacros() {
-            // توزيع السعرات: 40% كارب (1غ = 4 سعرة)، 30% بروتين (1غ = 4 سعرة)، 30% دهون (1غ = 9 سعرة)
             const carbsCal = currentTDEE * 0.40;
             const proteinCal = currentTDEE * 0.30;
             const fatsCal = currentTDEE * 0.30;
