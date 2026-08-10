@@ -8,7 +8,7 @@
         :root {
             --primary: #2c5e7b;
             --primary-dark: #1a3a4c;
-            --bg-color: #f0f4f8;
+            --bg-overlay: rgba(240, 244, 248, 0.88);
             --box-bg: #ffffff;
             --text-color: #333333;
             --sub-text: #666666;
@@ -16,13 +16,13 @@
             --highlight-dark: #1e8449;
             --calc-color: #e67e22;
             --border-color: #dfe6e9;
-            --box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
         [data-theme="dark"] {
             --primary: #5ba4d9;
             --primary-dark: #2c5e7b;
-            --bg-color: #121212;
+            --bg-overlay: rgba(18, 18, 18, 0.92);
             --box-bg: #1e1e1e;
             --text-color: #e0e0e0;
             --sub-text: #a0a0a0;
@@ -30,12 +30,16 @@
             --highlight-dark: #27ae60;
             --calc-color: #f39c12;
             --border-color: #333333;
-            --box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            --box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: var(--bg-color); 
+            /* خلفية صورة مكتبية احترافية مع طبقة شفافة تتناسب مع الثيم */
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             display: flex; 
             flex-direction: column; 
             align-items: center; 
@@ -43,7 +47,7 @@
             color: var(--text-color);
             margin: 0;
             min-height: 100vh;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background 0.3s, color 0.3s;
         }
 
         .top-bar { width: 100%; max-width: 600px; display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 20px; }
@@ -122,14 +126,13 @@
         .count-btn { background: var(--highlight); color: white; border: none; padding: 15px; font-size: 20px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; box-shadow: 0 6px 0 var(--highlight-dark); transition: 0.1s;}
         .count-btn:active { transform: translateY(6px); box-shadow: 0 0 0 var(--highlight-dark); }
 
-        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
-        .back-btn { background: #95a5a6; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; box-shadow: 0 4px 0 #7f8c8d;}
-        .back-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #7f8c8d; }
-        .home-btn { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; box-shadow: 0 4px 0 var(--primary-dark);}
-        .home-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--primary-dark); }
+        /* أزرار الرجوع في الأعلى */
+        .top-action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; width: 100%; }
+        .back-btn-top { background: #95a5a6; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; box-shadow: 0 3px 0 #7f8c8d; }
+        .back-btn-top:active { transform: translateY(3px); box-shadow: 0 0 0 #7f8c8d; }
 
         /* شاشة الحاسبة والنظام الغذائي */
-        .calc-form { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; text-align: start; max-width: 100%; }
+        .calc-form { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; text-align: start; max-width: 100%; }
         .calc-form label { font-weight: bold; color: var(--calc-color); font-size: 15px; margin-bottom: -5px; }
         .calc-form input, .calc-form select { 
             padding: 12px; border: 2px solid var(--border-color); background: var(--box-bg); color: var(--text-color);
@@ -139,20 +142,20 @@
         .calc-btn {
             background: var(--calc-color); color: white; border: none; padding: 15px;
             font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer;
-            margin-top: 15px; transition: 0.2s; box-shadow: 0 4px 0 #9c3f00; width: 100%;
+            margin-top: 10px; transition: 0.2s; box-shadow: 0 4px 0 #9c3f00; width: 100%;
         }
         .calc-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #9c3f00; }
         
         .diet-btn {
             background: var(--highlight); color: white; border: none; padding: 15px;
             font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer;
-            margin-top: 15px; transition: 0.2s; box-shadow: 0 4px 0 var(--highlight-dark); width: 100%;
+            margin-top: 10px; transition: 0.2s; box-shadow: 0 4px 0 var(--highlight-dark); width: 100%;
             display: none;
         }
         .diet-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--highlight-dark); }
 
         .calc-result {
-            margin-top: 20px; padding: 15px; background: rgba(230, 126, 34, 0.1); 
+            margin-top: 15px; padding: 15px; background: rgba(230, 126, 34, 0.1); 
             border-radius: 8px; font-weight: bold; color: var(--calc-color);
             display: none; font-size: 16px; line-height: 1.8; border: 2px solid var(--calc-color); text-align: center;
         }
@@ -169,14 +172,18 @@
         }
         .macro-box span { font-size: 22px; display: block; margin-top: 5px; }
         .meal-card {
-            background: var(--bg-color); padding: 15px; border-radius: 8px; margin-bottom: 12px;
+            background: var(--bg-overlay); padding: 15px; border-radius: 8px; margin-bottom: 12px;
             border-inline-start: 5px solid;
         }
         .meal-card p { margin: 8px 0 0 0; font-size: 15px; line-height: 1.5; font-weight: normal; color: var(--sub-text); }
         
         .streak-badge {
             background: rgba(231, 76, 60, 0.15); color: #e74c3c; padding: 8px 15px; border-radius: 20px;
-            font-weight: bold; display: inline-block; margin-bottom: 15px; border: 1px solid #e74c3c;
+            font-weight: bold; display: inline-block; margin-bottom: 10px; border: 1px solid #e74c3c;
+        }
+        .quote-box {
+            font-style: italic; color: var(--calc-color); margin: 10px 0 20px 0; font-size: 15px; line-height: 1.5;
+            background: rgba(230, 126, 34, 0.08); padding: 10px 15px; border-radius: 10px; border: 1px dashed var(--calc-color);
         }
     </style>
 </head>
@@ -189,6 +196,7 @@
 
     <div class="app-container">
         
+        <!-- شاشة تسجيل الدخول -->
         <div id="loginScreen" class="screen active">
             <h1 id="loginTitle">مرحباً بك في العلاج المكتبي</h1>
             <p id="loginSub" style="color: var(--sub-text); font-size: 16px;">الرجاء إدخال اسمك الكريم للبدء:</p>
@@ -196,10 +204,12 @@
             <button class="submit-name-btn" id="startAppBtn" onclick="saveNameAndEnter()">دخول</button>
         </div>
 
+        <!-- الشاشة الرئيسية -->
         <div id="welcomeScreen" class="screen">
             <div id="streakDisplay" class="streak-badge">🔥 الأيام المتتالية: 1 يوم</div>
             <h1 id="welcomeTitle">أهلاً بك</h1>
-            <p id="welcomeSub" style="color: var(--sub-text); font-size: 16px;">اختر القسم الذي ترغب بتمرينه اليوم:</p>
+            <div id="motivationalQuote" class="quote-box"></div>
+            <p id="welcomeSub" style="color: var(--sub-text); font-size: 15px; margin-bottom: 15px;">اختر القسم الذي ترغب بتمرينه اليوم:</p>
             
             <div class="category-grid">
                 <button class="btn-3d" id="btnCat1" onclick="openCategory('neck')">1. تمارين الرقبة والأكتاف</button>
@@ -209,14 +219,23 @@
             </div>
         </div>
 
+        <!-- شاشة قائمة التمارين (زر الرجوع في الأعلى) -->
         <div id="listScreen" class="screen">
-            <h2 id="listTitle" style="color: var(--primary); margin-bottom: 25px;">اختر التمرين:</h2>
+            <div class="top-action-bar">
+                <button class="back-btn-top" id="backToWelcomeBtn" onclick="goHome()">🔙 الرئيسية</button>
+                <h2 id="listTitle" style="color: var(--primary); margin: 0; font-size: 20px;">اختر التمرين:</h2>
+                <div style="width: 70px;"></div>
+            </div>
             <div id="exercisesContainer"></div>
-            <button class="back-btn" id="backToWelcomeBtn" onclick="goHome()" style="margin-top: 20px;">🔙 العودة للرئيسية</button>
         </div>
 
+        <!-- شاشة الفيديو (أزرار الرجوع والتحكم في الأعلى) -->
         <div id="videoScreen" class="screen">
-            <h2 id="videoTitle" style="color: var(--primary);"></h2>
+            <div class="top-action-bar">
+                <button class="back-btn-top" id="backToListBtn" onclick="goToList()">🔙 القائمة</button>
+                <h2 id="videoTitle" style="color: var(--primary); margin: 0; font-size: 18px;"></h2>
+                <button class="back-btn-top" id="jumpHomeBtn" onclick="goHome()" style="background: var(--primary);">🏠 الرئيسية</button>
+            </div>
             
             <div class="video-wrapper">
                 <button class="sound-btn" id="soundBtn" onclick="toggleSound()">🔇</button>
@@ -233,16 +252,15 @@
                 <div class="count-number" id="counterValue">0</div>
                 <button class="count-btn" id="addCountBtn" onclick="addCount()"></button>
             </div>
-
-            <div class="btn-group">
-                <button class="back-btn" id="backToListBtn" onclick="goToList()"></button>
-                <button class="home-btn" id="jumpHomeBtn" onclick="goHome()"></button>
-            </div>
         </div>
 
-        <!-- شاشة حاسبة السعرات والوجبات -->
+        <!-- شاشة الحاسبة (زر الرجوع في الأعلى) -->
         <div id="calcScreen" class="screen">
-            <h2 id="calcTitleText" style="color: var(--calc-color); margin-top: 0;">حاسبة السعرات الدقيقة</h2>
+            <div class="top-action-bar">
+                <button class="back-btn-top" id="backFromCalcBtn" onclick="goHome()">🔙 الرئيسية</button>
+                <h2 id="calcTitleText" style="color: var(--calc-color); margin: 0; font-size: 20px;">حاسبة السعرات الدقيقة</h2>
+                <div style="width: 70px;"></div>
+            </div>
             
             <div class="calc-form">
                 <label id="lblGender">الجنس:</label>
@@ -319,10 +337,7 @@
                         <p id="mealExtraDesc">كوب زبادي يوناني مع بذور الشيا وبضع قطرات من العسل لتعزيز الاستشفاء الليلي.</p>
                     </div>
                 </div>
-
             </div>
-
-            <button class="back-btn" id="backFromCalcBtn" onclick="goHome()" style="margin-top: 20px;">🔙 العودة للرئيسية</button>
         </div>
 
     </div>
@@ -336,11 +351,118 @@
         let currentTDEE = 0;
         const video = document.getElementById("exVideo");
 
+        // 50 جملة تحفيزية بالعربية والإنجليزية
+        const quotesAr = [
+            "الصحة تاج على رؤوس الصحيحين لا يراه إلا المرضى.",
+            "حركة بسيطة اليوم تحميك من آلام كثيرة غداً.",
+            "الاستمرارية في التمارين البسيطة تصنع فارقاً عظيماً.",
+            "عقلك السليم في جسمك النشيط خلال العمل.",
+            "خذ استراحة قصيرة، فجسدك يستحق العناية.",
+            "النشاط البدني يزيد من تركيزك وانتاجيتك.",
+            "اجعل التمدد عادة يومية في مكتبك.",
+            "الخطوات الصغيرة المتسقتة تؤدي إلى نتائج مذهلة.",
+            "صحتك المهنية تبدأ بالاهتمام بوضعية جسمك.",
+            "كل دقيقة تمرين هي استثمار في راحتك.",
+            "لا تنتظر حتى تتعب، بادر بإرخاء عضلاتك الآن.",
+            "الطاقة الإيجابية تبدأ من جسد مرن ونشط.",
+            "الجلوس الطويل عدو صحتك، اهزمه بحركة بسيطة.",
+            "اجعل مكتبك بيئة تدعم صحتك وحيويتك.",
+            "النفس العميقة والحركة تصنعان يومك.",
+            "تحديث وضعية جلوسك يجدد نشاطك الفكري.",
+            "العناية بالجسد ليست رفاهية بل ضرورة.",
+            "كل تمرين صغير يقربك من صحة أفضل.",
+            "استمع لجسدك وامنحه ما يستحقه من راحة وحركة.",
+            "الاستثمار الأفضل هو الاستثمار في صحتك.",
+            "اجعل الحركة جزءاً من روتينك العملي اليومي.",
+            "التوازن بين العمل والراحة سر الاستمرارية.",
+            "صحتك اليوم هي أساس إنجازاتك الغد.",
+            "التغلب على الكسل يبدأ بتمرين مدد واحد.",
+            "جسدك مرآة لمدى اهتمامك بنفسك.",
+            "أرح عينيك وكتفيك وواصل إبداعك.",
+            "التركيز العالي يبدأ بجسد خالي من التوتر.",
+            "لا تؤجل تمرينك المكتبي إلى الغد.",
+            "خطوة صغيرة نحو الحركة تصنع يوماً عظيماً.",
+            "الحيوية في العمل تبدأ من فقرات ظهر مرتاحة.",
+            "اجعل صفاء ذهنك مرتبطاً براحة عضلاتك.",
+            "كل تمدد يحرر طاقة جديدة بداخلك.",
+            "النجاح في العمل يبدأ بصحة مستدامة.",
+            "التنفس الصحيح يغير مجرى يومك المهني.",
+            "حافظ على نشاطك لتكون دائماً في قمة أفرمك.",
+            "التغيرات البسيطة تصنع أكبر النتائج.",
+            "امنح رقبتك وعضلاتك دقيقة حب واسترخاء.",
+            "العمل الذكي يتخلله اهتمام بالصحة.",
+            "لا تدع التوتر المكتبي يسرق نشاطك.",
+            "الاسترخاء الواعي يجدد طاقة الإبداع.",
+            "قوة إرادتك تبدأ بالاهتمام بصحتك الجسدية.",
+            "كن لطيفاً مع جسدك طوال ساعات العمل.",
+            "كل حركة تمنحك عمراً جديداً من النشاط.",
+            "الإنجاز الحقيقي لا يُخل بصحتك.",
+            "اجعل العافية رفيقك الدائم في المكتب.",
+            "التدريب المنتظم يصنع جداراً ضد إرهاق المكتب.",
+            "الرشاقة والمرونة تبدأ من هنا.",
+            "استمتع بلحظات الاسترخاء القصيرة أثناء عملك.",
+            "جسدك يمتن لك عندما تمنحه هذه التمارين.",
+            "يوم عمل صحي هو يوم عمل ناجح ومثمر."
+        ];
+
+        const quotesEn = [
+            "Health is a crown worn by the healthy that only the ill can see.",
+            "A small movement today saves you from much pain tomorrow.",
+            "Consistency in simple exercises makes a huge difference.",
+            "A sound mind thrives in an active body during work.",
+            "Take a short break; your body deserves care.",
+            "Physical activity boosts your focus and productivity.",
+            "Make stretching a daily habit at your desk.",
+            "Small, consistent steps lead to amazing results.",
+            "Your occupational health begins with good posture.",
+            "Every minute of exercise is an investment in your comfort.",
+            "Don't wait until you're tired; stretch your muscles now.",
+            "Positive energy starts with a flexible and active body.",
+            "Prolonged sitting is the enemy of health; defeat it with movement.",
+            "Make your workspace an environment that supports your vitality.",
+            "A deep breath and movement shape your workday.",
+            "Correcting your posture refreshes your intellectual energy.",
+            "Body care is not a luxury; it is a necessity.",
+            "Every small exercise brings you closer to better health.",
+            "Listen to your body and give it the rest and movement it deserves.",
+            "The best investment is an investment in your health.",
+            "Make movement a part of your daily work routine.",
+            "The balance between work and rest is the secret to consistency.",
+            "Your health today is the foundation of tomorrow's achievements.",
+            "Overcoming laziness starts with a single stretch.",
+            "Your body is a reflection of how much you care for yourself.",
+            "Rest your eyes and shoulders and keep creating.",
+            "High focus starts with a tension-free body.",
+            "Don't postpone your office stretches for tomorrow.",
+            "A small step toward movement makes a great day.",
+            "Vitality at work starts with relaxed back vertebrae.",
+            "Let your mental clarity be tied to your muscle relaxation.",
+            "Every stretch releases a new wave of energy inside you.",
+            "Success at work begins with sustainable health.",
+            "Proper breathing changes the course of your workday.",
+            "Stay active to always be at your absolute best.",
+            "Simple changes yield the greatest results.",
+            "Give your neck and muscles a minute of love and relaxation.",
+            "Smart work involves caring for your health.",
+            "Don't let office stress steal your energy.",
+            "Mindful relaxation renews your creative energy.",
+            "Your willpower starts with caring for your physical health.",
+            "Be kind to your body throughout your working hours.",
+            "Every movement grants you a new lease on activity.",
+            "True achievement does not compromise your health.",
+            "Let wellness be your constant companion at the office.",
+            "Regular training builds a wall against office fatigue.",
+            "Agility and flexibility start right here.",
+            "Enjoy moments of short relaxation during your work.",
+            "Your body thanks you when you give it these exercises.",
+            "A healthy workday is a successful and productive workday."
+        ];
+
         const db = {
             neck: [
                 { id: 'n1', vid: 'exercise1.mp4', titleAr: '1. تمرين دوران الرقبة', titleEn: '1. Basic Neck Turn', descAr: 'أدر رأسك يميناً ويساراً مع الثبات 10 ثوانٍ.', descEn: 'Turn head side to side, hold for 10 seconds.' },
                 { id: 'n2', vid: 'nexkexercise2.mp4', titleAr: '2. إمالة الرقبة', titleEn: '2. Neck Tilt', descAr: 'أمل رأسك نحو كتفك ببطء واثبت.', descEn: 'Tilt head towards shoulder slowly and hold.' },
-                { id: 'n3', vid: 'shoulder .mp4', titleAr: '3. تمرين تحريك الكتفين', titleEn: '3. Shoulder Mobility', descAr: 'ارفع كتفيك نحو أذنيك ثم أنزلهما ببطء لإرخاء التوتر.', descEn: 'Lift shoulders toward ears and slowly lower to release tension.' }
+                { id: 'n3', vid: 'shoulder.mp4', titleAr: '3. تمرين تحريك الكتفين', titleEn: '3. Shoulder Mobility', descAr: 'ارفع كتفيك نحو أذنيك ثم أنزلهما ببطء لإرخاء التوتر.', descEn: 'Lift shoulders toward ears and slowly lower to release tension.' }
             ],
             back: [
                 { id: 'b1', vid: 'exercise5.mp4', titleAr: '1. تمدد الأكتاف', titleEn: '1. Shoulder Stretch', descAr: 'مد ذراعيك للأمام وادفع ظهرك للخلف.', descEn: 'Stretch arms forward and push back.' }
@@ -357,7 +479,7 @@
                 welcomeTitle: "أهلاً بك", welcomeSub: "اختر القسم الذي ترغب بتمرينه اليوم:",
                 cat1: "1. تمارين الرقبة والأكتاف", cat2: "2. تمارين الظهر والجذع", cat3: "3. تمارين الساقين والحوض",
                 btnCalcMain: "4. حاسبة السعرات والوجبات 🔥",
-                listTitle: "اختر التمرين:", backHome: "🔙 العودة للرئيسية", backList: "🔙 للقائمة", jumpHome: "🏠 للرئيسية",
+                listTitle: "اختر التمرين:", backHome: "🔙 الرئيسية", backList: "🔙 القائمة", jumpHome: "🏠 الرئيسية",
                 countLabel: "عدد التكرارات المنجزة:", countBtn: "+ عدّ تمرين واحد", mute: "🔇 مكتوم", unmute: "🔊 يعمل",
                 guidance: "🎯 الهدف: يُنصح بعمل 3 إلى 5 تكرارات لكل جهة لضمان الفائدة.", instructionPrefix: "التعليمات: ",
                 calcTitle: "حاسبة السعرات الدقيقة", lblGender: "الجنس:", optMale: "ذكر", optFemale: "أنثى",
@@ -385,7 +507,7 @@
                 welcomeTitle: "Welcome", welcomeSub: "Choose a category to start:",
                 cat1: "1. Neck & Shoulders", cat2: "2. Back & Trunk", cat3: "3. Legs & Hips",
                 btnCalcMain: "4. Calories & Diet Calc 🔥",
-                listTitle: "Select Exercise:", backHome: "🔙 Back to Home", backList: "🔙 To List", jumpHome: "🏠 To Home",
+                listTitle: "Select Exercise:", backHome: "🔙 Home", backList: "🔙 List", jumpHome: "🏠 Home",
                 countLabel: "Repetitions completed:", countBtn: "+ Add 1 Rep", mute: "🔇 Muted", unmute: "🔊 Sound On",
                 guidance: "🎯 Goal: Recommended 3 to 5 repetitions per side.", instructionPrefix: "Instructions: ",
                 calcTitle: "Accurate Calorie Calc", lblGender: "Gender:", optMale: "Male", optFemale: "Female",
@@ -409,6 +531,13 @@
             }
         };
 
+        // اختيار جملة تحفيزية عشوائية حسب اللغة
+        function setRandomQuote() {
+            const list = currentLang === 'ar' ? quotesAr : quotesEn;
+            const randomQuote = list[Math.floor(Math.random() * list.length)];
+            document.getElementById("motivationalQuote").innerText = `💡 "${randomQuote}"`;
+        }
+
         // نظام حساب الأيام المتتالية (Streaks)
         function updateStreak() {
             let lastVisit = localStorage.getItem('ot_last_visit');
@@ -424,7 +553,7 @@
                 } else if (!lastVisit) {
                     streak = 1;
                 } else {
-                    streak = 1; // إعادة العداد لو فات يوم كامل
+                    streak = 1;
                 }
                 localStorage.setItem('ot_last_visit', today);
                 localStorage.setItem('ot_streak', streak);
@@ -434,7 +563,6 @@
             document.getElementById("streakDisplay").innerText = streakText;
         }
 
-        // تبديل الوضع الليلي والنهاري
         function toggleDarkMode() {
             const html = document.documentElement;
             const currentTheme = html.getAttribute("data-theme");
@@ -449,7 +577,6 @@
             }
         }
 
-        // استرجاع الثيم المحفوظ مسبقاً
         if (localStorage.getItem("theme") === "dark") {
             document.documentElement.setAttribute("data-theme", "dark");
             document.getElementById("darkModeBtn").innerText = "☀️";
@@ -463,7 +590,6 @@
             }
             userName = inputVal;
             
-            // إرسال الاسم ووقت الدخول للشيت كما هو مطلوب
             const scriptURL = 'https://script.google.com/macros/s/AKfycbycyOEfQfDToRbMvNuIc24LThOp3M3A_g6tWvIxpo7qAcsvT5Y4lY5T7jjlaZvHxpZd/exec';
             if (scriptURL) {
                 const img = new Image();
@@ -471,6 +597,7 @@
             }
             
             updateStreak();
+            setRandomQuote();
             document.getElementById("welcomeTitle").innerText = (currentLang === 'ar' ? "أهلاً بك، " : "Welcome, ") + userName + "!";
             document.getElementById("loginScreen").classList.remove("active");
             document.getElementById("welcomeScreen").classList.add("active");
@@ -567,6 +694,7 @@
             
             updateSoundBtn();
             updateStreak();
+            setRandomQuote();
         }
 
         function toggleLanguage() {
