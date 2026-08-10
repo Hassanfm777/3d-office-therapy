@@ -21,7 +21,7 @@
             
             --bg-base: #f1f5f9;
             --bg-surface: #ffffff;
-            --bg-glass: rgba(255, 255, 255, 0.75);
+            --bg-glass: rgba(255, 255, 255, 0.85);
             
             --text-main: #0f172a;
             --text-muted: #64748b;
@@ -52,7 +52,7 @@
             
             --bg-base: #0f172a;
             --bg-surface: #1e293b;
-            --bg-glass: rgba(30, 41, 59, 0.85);
+            --bg-glass: rgba(30, 41, 59, 0.90);
             
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
@@ -86,13 +86,11 @@
             transition: var(--transition-smooth);
         }
 
-        /* Custom Scrollbar for professional look */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: var(--radius-full); }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
-        /* Typography */
         h1, h2, h3, h4 { color: var(--text-main); font-weight: 800; line-height: 1.2; }
         p { line-height: 1.6; color: var(--text-muted); }
         
@@ -105,7 +103,6 @@
             width: 100%;
         }
 
-        /* Sidebar Styling */
         .sidebar {
             width: var(--sidebar-width);
             background: var(--bg-glass);
@@ -121,7 +118,7 @@
         }
 
         .sidebar-hidden {
-            transform: translateX(100%); /* RTL adaptation */
+            transform: translateX(100%);
             margin-inline-end: calc(-1 * var(--sidebar-width));
         }
         
@@ -143,102 +140,52 @@
 
         .brand svg { width: 32px; height: 32px; fill: currentColor; }
 
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            flex: 1;
-        }
+        .nav-menu { display: flex; flex-direction: column; gap: 10px; flex: 1; }
 
         .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 16px;
-            transition: var(--transition-smooth);
-            border: 1px solid transparent;
+            display: flex; align-items: center; gap: 15px; padding: 15px;
+            border-radius: var(--radius-md); cursor: pointer; color: var(--text-muted);
+            font-weight: 600; font-size: 16px; transition: var(--transition-smooth); border: 1px solid transparent;
         }
 
-        .nav-item:hover {
-            background: rgba(37, 99, 235, 0.05);
-            color: var(--primary);
-        }
+        .nav-item:hover { background: rgba(37, 99, 235, 0.05); color: var(--primary); }
 
         .nav-item.active {
-            background: var(--primary);
-            color: var(--text-light);
+            background: var(--primary); color: var(--text-light);
             box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
         }
 
         .nav-item svg { width: 24px; height: 24px; fill: currentColor; }
 
-        /* Main Content Area */
         .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            height: 100vh;
-            overflow-y: auto;
-            position: relative;
+            flex: 1; display: flex; flex-direction: column; padding: 20px;
+            height: 100vh; overflow-y: auto; position: relative;
         }
 
-        /* Top Header */
         .top-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 30px;
-            background: var(--bg-glass);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius-lg);
-            margin-bottom: 30px;
-            border: 1px solid var(--border-light);
-            box-shadow: var(--shadow-sm);
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 30px;
+            background: var(--bg-glass); backdrop-filter: blur(10px); border-radius: var(--radius-lg);
+            margin-bottom: 30px; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);
         }
 
-        .header-actions {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
+        .header-actions { display: flex; gap: 15px; align-items: center; }
 
         .icon-btn {
-            background: transparent;
-            border: 1px solid var(--border-light);
-            color: var(--text-main);
-            width: 45px;
-            height: 45px;
-            border-radius: var(--radius-full);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-            transition: var(--transition-smooth);
+            background: transparent; border: 1px solid var(--border-light); color: var(--text-main);
+            width: 45px; height: 45px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 18px; transition: var(--transition-smooth);
         }
 
         .icon-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            background: var(--primary); color: white; border-color: var(--primary);
+            transform: translateY(-2px); box-shadow: var(--shadow-md);
         }
 
         /* ==========================================================================
            4. COMPONENTS & SCREENS
            ========================================================================== */
         .screen-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            width: 100%;
-            display: none;
+            max-width: 1000px; margin: 0 auto; width: 100%; display: none;
             animation: fadeScale 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -249,267 +196,114 @@
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* Login Screen Special Styles */
         .login-wrapper {
-            max-width: 500px;
-            margin: 10vh auto;
-            background: var(--bg-surface);
-            padding: 50px 40px;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            text-align: center;
-            border: 1px solid var(--border-light);
+            max-width: 500px; margin: 10vh auto; background: var(--bg-surface); padding: 50px 40px;
+            border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); text-align: center; border: 1px solid var(--border-light);
         }
 
         .fancy-input {
-            width: 100%;
-            padding: 18px 25px;
-            font-size: 18px;
-            background: var(--bg-base);
-            border: 2px solid var(--border-light);
-            color: var(--text-main);
-            border-radius: var(--radius-md);
-            margin: 30px 0;
-            outline: none;
-            transition: var(--transition-smooth);
-            text-align: center;
-            font-weight: 600;
+            width: 100%; padding: 18px 25px; font-size: 18px; background: var(--bg-base);
+            border: 2px solid var(--border-light); color: var(--text-main); border-radius: var(--radius-md);
+            margin: 30px 0; outline: none; transition: var(--transition-smooth); text-align: center; font-weight: 600;
         }
 
         .fancy-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
-            background: var(--bg-surface);
+            border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15); background: var(--bg-surface);
         }
 
         .fancy-btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            padding: 18px 30px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-            transition: var(--transition-smooth);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none;
+            padding: 18px 30px; font-size: 18px; font-weight: bold; border-radius: var(--radius-md); cursor: pointer;
+            width: 100%; box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3); transition: var(--transition-smooth);
+            display: flex; justify-content: center; align-items: center; gap: 12px;
         }
 
-        .fancy-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4);
-        }
+        .fancy-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4); }
+        .fancy-btn:active { transform: translateY(2px); }
 
-        .fancy-btn:active {
-            transform: translateY(2px);
-        }
-
-        /* Dashboard Grid */
         .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px;
         }
 
         .dash-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
-            padding: 25px;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition-smooth);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-lg);
+            padding: 25px; box-shadow: var(--shadow-md); transition: var(--transition-smooth); cursor: pointer;
+            position: relative; overflow: hidden;
         }
 
         .dash-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 5px;
-            background: var(--primary);
-            opacity: 0;
-            transition: var(--transition-smooth);
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--primary);
+            opacity: 0; transition: var(--transition-smooth);
         }
 
-        .dash-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
+        .dash-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
         .dash-card:hover::after { opacity: 1; }
 
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
+        .card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
         .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
+            width: 50px; height: 50px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px;
         }
 
-        /* Chart Area */
         .chart-container {
-            background: var(--bg-surface);
-            padding: 25px;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            margin-top: 30px;
-            border: 1px solid var(--border-light);
+            background: var(--bg-surface); padding: 25px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
+            margin-top: 30px; border: 1px solid var(--border-light);
         }
 
-        #activityChart {
-            width: 100%;
-            height: 250px;
-            margin-top: 20px;
-        }
+        #activityChart { width: 100%; height: 250px; margin-top: 20px; }
 
-        /* Video Player Screen */
         .player-container {
-            background: var(--bg-surface);
-            border-radius: var(--radius-lg);
-            padding: 30px;
-            box-shadow: var(--shadow-lg);
-            text-align: center;
-            position: relative;
+            background: var(--bg-surface); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-lg);
+            text-align: center; position: relative;
         }
 
         .video-box {
-            width: 100%;
-            max-height: 500px;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            background: #000;
-            margin: 25px 0;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%; max-height: 500px; border-radius: var(--radius-md); overflow: hidden; background: #000;
+            margin: 25px 0; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+        video { width: 100%; height: 100%; object-fit: contain; }
 
-        .vid-controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
+        .vid-controls { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
 
         .btn-rep {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 24px;
-            font-weight: 900;
-            border-radius: var(--radius-full);
-            cursor: pointer;
-            box-shadow: 0 8px 0 #059669;
-            transition: all 0.1s ease;
+            background: var(--success); color: white; border: none; padding: 15px 40px; font-size: 24px; font-weight: 900;
+            border-radius: var(--radius-full); cursor: pointer; box-shadow: 0 8px 0 #059669; transition: all 0.1s ease;
         }
         .btn-rep:active { transform: translateY(8px); box-shadow: 0 0 0 #059669; }
 
-        /* Pomodoro Timer */
         .pomodoro-box {
-            text-align: center;
-            background: var(--bg-surface);
-            padding: 50px 30px;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
+            text-align: center; background: var(--bg-surface); padding: 50px 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
         }
 
-        .pomo-ring {
-            width: 300px;
-            height: 300px;
-            margin: 0 auto 40px;
-            position: relative;
-        }
-
+        .pomo-ring { width: 300px; height: 300px; margin: 0 auto 40px; position: relative; }
         .pomo-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .pomo-ring circle {
-            fill: transparent;
-            stroke-width: 12;
-            stroke-linecap: round;
-        }
+        .pomo-ring circle { fill: transparent; stroke-width: 12; stroke-linecap: round; }
         .pomo-bg { stroke: var(--border-light); }
         .pomo-progress {
-            stroke: var(--accent);
-            stroke-dasharray: 879; /* 2 * pi * r (r=140) */
-            stroke-dashoffset: 0;
-            transition: stroke-dashoffset 1s linear, stroke 0.3s;
+            stroke: var(--accent); stroke-dasharray: 879; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear, stroke 0.3s;
         }
-
         .pomo-time {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 64px;
-            font-weight: 900;
-            color: var(--text-main);
-            font-variant-numeric: tabular-nums;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 64px; font-weight: 900;
+            color: var(--text-main); font-variant-numeric: tabular-nums;
         }
 
-        /* Confetti Canvas */
-        #confettiCanvas {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 9999;
-        }
+        #confettiCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
 
-        /* Toasts System */
         .toast-wrapper {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 10000;
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; gap: 15px; z-index: 10000;
         }
 
         .toast-msg {
-            background: var(--text-main);
-            color: var(--bg-base);
-            padding: 16px 32px;
-            border-radius: var(--radius-full);
-            font-weight: 600;
-            font-size: 16px;
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            background: var(--text-main); color: var(--bg-base); padding: 16px 32px; border-radius: var(--radius-full);
+            font-weight: 600; font-size: 16px; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 12px;
             animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards, fadeOut 0.4s ease 3.5s forwards;
         }
 
         @keyframes popIn { 0% { opacity: 0; transform: translateY(50px) scale(0.8); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes fadeOut { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(50px); } }
 
-        /* Media Queries for Responsiveness */
         @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                height: 100vh;
-                box-shadow: 20px 0 50px rgba(0,0,0,0.5);
-            }
+            .sidebar { position: fixed; height: 100vh; box-shadow: 20px 0 50px rgba(0,0,0,0.5); }
             .main-content { padding: 10px; }
             .top-header { padding: 10px 15px; }
             .dashboard-grid { grid-template-columns: 1fr; }
@@ -517,29 +311,17 @@
             .pomo-time { font-size: 48px; }
         }
 
-        /* Utility Classes */
-        .text-primary { color: var(--primary); }
-        .text-accent { color: var(--accent); }
-        .text-success { color: var(--success); }
-        .text-warning { color: var(--warning); }
-        
-        .bg-primary-light { background: rgba(37, 99, 235, 0.1); }
-        .bg-accent-light { background: rgba(239, 68, 68, 0.1); }
-        .bg-success-light { background: rgba(16, 185, 129, 0.1); }
-        .bg-warning-light { background: rgba(245, 158, 11, 0.1); }
+        .text-primary { color: var(--primary); } .text-accent { color: var(--accent); } .text-success { color: var(--success); } .text-warning { color: var(--warning); }
+        .bg-primary-light { background: rgba(37, 99, 235, 0.1); } .bg-accent-light { background: rgba(239, 68, 68, 0.1); } .bg-success-light { background: rgba(16, 185, 129, 0.1); } .bg-warning-light { background: rgba(245, 158, 11, 0.1); }
     </style>
 </head>
 <body>
 
-    <!-- Confetti Canvas overlay -->
     <canvas id="confettiCanvas"></canvas>
-
-    <!-- Global Toast Notifications Container -->
     <div class="toast-wrapper" id="toastHub"></div>
 
     <div class="app-layout">
         
-        <!-- SIDEBAR NAVIGATION -->
         <aside class="sidebar sidebar-hidden" id="mainSidebar">
             <div class="brand">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
@@ -548,36 +330,28 @@
 
             <nav class="nav-menu">
                 <div class="nav-item active" onclick="navigateTo('dashboardScreen')" id="navDash">
-                    <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-                    لوحة التحكم
+                    <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg> لوحة التحكم
                 </div>
                 <div class="nav-item" onclick="navigateTo('exercisesScreen')" id="navEx">
-                    <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>
-                    التمارين المكتبية
+                    <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg> التمارين المكتبية
                 </div>
                 <div class="nav-item" onclick="navigateTo('pomoScreen')" id="navPomo">
-                    <svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
-                    مؤقت التركيز
+                    <svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg> مؤقت التركيز
                 </div>
                 <div class="nav-item" onclick="navigateTo('dietScreen')" id="navDiet">
-                    <svg viewBox="0 0 24 24"><path d="M18 4H6v2h12V4zm0 4H6v2h12V8zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zM19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-                    الدايت والحاسبة
+                    <svg viewBox="0 0 24 24"><path d="M18 4H6v2h12V4zm0 4H6v2h12V8zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zM19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> الدايت والحاسبة
                 </div>
                 <div class="nav-item" onclick="navigateTo('waterScreen')" id="navWater">
-                    <svg viewBox="0 0 24 24"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8zm0 18c-3.35 0-6-2.57-6-6.2 0-2.34 1.95-5.44 6-9.14 4.05 3.7 6 6.79 6 9.14 0 3.63-2.65 6.2-6 6.2z"/></svg>
-                    الماء والصحة
+                    <svg viewBox="0 0 24 24"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8zm0 18c-3.35 0-6-2.57-6-6.2 0-2.34 1.95-5.44 6-9.14 4.05 3.7 6 6.79 6 9.14 0 3.63-2.65 6.2-6 6.2z"/></svg> الماء والصحة
                 </div>
                 <div class="nav-item" onclick="navigateTo('settingsScreen')" id="navSettings">
-                    <svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>
-                    الإعدادات
+                    <svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg> الإعدادات
                 </div>
             </nav>
         </aside>
 
-        <!-- MAIN CONTENT -->
         <main class="main-content">
             
-            <!-- Header -->
             <header class="top-header" id="mainHeader" style="display: none;">
                 <div style="display: flex; align-items: center; gap: 15px;">
                     <button class="icon-btn" onclick="toggleSidebar()">☰</button>
@@ -589,9 +363,6 @@
                 </div>
             </header>
 
-            <!-- ==========================================
-                 SCREEN 1: LOGIN (Landing)
-                 ========================================== -->
             <div id="loginScreen" class="screen-container active">
                 <div class="login-wrapper">
                     <svg width="100" height="100" viewBox="0 0 24 24" fill="var(--primary)" style="margin-bottom:20px;">
@@ -609,13 +380,9 @@
                 </div>
             </div>
 
-            <!-- ==========================================
-                 SCREEN 2: DASHBOARD
-                 ========================================== -->
             <div id="dashboardScreen" class="screen-container">
-                <div class="quote-box" id="quoteBox">💡 "الصحة تاج على رؤوس الأصحاء."</div>
+                <div class="quote-box" id="quoteBox" style="font-style: italic; color: var(--text-muted); margin: 15px 0 25px; font-size: 16px; line-height: 1.6; background: rgba(0,0,0,0.03); padding: 20px; border-radius: 16px; position: relative;">💡 "الصحة تاج على رؤوس الأصحاء."</div>
                 
-                <!-- Quick Stats -->
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                     <div style="background: rgba(245, 158, 11, 0.1); color: var(--warning); padding: 10px 20px; border-radius: 20px; font-weight: bold; border: 1px solid var(--warning);">
                         🔥 <span id="txtStreak">الأيام المتتالية: 0</span>
@@ -625,7 +392,6 @@
                     </div>
                 </div>
 
-                <!-- Feature Grid -->
                 <div class="dashboard-grid">
                     <div class="dash-card" onclick="navigateTo('exercisesScreen')">
                         <div class="card-header">
@@ -660,19 +426,13 @@
                     </div>
                 </div>
 
-                <!-- Activity Chart (SVG Rendered by JS) -->
                 <div class="chart-container">
                     <h3 id="chartTitle" style="margin-bottom: 10px;">نشاطك هذا الأسبوع</h3>
                     <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">عدد التمارين المنجزة في آخر 7 أيام</p>
-                    <svg id="activityChart" viewBox="0 0 800 250" preserveAspectRatio="none">
-                        <!-- Chart generated via JS -->
-                    </svg>
+                    <svg id="activityChart" viewBox="0 0 800 250" preserveAspectRatio="none"></svg>
                 </div>
             </div>
 
-            <!-- ==========================================
-                 SCREEN 3: EXERCISES CATEGORIES
-                 ========================================== -->
             <div id="exercisesScreen" class="screen-container">
                 <h2 id="exerMainTitle" style="margin-bottom: 20px; color: var(--primary);">أقسام التمارين</h2>
                 
@@ -697,9 +457,6 @@
                 </div>
             </div>
 
-            <!-- ==========================================
-                 SCREEN 4: VIDEO PLAYER
-                 ========================================== -->
             <div id="videoScreen" class="screen-container">
                 <button class="icon-btn" onclick="navigateTo('exercisesScreen')" style="margin-bottom: 20px;">🔙</button>
                 
@@ -708,13 +465,11 @@
                     <p id="vidDesc" style="color: var(--text-muted); font-size: 16px; margin-bottom: 20px;">وصف التمرين يكتب هنا...</p>
                     
                     <div class="video-box" id="videoBoxWrapper">
-                        <!-- Custom Error Overlay -->
                         <div id="vidErrorOverlay" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); color:white; flex-direction:column; justify-content:center; align-items:center; z-index:10; padding:20px;">
                             <span style="font-size: 40px; margin-bottom:15px;">⚠️</span>
                             <h3 style="margin-bottom: 10px;">عذراً، الفيديو غير متوفر</h3>
                             <p style="font-size:14px; color:#ccc;">يرجى التأكد من رفع الفيديو على GitHub بالاسم الصحيح <br><strong id="expectedFileName" style="color:var(--accent);"></strong></p>
                         </div>
-
                         <video id="workoutVideo" autoplay loop muted playsinline>
                             <source id="videoSource" src="" type="video/mp4">
                         </video>
@@ -729,9 +484,6 @@
                 </div>
             </div>
 
-            <!-- ==========================================
-                 SCREEN 5: POMODORO TIMER
-                 ========================================== -->
             <div id="pomoScreen" class="screen-container">
                 <div class="pomodoro-box">
                     <h2 id="lblTimerTitle" style="font-size: 32px; margin-bottom: 10px; color: var(--accent);">مؤقت التركيز</h2>
@@ -750,6 +502,8 @@
                         <div class="pomo-time" id="timerClock">25:00</div>
                     </div>
 
+                    <div id="timerModeText" style="color: var(--accent); font-weight: bold; margin-bottom: 20px;">وقت العمل 🔥</div>
+
                     <div style="display: flex; justify-content: center; gap: 20px;">
                         <button class="icon-btn" style="width: 70px; height: 70px; font-size: 28px; background: var(--primary); color: white;" onclick="toggleTimer()" id="btnTimerPlay">▶️</button>
                         <button class="icon-btn" style="width: 70px; height: 70px; font-size: 28px;" onclick="resetTimer()">🔄</button>
@@ -757,9 +511,6 @@
                 </div>
             </div>
 
-            <!-- ==========================================
-                 SCREEN 6: CALC & DIET
-                 ========================================== -->
             <div id="dietScreen" class="screen-container">
                 <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-light);">
                     <h2 id="lblCalcHead" style="color: var(--calc-color); margin-bottom: 25px;">حاسبة السعرات الدقيقة</h2>
@@ -823,22 +574,35 @@
                                 <div style="font-size: 12px; font-weight: bold;" id="lblF">دهون</div><div style="font-size: 20px; font-weight: 900; margin-top: 5px;" id="valF">0g</div>
                             </div>
                         </div>
+
+                        <div style="margin-top: 30px;">
+                            <h3 id="mealsTitle" style="color: var(--primary); margin-bottom: 15px;">قائمتك المفضلة والمقترحة:</h3>
+                            <div style="background: var(--bg-surface); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid #f1c40f;">
+                                <h4 id="meal1Title" style="color: var(--text-main); margin-bottom: 5px;">🍳 الفطور (طاقة الصباح)</h4>
+                                <p id="meal1Desc">شوفان بالحليب، مع شرائح الموز، قطرات العسل، ورشة قرفة مع حبات التوت.</p>
+                            </div>
+                            <div style="background: var(--bg-surface); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid var(--success);">
+                                <h4 id="meal2Title" style="color: var(--text-main); margin-bottom: 5px;">🥗 الغداء (السلطة المتكاملة)</h4>
+                                <p id="meal2Desc">سلطة غنية بالبروتين: بيض مسلوق، شرائح لحم عجل، خس، طماطم، خيار، وتفاح أخضر، بتتبيلة الزبادي اليوناني وزيت الزيتون.</p>
+                            </div>
+                            <div style="background: var(--bg-surface); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid var(--primary);">
+                                <h4 id="meal3Title" style="color: var(--text-main); margin-bottom: 5px;">🥤 سناك (جرعة انتعاش)</h4>
+                                <p id="meal3Desc">سموثي الفواكه المفضل: فراولة، توت أزرق، موز، مانجو، حليب، مع قليل من العسل.</p>
+                            </div>
+                            <div style="background: var(--bg-surface); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid var(--accent);">
+                                <h4 id="meal4Title" style="color: var(--text-main); margin-bottom: 5px;">🍝 العشاء (كارب معتدل)</h4>
+                                <p id="meal4Desc">مكس سباغيتي وبيني باستا بصوص الكريمة المخفوقة مع الطماطم، الثوم، الفطر، ومغطاة بجبن القشقوان اللذيذ.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ==========================================
-                 SCREEN 7: WATER & WELLNESS
-                 ========================================== -->
             <div id="waterScreen" class="screen-container">
                 <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--info); margin-bottom: 30px;">
                     <h2 id="lblWaterHead" style="color: var(--info); text-align: center; margin-bottom: 10px;">متتبع شرب الماء 💧</h2>
                     <p id="lblWaterSub" style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">حافظ على رطوبة جسدك. الهدف 8 أكواب يومياً.</p>
-                    
-                    <div id="waterGridArea" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 25px;">
-                        <!-- Generated via JS -->
-                    </div>
-                    
+                    <div id="waterGridArea" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 25px;"></div>
                     <h3 style="text-align: center; color: var(--info);" id="waterTotalText">المنجز: 0 / 8 أكواب</h3>
                 </div>
 
@@ -854,9 +618,6 @@
                 </div>
             </div>
 
-            <!-- ==========================================
-                 SCREEN 8: SETTINGS
-                 ========================================== -->
             <div id="settingsScreen" class="screen-container">
                 <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-light);">
                     <h2 id="lblSetHead" style="color: var(--text-main); margin-bottom: 25px;">إعدادات المنصة ⚙️</h2>
@@ -885,12 +646,16 @@
     </div>
 
     <!-- ==========================================================================
-         JAVASCRIPT ENGINE (Object Oriented & Modular)
+         JAVASCRIPT ENGINE (Bulletproof Edition)
          ========================================================================== -->
     <script>
-        /**
-         * State Management Database
-         */
+        // --- SAFE STATE INITIALIZATION ---
+        let parsedWeekly;
+        try {
+            parsedWeekly = JSON.parse(localStorage.getItem('ot_weekly'));
+            if (!Array.isArray(parsedWeekly)) parsedWeekly = [0,0,0,0,0,0,0];
+        } catch(e) { parsedWeekly = [0,0,0,0,0,0,0]; }
+
         const AppState = {
             user: localStorage.getItem('ot_user_pro') || '',
             streak: parseInt(localStorage.getItem('ot_streak_pro') || '1'),
@@ -901,87 +666,63 @@
             totalWorkouts: parseInt(localStorage.getItem('ot_workouts') || '0'),
             pomoWorkTime: parseInt(localStorage.getItem('ot_pomo_work') || '25'),
             pomoBreakTime: parseInt(localStorage.getItem('ot_pomo_break') || '5'),
-            weeklyStats: JSON.parse(localStorage.getItem('ot_weekly') || '[0,0,0,0,0,0,0]')
+            weeklyStats: parsedWeekly
         };
 
-        // Reset daily water
-        if (AppState.waterDate !== new Date().toDateString()) {
-            AppState.water = 0;
-            AppState.waterDate = new Date().toDateString();
-            
-            // Shift weekly stats (simple simulation: drop oldest, add 0 for today)
-            AppState.weeklyStats.shift();
-            AppState.weeklyStats.push(0);
-            
-            saveStateToLocal();
-        }
-
-        let currentLang = 'ar';
-        let currentVideoObj = null;
-
-        /**
-         * Translations Dictionary (Comprehensive)
-         */
-        const langDB = {
-            ar: {
-                appName: "العلاج المكتبي برو",
-                loginSub: "أدخل اسمك لنبدأ رحلة العناية بصحتك خلال العمل:", btnLogin: "دخول للمنصة",
-                greet: "مرحباً،", navDash: "لوحة التحكم", navEx: "التمارين", navPomo: "مؤقت التركيز", navDiet: "الدايت", navWater: "الصحة والماء", navSet: "الإعدادات",
-                dashStreak: "الأيام المتتالية:", dashWrk: "إجمالي التمارين:", dashTitleEx: "التمارين", dashDescEx: "تخلص من التوتر المكتبي.", dashTitlePo: "التركيز", dashDescPo: "مؤقت بومودورو ذكي.", dashTitleDi: "التغذية", dashDescDi: "حاسبة وجداول صحية.", dashTitleWa: "الماء", dashDescWa: "تتبع شربك وجلستك.", chartTitle: "نشاطك هذا الأسبوع",
-                exMainT: "أقسام التمارين", catN: "الرقبة والأكتاف", catB: "الظهر والجذع", catL: "الساقين والحوض", catE: "إراحة العين (20-20-20)", listAv: "التمارين المتاحة:",
-                vidReps: "التكرارات المنجزة:", btnAddRep: "+ سجل تكرار", errVidHead: "عذراً، الفيديو غير متوفر", errVidSub: "يرجى التأكد من رفع الفيديو على GitHub بالاسم الصحيح",
-                poTitle: "مؤقت التركيز", poSub: "نظم وقتك لزيادة الإنتاجية وتقليل الجهد.", btnW: "العمل", btnB: "استراحة",
-                calcH: "حاسبة السعرات الدقيقة", lG: "الجنس:", m: "ذكر", f: "أنثى", lA: "العمر:", lW: "الوزن (كجم):", lH: "الطول (سم):", lAct: "النشاط:",
-                a1: "خامل", a2: "خفيف", a3: "متوسط", a4: "نشط", btnCalc: "احسب", resT: "النتائج اليومية", rM: "المحافظة:", rL: "إنقاص:", rG: "زيادة:", mac: "الماكروز المقترح:",
-                waH: "متتبع شرب الماء 💧", waS: "الهدف اليومي:", waT: "المنجز:", ergH: "دليل الجلسة الصحية 🪑",
-                setH: "إعدادات المنصة ⚙️", sPw: "زمن العمل (دقيقة):", sPb: "زمن الراحة (دقيقة):", sW: "هدف الماء (أكواب):", btnS: "حفظ الإعدادات", btnOut: "تسجيل الخروج",
-                toastWelcome: "تم تسجيل الدخول بنجاح!", toastSave: "تم الحفظ بنجاح!", toastWater: "عاش! استمر في شرب الماء.", toastRep: "بطل! استمر.", toastDone: "انتهى الوقت!"
-            },
-            en: {
-                appName: "Office Therapy Pro",
-                loginSub: "Enter your name to start your wellness journey:", btnLogin: "Enter Platform",
-                greet: "Hello,", navDash: "Dashboard", navEx: "Exercises", navPomo: "Focus Timer", navDiet: "Diet Calc", navWater: "Wellness", navSet: "Settings",
-                dashStreak: "Streak Days:", dashWrk: "Total Workouts:", dashTitleEx: "Exercises", dashDescEx: "Relieve office stress.", dashTitlePo: "Focus", dashDescPo: "Smart Pomodoro timer.", dashTitleDi: "Nutrition", dashDescDi: "Calc & healthy plans.", dashTitleWa: "Water", dashDescWa: "Track hydration & posture.", chartTitle: "Your Weekly Activity",
-                exMainT: "Exercise Categories", catN: "Neck & Shoulders", catB: "Back & Trunk", catL: "Legs & Hips", catE: "Eye Rest (20-20-20)", listAv: "Available Exercises:",
-                vidReps: "Completed Reps:", btnAddRep: "+ Add Rep", errVidHead: "Sorry, Video Unavailable", errVidSub: "Ensure the video is uploaded to GitHub with the exact name",
-                poTitle: "Focus Timer", poSub: "Organize time to boost productivity.", btnW: "Work", btnB: "Break",
-                calcH: "Accurate Calorie Calc", lG: "Gender:", m: "Male", f: "Female", lA: "Age:", lW: "Weight (kg):", lH: "Height (cm):", lAct: "Activity:",
-                a1: "Sedentary", a2: "Light", a3: "Moderate", a4: "Active", btnCalc: "Calculate", resT: "Daily Results", rM: "Maintain:", rL: "Lose:", rG: "Gain:", mac: "Suggested Macros:",
-                waH: "Water Tracker 💧", waS: "Daily Goal:", waT: "Completed:", ergH: "Ergonomic Guide 🪑",
-                setH: "Platform Settings ⚙️", sPw: "Work Time (min):", sPb: "Break Time (min):", sW: "Water Goal (cups):", btnS: "Save Settings", btnOut: "Logout",
-                toastWelcome: "Logged in successfully!", toastSave: "Saved successfully!", toastWater: "Great! Keep hydrating.", toastRep: "Hero! Keep going.", toastDone: "Time's Up!"
+        try {
+            if (AppState.waterDate !== new Date().toDateString()) {
+                AppState.water = 0;
+                AppState.waterDate = new Date().toDateString();
+                if (Array.isArray(AppState.weeklyStats)) {
+                    AppState.weeklyStats.shift();
+                    AppState.weeklyStats.push(0);
+                } else {
+                    AppState.weeklyStats = [0,0,0,0,0,0,0];
+                }
+                saveStateToLocal();
             }
-        };
+        } catch(e) { console.error('Date reset error', e); }
 
-        // Database
-        const dbExercises = {
-            neck: [
-                { id: 'n1', vid: 'exercise1.mp4', titleAr: 'دوران الرقبة', titleEn: 'Neck Turn', descAr: 'أدر رأسك يميناً ويساراً.', descEn: 'Turn head side to side.' },
-                { id: 'n2', vid: 'nexkexercise2.mp4', titleAr: 'إمالة الرقبة', titleEn: 'Neck Tilt', descAr: 'أمل رأسك نحو كتفك.', descEn: 'Tilt head toward shoulder.' },
-                { id: 'n3', vid: 'shoulder.mp4', titleAr: 'تحريك الكتفين', titleEn: 'Shoulder Mobility', descAr: 'ارفع كتفيك ثم أنزلهما.', descEn: 'Lift shoulders and lower.' }
-            ],
-            back: [{ id: 'b1', vid: 'exercise5.mp4', titleAr: 'تمدد الأكتاف', titleEn: 'Shoulder Stretch', descAr: 'مد ذراعيك للأمام وظهرك للخلف.', descEn: 'Stretch arms forward, push back.' }],
-            legs: [{ id: 'l1', vid: 'exercise13.mp4', titleAr: 'تمدد الحوض', titleEn: 'Hip Stretch', descAr: 'ضع كاحلك على ركبتك وانحنِ.', descEn: 'Ankle on knee, lean forward.' }],
-            eyes: [{ id: 'e1', vid: '', titleAr: 'تمرين 20-20-20', titleEn: '20-20-20 Rule', descAr: 'أغمض عينيك 20 ثانية لترتاح.', descEn: 'Close eyes for 20s to rest.' }]
-        };
-
-        /**
-         * Core Utilities
-         */
         function saveStateToLocal() {
-            localStorage.setItem('ot_user_pro', AppState.user);
-            localStorage.setItem('ot_streak_pro', AppState.streak);
-            localStorage.setItem('ot_water_pro', AppState.water);
-            localStorage.setItem('ot_water_date', AppState.waterDate);
-            localStorage.setItem('ot_workouts', AppState.totalWorkouts);
-            localStorage.setItem('ot_pomo_work', AppState.pomoWorkTime);
-            localStorage.setItem('ot_pomo_break', AppState.pomoBreakTime);
-            localStorage.setItem('ot_water_goal', AppState.waterGoal);
-            localStorage.setItem('ot_weekly', JSON.stringify(AppState.weeklyStats));
+            try {
+                localStorage.setItem('ot_user_pro', AppState.user);
+                localStorage.setItem('ot_streak_pro', AppState.streak);
+                localStorage.setItem('ot_visit_pro', AppState.lastVisit);
+                localStorage.setItem('ot_water_pro', AppState.water);
+                localStorage.setItem('ot_water_date', AppState.waterDate);
+                localStorage.setItem('ot_workouts', AppState.totalWorkouts);
+                localStorage.setItem('ot_pomo_work', AppState.pomoWorkTime);
+                localStorage.setItem('ot_pomo_break', AppState.pomoBreakTime);
+                localStorage.setItem('ot_water_goal', AppState.waterGoal);
+                localStorage.setItem('ot_weekly', JSON.stringify(AppState.weeklyStats));
+            } catch (e) { console.error("LocalStorage Save Error:", e); }
         }
 
+        // --- SAFE AUDIO API ---
+        let audioCtx = null;
+        function playBeep() {
+            try {
+                if (!audioCtx) {
+                    const AC = window.AudioContext || window.webkitAudioContext;
+                    if(AC) audioCtx = new AC();
+                }
+                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+                if (audioCtx) {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+                    osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.5);
+                }
+            } catch(e) { console.log('Audio Beep Skipped (Policy/Support)', e); }
+        }
+
+        // --- TOAST SYSTEM ---
         function showToast(msg) {
             const hub = document.getElementById('toastHub');
+            if(!hub) return;
             const t = document.createElement('div');
             t.className = 'toast-msg';
             t.innerHTML = `<span>✨</span> ${msg}`;
@@ -989,22 +730,60 @@
             setTimeout(() => t.remove(), 4000);
         }
 
-        // Web Audio API Beep (For Pomodoro)
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playBeep() {
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-            gain.gain.setValueAtTime(1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
-            osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.5);
-        }
+        // --- GLOBAL VARIABLES ---
+        let currentLang = 'ar';
+        let currentCategory = '';
+        let count = 0;
+        let currentTDEE = 0;
 
-        /**
-         * Confetti Particle System (Advanced Graphics)
-         */
+        const langDB = {
+            ar: {
+                appName: "العلاج المكتبي برو", loginSub: "أدخل اسمك لنبدأ رحلة العناية بصحتك خلال العمل:", btnLogin: "دخول للمنصة",
+                greet: "مرحباً،", navDash: "لوحة التحكم", navEx: "التمارين", navPomo: "مؤقت التركيز", navDiet: "الدايت", navWater: "الصحة والماء", navSet: "الإعدادات",
+                dashStreak: "الأيام المتتالية:", dashWrk: "إجمالي التمارين:", dashTitleEx: "التمارين", dashDescEx: "تخلص من التوتر المكتبي.", dashTitlePo: "التركيز", dashDescPo: "مؤقت بومودورو ذكي.", dashTitleDi: "التغذية", dashDescDi: "حاسبة وجداول صحية.", dashTitleWa: "الماء", dashDescWa: "تتبع شربك وجلستك.", chartTitle: "نشاطك هذا الأسبوع",
+                exMainT: "أقسام التمارين", catN: "الرقبة والأكتاف", catB: "الظهر والجذع", catL: "الساقين والحوض", catE: "إراحة العين (20-20-20)", listAv: "التمارين المتاحة:",
+                vidReps: "التكرارات المنجزة:", btnAddRep: "+ سجل تكرار", errVidHead: "عذراً، الفيديو غير متوفر", errVidSub: "يرجى التأكد من رفع الفيديو على GitHub بالاسم الصحيح",
+                poTitle: "مؤقت التركيز", poSub: "نظم وقتك لزيادة الإنتاجية وتقليل الجهد.", btnW: "العمل", btnB: "استراحة",
+                calcH: "حاسبة السعرات الدقيقة", lG: "الجنس:", m: "ذكر", f: "أنثى", lA: "العمر:", lW: "الوزن (كجم):", lH: "الطول (سم):", lAct: "النشاط:",
+                a1: "خامل", a2: "خفيف", a3: "متوسط", a4: "نشط", btnCalc: "احسب السعرات", resT: "النتائج اليومية", rM: "المحافظة على الوزن:", rL: "إنقاص الوزن:", rG: "زيادة الوزن:", mac: "الماكروز المقترح:",
+                waH: "متتبع شرب الماء 💧", waS: "الهدف اليومي:", waT: "المنجز:", ergH: "دليل الجلسة الصحية 🪑",
+                setH: "إعدادات المنصة ⚙️", sPw: "زمن العمل (دقيقة):", sPb: "زمن الراحة (دقيقة):", sW: "هدف الماء (أكواب):", btnS: "حفظ الإعدادات", btnOut: "تسجيل الخروج",
+                toastWelcome: "تم تسجيل الدخول بنجاح!", toastSave: "تم الحفظ بنجاح!", toastWater: "عاش! استمر في شرب الماء.", toastRep: "بطل! استمر.", toastDone: "انتهى الوقت!",
+                mute: "🔇 مكتوم", unmute: "🔊 يعمل", modeWork: "وقت العمل 🔥", modeBreak: "وقت الراحة ☕"
+            },
+            en: {
+                appName: "Office Therapy Pro", loginSub: "Enter your name to start your wellness journey:", btnLogin: "Enter Platform",
+                greet: "Hello,", navDash: "Dashboard", navEx: "Exercises", navPomo: "Focus Timer", navDiet: "Diet Calc", navWater: "Wellness", navSet: "Settings",
+                dashStreak: "Streak Days:", dashWrk: "Total Workouts:", dashTitleEx: "Exercises", dashDescEx: "Relieve office stress.", dashTitlePo: "Focus", dashDescPo: "Smart Pomodoro timer.", dashTitleDi: "Nutrition", dashDescDi: "Calc & healthy plans.", dashTitleWa: "Water", dashDescWa: "Track hydration & posture.", chartTitle: "Your Weekly Activity",
+                exMainT: "Exercise Categories", catN: "Neck & Shoulders", catB: "Back & Trunk", catL: "Legs & Hips", catE: "Eye Rest (20-20-20)", listAv: "Available Exercises:",
+                vidReps: "Completed Reps:", btnAddRep: "+ Add Rep", errVidHead: "Sorry, Video Unavailable", errVidSub: "Ensure the video is uploaded to GitHub with the exact name",
+                poTitle: "Focus Timer", poSub: "Organize time to boost productivity.", btnW: "Work", btnB: "Break",
+                calcH: "Accurate Calorie Calc", lG: "Gender:", m: "Male", f: "Female", lA: "Age:", lW: "Weight (kg):", lH: "Height (cm):", lAct: "Activity:",
+                a1: "Sedentary", a2: "Light", a3: "Moderate", a4: "Active", btnCalc: "Calculate", resT: "Daily Results", rM: "Maintenance:", rL: "Weight Loss:", rG: "Weight Gain:", mac: "Suggested Macros:",
+                waH: "Water Tracker 💧", waS: "Daily Goal:", waT: "Completed:", ergH: "Ergonomic Guide 🪑",
+                setH: "Platform Settings ⚙️", sPw: "Work Time (min):", sPb: "Break Time (min):", sW: "Water Goal (cups):", btnS: "Save Settings", btnOut: "Logout",
+                toastWelcome: "Logged in successfully!", toastSave: "Saved successfully!", toastWater: "Great! Keep hydrating.", toastRep: "Hero! Keep going.", toastDone: "Time's Up!",
+                mute: "🔇 Muted", unmute: "🔊 Sound On", modeWork: "Focus Time 🔥", modeBreak: "Break Time ☕"
+            }
+        };
+
+        const quotes = {
+            ar: ["الصحة تاج على رؤوس الأصحاء.", "حركة بسيطة اليوم تحميك غداً.", "الاستمرارية تصنع الفارق.", "عقلك السليم في جسمك النشيط.", "الاستثمار الأفضل هو صحتك."],
+            en: ["Health is wealth.", "A small stretch goes a long way.", "Consistency is key.", "A healthy body hosts a healthy mind.", "Invest in your posture."]
+        };
+
+        const dbExercises = {
+            neck: [
+                { id: 'n1', vid: 'exercise1.mp4', titleAr: 'دوران الرقبة', titleEn: 'Neck Turn', descAr: 'أدر رأسك يميناً ويساراً مع الثبات.', descEn: 'Turn head side to side and hold.' },
+                { id: 'n2', vid: 'nexkexercise2.mp4', titleAr: 'إمالة الرقبة', titleEn: 'Neck Tilt', descAr: 'أمل رأسك نحو كتفك ببطء.', descEn: 'Slowly tilt head toward shoulder.' },
+                { id: 'n3', vid: 'shoulder.mp4', titleAr: 'تحريك الكتفين', titleEn: 'Shoulder Mobility', descAr: 'ارفع كتفيك ثم أنزلهما لإرخاء التوتر.', descEn: 'Lift shoulders and lower to release tension.' }
+            ],
+            back: [{ id: 'b1', vid: 'exercise5.mp4', titleAr: 'تمدد الأكتاف', titleEn: 'Shoulder Stretch', descAr: 'مد ذراعيك للأمام وظهرك للخلف.', descEn: 'Stretch arms forward, push back.' }],
+            legs: [{ id: 'l1', vid: 'exercise13.mp4', titleAr: 'تمدد الحوض', titleEn: 'Hip Stretch', descAr: 'ضع كاحلك على ركبتك وانحنِ للأمام.', descEn: 'Place ankle on knee and lean forward.' }],
+            eyes: [{ id: 'e1', vid: '', titleAr: 'تمرين 20-20-20', titleEn: '20-20-20 Rule', descAr: 'أغمض عينيك 20 ثانية لترتاح.', descEn: 'Close eyes for 20s to rest.' }]
+        };
+
+        // --- CONFETTI SYSTEM ---
         const canvas = document.getElementById('confettiCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -1015,18 +794,14 @@
 
         function fireConfetti() {
             if(confettiActive) return;
-            confettiActive = true;
-            particles = [];
+            confettiActive = true; particles = [];
             const colors = ['#2563eb', '#ef4444', '#10b981', '#f59e0b', '#a855f7'];
             for(let i=0; i<100; i++) {
                 particles.push({
-                    x: canvas.width/2, y: canvas.height/2,
-                    r: Math.random() * 6 + 4,
+                    x: canvas.width/2, y: canvas.height/2, r: Math.random() * 6 + 4,
                     dx: Math.random() * 10 - 5, dy: Math.random() * -10 - 5,
                     color: colors[Math.floor(Math.random() * colors.length)],
-                    tilt: Math.floor(Math.random() * 10) - 10,
-                    tiltAngleInc: (Math.random() * 0.07) + 0.05,
-                    tiltAngle: 0
+                    tilt: Math.floor(Math.random() * 10) - 10, tiltAngleInc: (Math.random() * 0.07) + 0.05, tiltAngle: 0
                 });
             }
             animateConfetti();
@@ -1040,22 +815,14 @@
             particles.forEach(p => {
                 p.tiltAngle += p.tiltAngleInc;
                 p.y += (Math.cos(p.tiltAngle) + 1 + p.r / 2) / 2;
-                p.x += Math.sin(p.tiltAngle) * 2;
-                p.dy += 0.1; // gravity
+                p.x += Math.sin(p.tiltAngle) * 2; p.dy += 0.1;
                 p.x += p.dx; p.y += p.dy;
-                
-                ctx.beginPath();
-                ctx.lineWidth = p.r;
-                ctx.strokeStyle = p.color;
-                ctx.moveTo(p.x + p.tilt + p.r, p.y);
-                ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r);
-                ctx.stroke();
+                ctx.beginPath(); ctx.lineWidth = p.r; ctx.strokeStyle = p.color;
+                ctx.moveTo(p.x + p.tilt + p.r, p.y); ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r); ctx.stroke();
             });
         }
 
-        /**
-         * Navigation & Initialization
-         */
+        // --- NAVIGATION ---
         function toggleSidebar() { document.getElementById('mainSidebar').classList.toggle('sidebar-hidden'); }
         
         function navigateTo(screenId) {
@@ -1063,20 +830,18 @@
             document.getElementById(screenId).classList.add('active');
             
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            
             const navMap = {
                 'dashboardScreen': 'navDash', 'exercisesScreen': 'navEx', 'videoScreen': 'navEx',
                 'pomoScreen': 'navPomo', 'dietScreen': 'navDiet', 'waterScreen': 'navWater', 'settingsScreen': 'navSettings'
             };
             if(navMap[screenId]) document.getElementById(navMap[screenId]).classList.add('active');
-            
-            // Close sidebar on mobile
             if(window.innerWidth <= 768) document.getElementById('mainSidebar').classList.add('sidebar-hidden');
             
-            // Render specific components
-            if(screenId === 'dashboardScreen') drawChart();
-            if(screenId === 'waterScreen') renderWater();
-            if(screenId !== 'videoScreen') document.getElementById('workoutVideo').pause();
+            try {
+                if(screenId === 'dashboardScreen') drawChart();
+                if(screenId === 'waterScreen') renderWater();
+                if(screenId !== 'videoScreen') document.getElementById('workoutVideo').pause();
+            } catch(e) {}
         }
 
         function toggleLanguage() {
@@ -1090,37 +855,41 @@
             const html = document.documentElement;
             if (html.getAttribute("data-theme") === "dark") {
                 html.removeAttribute("data-theme"); localStorage.setItem("theme", "light");
-                document.getElementById("btnDark").innerText = "🌙";
+                if(document.getElementById("btnDark")) document.getElementById("btnDark").innerText = "🌙";
             } else {
                 html.setAttribute("data-theme", "dark"); localStorage.setItem("theme", "dark");
-                document.getElementById("btnDark").innerText = "☀️";
+                if(document.getElementById("btnDark")) document.getElementById("btnDark").innerText = "☀️";
             }
-            if(document.getElementById('dashboardScreen').classList.contains('active')) drawChart(); // redraw chart with new colors
+            try { if(document.getElementById('dashboardScreen').classList.contains('active')) drawChart(); } catch(e){}
         }
 
+        // --- CORE LOGIC ---
         function appLogin() {
             const name = document.getElementById('inputName').value.trim();
             if(!name) return showToast(langDB[currentLang].loginSub);
             
             AppState.user = name;
-            
-            // Process Streak
             let today = new Date().toDateString();
             if(AppState.lastVisit !== today) {
                 let yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
-                if(AppState.lastVisit === yesterday.toDateString()) AppState.streak++;
-                else AppState.streak = 1;
+                if(AppState.lastVisit === yesterday.toDateString()) AppState.streak++; else AppState.streak = 1;
                 AppState.lastVisit = today;
             }
             saveStateToLocal();
             
-            // Send to Google Sheets (Hidden Image Hack to avoid CORS)
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbycyOEfQfDToRbMvNuIc24LThOp3M3A_g6tWvIxpo7qAcsvT5Y4lY5T7jjlaZvHxpZd/exec';
-            new Image().src = scriptURL + '?name=' + encodeURIComponent(AppState.user);
+            try {
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbycyOEfQfDToRbMvNuIc24LThOp3M3A_g6tWvIxpo7qAcsvT5Y4lY5T7jjlaZvHxpZd/exec';
+                new Image().src = scriptURL + '?name=' + encodeURIComponent(AppState.user);
+            } catch(e) {}
             
             initApp();
             showToast(langDB[currentLang].toastWelcome);
         }
+
+        // Enter key for login
+        document.getElementById('inputName').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') appLogin();
+        });
 
         function logoutUser() {
             AppState.user = ''; saveStateToLocal();
@@ -1134,84 +903,74 @@
             document.getElementById('mainHeader').style.display = 'flex';
             if(window.innerWidth > 768) document.getElementById('mainSidebar').classList.remove('sidebar-hidden');
             
-            // Populate Settings Values
             document.getElementById('inpSetWork').value = AppState.pomoWorkTime;
             document.getElementById('inpSetBreak').value = AppState.pomoBreakTime;
             document.getElementById('inpSetWater').value = AppState.waterGoal;
             
+            document.getElementById("quoteBox").innerText = `💡 "${quotes[currentLang][Math.floor(Math.random() * quotes[currentLang].length)]}"`;
+            
             navigateTo('dashboardScreen');
         }
 
-        /**
-         * SVG Chart Renderer (Pure JS)
-         */
         function drawChart() {
-            const svg = document.getElementById('activityChart');
-            svg.innerHTML = '';
-            const data = AppState.weeklyStats;
-            const maxVal = Math.max(...data, 5); // Minimum scale is 5
-            
-            const width = 800; const height = 250;
-            const barWidth = 40; const gap = (width - (7 * barWidth)) / 8;
-            
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            const barColor = isDark ? '#3b82f6' : '#2563eb';
-            const textColor = isDark ? '#94a3b8' : '#64748b';
-
-            const daysAr = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-            const daysEn = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-            const todayIdx = new Date().getDay();
-            
-            // Generate last 7 days labels ending with today
-            let labels = [];
-            for(let i=6; i>=0; i--) {
-                let d = new Date(); d.setDate(d.getDate() - i);
-                labels.push(currentLang === 'ar' ? daysAr[d.getDay()] : daysEn[d.getDay()]);
-            }
-
-            for(let i=0; i<7; i++) {
-                let h = (data[i] / maxVal) * (height - 50);
-                let x = gap + i * (barWidth + gap);
-                let y = height - 30 - h;
+            try {
+                const svg = document.getElementById('activityChart');
+                if(!svg) return;
+                while (svg.lastChild) { svg.removeChild(svg.lastChild); } // Safe clear
                 
-                // Bar
-                let rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                rect.setAttribute('x', x); rect.setAttribute('y', y);
-                rect.setAttribute('width', barWidth); rect.setAttribute('height', h);
-                rect.setAttribute('fill', barColor); rect.setAttribute('rx', '4');
+                const data = Array.isArray(AppState.weeklyStats) ? AppState.weeklyStats : [0,0,0,0,0,0,0];
+                const maxVal = Math.max(...data, 5); 
                 
-                // Label
-                let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', x + barWidth/2); text.setAttribute('y', height - 10);
-                text.setAttribute('text-anchor', 'middle'); text.setAttribute('fill', textColor);
-                text.setAttribute('font-size', '14'); text.textContent = labels[i];
+                const width = 800; const height = 250;
+                const barWidth = 40; const gap = (width - (7 * barWidth)) / 8;
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                const barColor = isDark ? '#3b82f6' : '#2563eb';
+                const textColor = isDark ? '#94a3b8' : '#64748b';
 
-                // Value
-                if(data[i] > 0) {
-                    let valText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                    valText.setAttribute('x', x + barWidth/2); valText.setAttribute('y', y - 5);
-                    valText.setAttribute('text-anchor', 'middle'); valText.setAttribute('fill', barColor);
-                    valText.setAttribute('font-weight', 'bold'); valText.textContent = data[i];
-                    svg.appendChild(valText);
+                const daysAr = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+                const daysEn = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                
+                let labels = [];
+                for(let i=6; i>=0; i--) {
+                    let d = new Date(); d.setDate(d.getDate() - i);
+                    labels.push(currentLang === 'ar' ? daysAr[d.getDay()] : daysEn[d.getDay()]);
                 }
 
-                svg.appendChild(rect); svg.appendChild(text);
-            }
+                for(let i=0; i<7; i++) {
+                    let h = (data[i] / maxVal) * (height - 50);
+                    let x = gap + i * (barWidth + gap); let y = height - 30 - h;
+                    
+                    let rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    rect.setAttribute('x', x); rect.setAttribute('y', y);
+                    rect.setAttribute('width', barWidth); rect.setAttribute('height', h);
+                    rect.setAttribute('fill', barColor); rect.setAttribute('rx', '4');
+                    
+                    let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text.setAttribute('x', x + barWidth/2); text.setAttribute('y', height - 10);
+                    text.setAttribute('text-anchor', 'middle'); text.setAttribute('fill', textColor);
+                    text.setAttribute('font-size', '14'); text.textContent = labels[i];
+
+                    if(data[i] > 0) {
+                        let valText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        valText.setAttribute('x', x + barWidth/2); valText.setAttribute('y', y - 5);
+                        valText.setAttribute('text-anchor', 'middle'); valText.setAttribute('fill', barColor);
+                        valText.setAttribute('font-weight', 'bold'); valText.textContent = data[i];
+                        svg.appendChild(valText);
+                    }
+                    svg.appendChild(rect); svg.appendChild(text);
+                }
+            } catch(e) { console.error('Chart Error', e); }
         }
 
-        /**
-         * Exercises Module
-         */
+        // --- EXERCISES ---
         function loadCategory(cat) {
+            currentCategory = cat;
             const list = document.getElementById('dynamicExerciseList');
             list.innerHTML = '';
             dbExercises[cat].forEach(ex => {
                 let btn = document.createElement('button');
-                btn.className = 'fancy-btn';
-                btn.style.background = 'var(--bg-glass)';
-                btn.style.color = 'var(--primary)';
-                btn.style.border = '1px solid var(--primary)';
-                btn.style.boxShadow = 'var(--shadow-sm)';
+                btn.className = 'fancy-btn'; btn.style.background = 'var(--bg-glass)'; btn.style.color = 'var(--primary)';
+                btn.style.border = '1px solid var(--border-heavy)'; btn.style.boxShadow = 'var(--shadow-sm)';
                 btn.innerText = currentLang === 'ar' ? ex.titleAr : ex.titleEn;
                 btn.onclick = () => openVideoPlayer(ex);
                 list.appendChild(btn);
@@ -1220,21 +979,17 @@
         }
 
         function openVideoPlayer(ex) {
-            currentVideoObj = ex;
             document.getElementById('vidTitle').innerText = currentLang === 'ar' ? ex.titleAr : ex.titleEn;
             document.getElementById('vidDesc').innerText = currentLang === 'ar' ? ex.descAr : ex.descEn;
             
             const vidPlayer = document.getElementById('workoutVideo');
             const errOverlay = document.getElementById('vidErrorOverlay');
-            
             errOverlay.style.display = 'none';
             count = 0; document.getElementById('repCounterDisplay').innerText = count;
 
             if(ex.vid !== '') {
                 document.getElementById('videoBoxWrapper').style.display = 'block';
                 vidPlayer.src = ex.vid;
-                
-                // Advanced Error Handling for Shoulder.mp4 issue
                 vidPlayer.onerror = function() {
                     errOverlay.style.display = 'flex';
                     document.getElementById('expectedFileName').innerText = ex.vid;
@@ -1246,35 +1001,23 @@
         }
 
         function recordRep() {
-            count++;
-            document.getElementById('repCounterDisplay').innerText = count;
-            AppState.totalWorkouts++;
-            AppState.weeklyStats[6]++; // Add to today's stats
-            saveStateToLocal();
-            fireConfetti();
-            showToast(langDB[currentLang].toastRep);
+            count++; document.getElementById('repCounterDisplay').innerText = count;
+            AppState.totalWorkouts++; AppState.weeklyStats[6]++;
+            saveStateToLocal(); fireConfetti(); showToast(langDB[currentLang].toastRep);
         }
 
-        function toggleSound() {
-            const v = document.getElementById('workoutVideo');
-            v.muted = !v.muted;
-            document.getElementById('soundBtn').innerText = v.muted ? langDB[currentLang].mute : langDB[currentLang].unmute;
-        }
-
-        /**
-         * Pomodoro Timer Module
-         */
+        // --- POMODORO ---
         let pomoInterval;
-        let pomoTimeLeft = AppState.pomoWorkTime * 60;
         let isPomoRunning = false;
-        let currentPomoMode = 'work'; // work | break
+        let currentPomoMode = 'work';
+        let pomoTimeLeft = AppState.pomoWorkTime * 60;
         
         function setTimerMode(mode) {
-            clearInterval(pomoInterval); isPomoRunning = false;
-            currentPomoMode = mode;
+            clearInterval(pomoInterval); isPomoRunning = false; currentPomoMode = mode;
             pomoTimeLeft = (mode === 'work' ? AppState.pomoWorkTime : AppState.pomoBreakTime) * 60;
             document.getElementById('btnTimerPlay').innerText = "▶️";
             document.getElementById('timerProgress').style.stroke = mode === 'work' ? 'var(--accent)' : 'var(--success)';
+            document.getElementById('timerModeText').innerText = langDB[currentLang][mode === 'work' ? 'modeWork' : 'modeBreak'];
             updatePomoDisplay();
         }
 
@@ -1282,25 +1025,19 @@
             let m = Math.floor(pomoTimeLeft / 60).toString().padStart(2, '0');
             let s = (pomoTimeLeft % 60).toString().padStart(2, '0');
             document.getElementById('timerClock').innerText = `${m}:${s}`;
-            
             const total = (currentPomoMode === 'work' ? AppState.pomoWorkTime : AppState.pomoBreakTime) * 60;
-            const circle = document.getElementById('timerProgress');
-            let offset = 879 - (pomoTimeLeft / total) * 879;
-            circle.style.strokeDashoffset = offset;
+            document.getElementById('timerProgress').style.strokeDashoffset = 879 - (pomoTimeLeft / total) * 879;
         }
 
         function toggleTimer() {
             if(isPomoRunning) {
-                clearInterval(pomoInterval); isPomoRunning = false;
-                document.getElementById('btnTimerPlay').innerText = "▶️";
+                clearInterval(pomoInterval); isPomoRunning = false; document.getElementById('btnTimerPlay').innerText = "▶️";
             } else {
                 isPomoRunning = true; document.getElementById('btnTimerPlay').innerText = "⏸️";
                 pomoInterval = setInterval(() => {
-                    if(pomoTimeLeft > 0) {
-                        pomoTimeLeft--; updatePomoDisplay();
-                    } else {
-                        clearInterval(pomoInterval); isPomoRunning = false;
-                        playBeep(); showToast(langDB[currentLang].toastDone);
+                    if(pomoTimeLeft > 0) { pomoTimeLeft--; updatePomoDisplay(); } 
+                    else {
+                        clearInterval(pomoInterval); isPomoRunning = false; playBeep(); showToast(langDB[currentLang].toastDone);
                         setTimerMode(currentPomoMode === 'work' ? 'break' : 'work');
                     }
                 }, 1000);
@@ -1308,9 +1045,7 @@
         }
         function resetTimer() { setTimerMode(currentPomoMode); }
 
-        /**
-         * Diet & Calculator Module
-         */
+        // --- CALC & DIET ---
         function executeCalc() {
             const age = parseFloat(document.getElementById('inpAge').value);
             const w = parseFloat(document.getElementById('inpWeight').value);
@@ -1330,25 +1065,17 @@
             document.getElementById('valC').innerText = Math.round((tdee*0.4)/4) + "g";
             document.getElementById('valP').innerText = Math.round((tdee*0.3)/4) + "g";
             document.getElementById('valF').innerText = Math.round((tdee*0.3)/9) + "g";
-
             document.getElementById('calcResultsBox').style.display = 'block';
         }
 
-        /**
-         * Water Tracker Module
-         */
+        // --- WATER ---
         function renderWater() {
-            const grid = document.getElementById('waterGridArea');
-            grid.innerHTML = '';
+            const grid = document.getElementById('waterGridArea'); grid.innerHTML = '';
             for(let i=0; i<AppState.waterGoal; i++) {
                 let btn = document.createElement('button');
-                btn.style.width = '60px'; btn.style.height = '70px';
-                btn.style.border = '2px solid var(--info)';
-                btn.style.borderRadius = '5px 5px 15px 15px';
-                btn.style.background = i < AppState.water ? 'var(--info)' : 'transparent';
-                btn.style.color = i < AppState.water ? 'white' : 'var(--info)';
-                btn.style.fontSize = '24px'; btn.style.cursor = 'pointer';
-                btn.style.transition = 'all 0.2s';
+                btn.style.width = '60px'; btn.style.height = '70px'; btn.style.border = '2px solid var(--info)';
+                btn.style.borderRadius = '5px 5px 15px 15px'; btn.style.background = i < AppState.water ? 'var(--info)' : 'transparent';
+                btn.style.color = i < AppState.water ? 'white' : 'var(--info)'; btn.style.fontSize = '24px'; btn.style.cursor = 'pointer';
                 btn.innerText = '💧';
                 btn.onclick = () => {
                     if(AppState.water === i) { AppState.water++; fireConfetti(); showToast(langDB[currentLang].toastWater); }
@@ -1360,96 +1087,75 @@
             document.getElementById('waterTotalText').innerText = `${langDB[currentLang].waT} ${AppState.water} / ${AppState.waterGoal}`;
         }
 
-        /**
-         * Settings Module
-         */
+        // --- SETTINGS ---
         function saveSettings() {
             AppState.pomoWorkTime = parseInt(document.getElementById('inpSetWork').value) || 25;
             AppState.pomoBreakTime = parseInt(document.getElementById('inpSetBreak').value) || 5;
             AppState.waterGoal = parseInt(document.getElementById('inpSetWater').value) || 8;
-            saveStateToLocal();
-            setTimerMode('work'); // Reset timer with new values
-            showToast(langDB[currentLang].toastSave);
-            navigateTo('dashboardScreen');
+            saveStateToLocal(); setTimerMode('work'); showToast(langDB[currentLang].toastSave); navigateTo('dashboardScreen');
         }
 
-        /**
-         * Apply Translations UI update
-         */
+        // --- TRANSLATIONS APPLY ---
         function applyTranslations() {
-            const t = langDB[currentLang];
-            
-            // Login & Header
-            document.getElementById('txtLoginTitle').innerText = t.appName;
-            document.getElementById('txtLoginSub').innerText = t.loginSub;
-            document.getElementById('txtStartBtn').innerText = t.btnLogin;
-            document.getElementById('headerGreeting').innerText = `${t.greet} ${AppState.user}`;
-            
-            // Sidebar
-            document.getElementById('navDash').innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>${t.navDash}`;
-            document.getElementById('navEx').innerHTML = `<svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>${t.navEx}`;
-            document.getElementById('navPomo').innerHTML = `<svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>${t.navPomo}`;
-            document.getElementById('navDiet').innerHTML = `<svg viewBox="0 0 24 24"><path d="M18 4H6v2h12V4zm0 4H6v2h12V8zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zM19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>${t.navDiet}`;
-            document.getElementById('navWater').innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8zm0 18c-3.35 0-6-2.57-6-6.2 0-2.34 1.95-5.44 6-9.14 4.05 3.7 6 6.79 6 9.14 0 3.63-2.65 6.2-6 6.2z"/></svg>${t.navWater}`;
-            document.getElementById('navSettings').innerHTML = `<svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>${t.navSet}`;
-            
-            // Dashboard
-            document.getElementById('txtStreak').innerText = `${t.dashStreak} ${AppState.streak}`;
-            document.getElementById('txtTotalWorkouts').innerText = `${t.dashWrk} ${AppState.totalWorkouts}`;
-            document.getElementById('dashExerTitle').innerText = t.dashTitleEx; document.getElementById('dashExerDesc').innerText = t.dashDescEx;
-            document.getElementById('dashPomoTitle').innerText = t.dashTitlePo; document.getElementById('dashPomoDesc').innerText = t.dashDescPo;
-            document.getElementById('dashDietTitle').innerText = t.dashTitleDi; document.getElementById('dashDietDesc').innerText = t.dashDescDi;
-            document.getElementById('dashWaterTitle').innerText = t.dashTitleWa; document.getElementById('dashWaterDesc').innerText = t.dashDescWa;
-            document.getElementById('chartTitle').innerText = t.chartTitle;
-            
-            // Exercises
-            document.getElementById('exerMainTitle').innerText = t.exMainT;
-            document.getElementById('catNeck').innerText = t.catN; document.getElementById('catBack').innerText = t.catB;
-            document.getElementById('catLegs').innerText = t.catL; document.getElementById('catEyes').innerText = t.catE;
-            document.getElementById('lblAvailableExer').innerText = t.listAv;
-            
-            // Video
-            document.getElementById('lblReps').innerHTML = `${t.vidReps} <span id="repCounterDisplay" style="color: var(--success); font-size: 28px;">${count}</span>`;
-            document.getElementById('btnAddRep').innerText = t.btnAddRep;
-            document.querySelector('#vidErrorOverlay h3').innerText = t.errVidHead;
-            document.querySelector('#vidErrorOverlay p').innerHTML = `${t.errVidSub} <br><strong id="expectedFileName" style="color:var(--accent);"></strong>`;
-            
-            // Pomodoro
-            document.getElementById('lblTimerTitle').innerText = t.poTitle; document.getElementById('lblTimerSub').innerText = t.poSub;
-            document.getElementById('btnModeWork').innerText = `${t.btnW} (${AppState.pomoWorkTime})`;
-            document.getElementById('btnModeBreak').innerText = `${t.btnB} (${AppState.pomoBreakTime})`;
-            document.getElementById('timerModeText').innerText = currentPomoMode === 'work' ? (currentLang==='ar'?'وقت العمل 🔥':'Focus Time 🔥') : (currentLang==='ar'?'وقت الراحة ☕':'Break Time ☕');
-
-            // Calc
-            document.getElementById('lblCalcHead').innerText = t.calcH;
-            document.getElementById('lblGen').innerText = t.lG; document.getElementById('optM').innerText = t.m; document.getElementById('optF').innerText = t.f;
-            document.getElementById('lblAgeInp').innerText = t.lA; document.getElementById('lblW').innerText = t.lW; document.getElementById('lblH').innerText = t.lH;
-            document.getElementById('lblAct').innerText = t.lAct;
-            document.getElementById('act1').innerText = t.a1; document.getElementById('act2').innerText = t.a2; document.getElementById('act3').innerText = t.a3; document.getElementById('act4').innerText = t.a4;
-            document.getElementById('btnDoCalc').innerText = t.btnCalc;
-            document.getElementById('lblResTitle').innerText = t.resT;
-            document.getElementById('lblMaint').innerText = t.rM; document.getElementById('lblLoss').innerText = t.rL; document.getElementById('lblGain').innerText = t.rG;
-            document.getElementById('lblMacros').innerText = t.mac;
-            document.getElementById('lblC').innerText = t.lblCarbs; document.getElementById('lblP').innerText = t.lblProtein; document.getElementById('lblF').innerText = t.lblFats;
-            
-            // Water
-            document.getElementById('lblWaterHead').innerText = t.waH; document.getElementById('lblWaterSub').innerText = `${t.waS} ${AppState.waterGoal}`;
-            document.getElementById('waterTotalText').innerText = `${t.waT} ${AppState.water} / ${AppState.waterGoal}`;
-            document.getElementById('lblErgoHead').innerText = t.ergH; document.getElementById('ergoListItems').innerHTML = t.ergoList;
-            
-            // Settings
-            document.getElementById('lblSetHead').innerText = t.setH;
-            document.getElementById('lblSetPomoWork').innerText = t.sPw; document.getElementById('lblSetPomoBreak').innerText = t.sPb;
-            document.getElementById('lblSetWater').innerText = t.sW;
-            document.getElementById('btnSaveSet').innerText = t.btnS; document.getElementById('btnLogout').innerText = t.btnOut;
-
-            // Re-render specifics if active
-            if(document.getElementById('dashboardScreen').classList.contains('active')) drawChart();
-            if(currentCategory !== '') loadCategory(currentCategory);
+            try {
+                const t = langDB[currentLang];
+                document.getElementById('txtLoginTitle').innerText = t.appName; document.getElementById('txtLoginSub').innerText = t.loginSub;
+                document.getElementById('txtStartBtn').innerText = t.btnLogin; document.getElementById('headerGreeting').innerText = `${t.greet} ${AppState.user}`;
+                
+                document.getElementById('navDash').innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>${t.navDash}`;
+                document.getElementById('navEx').innerHTML = `<svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>${t.navEx}`;
+                document.getElementById('navPomo').innerHTML = `<svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>${t.navPomo}`;
+                document.getElementById('navDiet').innerHTML = `<svg viewBox="0 0 24 24"><path d="M18 4H6v2h12V4zm0 4H6v2h12V8zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zM19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>${t.navDiet}`;
+                document.getElementById('navWater').innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8zm0 18c-3.35 0-6-2.57-6-6.2 0-2.34 1.95-5.44 6-9.14 4.05 3.7 6 6.79 6 9.14 0 3.63-2.65 6.2-6 6.2z"/></svg>${t.navWater}`;
+                document.getElementById('navSettings').innerHTML = `<svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>${t.navSet}`;
+                
+                document.getElementById('txtStreak').innerText = `${t.dashStreak} ${AppState.streak}`;
+                document.getElementById('txtTotalWorkouts').innerText = `${t.dashWrk} ${AppState.totalWorkouts}`;
+                document.getElementById('dashExerTitle').innerText = t.dashTitleEx; document.getElementById('dashExerDesc').innerText = t.dashDescEx;
+                document.getElementById('dashPomoTitle').innerText = t.dashTitlePo; document.getElementById('dashPomoDesc').innerText = t.dashDescPo;
+                document.getElementById('dashDietTitle').innerText = t.dashTitleDi; document.getElementById('dashDietDesc').innerText = t.dashDescDi;
+                document.getElementById('dashWaterTitle').innerText = t.dashTitleWa; document.getElementById('dashWaterDesc').innerText = t.dashDescWa;
+                document.getElementById('chartTitle').innerText = t.chartTitle;
+                
+                document.getElementById('exerMainTitle').innerText = t.exMainT;
+                document.getElementById('catNeck').innerText = t.catN; document.getElementById('catBack').innerText = t.catB;
+                document.getElementById('catLegs').innerText = t.catL; document.getElementById('catEyes').innerText = t.catE;
+                document.getElementById('lblAvailableExer').innerText = t.listAv;
+                
+                document.getElementById('lblReps').innerHTML = `${t.vidReps} <span id="repCounterDisplay" style="color: var(--success); font-size: 28px;">${count}</span>`;
+                document.getElementById('btnAddRep').innerText = t.btnAddRep;
+                document.querySelector('#vidErrorOverlay h3').innerText = t.errVidHead;
+                
+                document.getElementById('lblTimerTitle').innerText = t.poTitle; document.getElementById('lblTimerSub').innerText = t.poSub;
+                document.getElementById('btnModeWork').innerText = `${t.btnW} (${AppState.pomoWorkTime})`;
+                document.getElementById('btnModeBreak').innerText = `${t.btnB} (${AppState.pomoBreakTime})`;
+                document.getElementById('timerModeText').innerText = t[currentPomoMode === 'work' ? 'modeWork' : 'modeBreak'];
+                
+                document.getElementById('lblCalcHead').innerText = t.calcH;
+                document.getElementById('lblGen').innerText = t.lG; document.getElementById('optM').innerText = t.m; document.getElementById('optF').innerText = t.f;
+                document.getElementById('lblAgeInp').innerText = t.lA; document.getElementById('lblW').innerText = t.lW; document.getElementById('lblH').innerText = t.lH; document.getElementById('lblAct').innerText = t.lAct;
+                document.getElementById('act1').innerText = t.a1; document.getElementById('act2').innerText = t.a2; document.getElementById('act3').innerText = t.a3; document.getElementById('act4').innerText = t.a4;
+                document.getElementById('btnDoCalc').innerText = t.btnCalc;
+                document.getElementById('lblResTitle').innerText = t.resT;
+                document.getElementById('lblMaint').innerText = t.rM; document.getElementById('lblLoss').innerText = t.rL; document.getElementById('lblGain').innerText = t.rG;
+                document.getElementById('lblMacros').innerText = t.mac; document.getElementById('lblC').innerText = t.lblCarbs; document.getElementById('lblP').innerText = t.lblProtein; document.getElementById('lblF').innerText = t.lblFats;
+                
+                document.getElementById('lblWaterHead').innerText = t.waH; document.getElementById('waterTotalText').innerText = `${t.waT} ${AppState.water} / ${AppState.waterGoal}`;
+                document.getElementById('lblErgoHead').innerText = t.ergH;
+                
+                document.getElementById('lblSetHead').innerText = t.setH;
+                document.getElementById('lblSetPomoWork').innerText = t.sPw; document.getElementById('lblSetPomoBreak').innerText = t.sPb;
+                document.getElementById('lblSetWater').innerText = t.sW; document.getElementById('btnSaveSet').innerText = t.btnS; document.getElementById('btnLogout').innerText = t.btnOut;
+                
+                if(currentCategory !== '') loadCategory(currentCategory);
+            } catch (e) { console.error('Translation sync err', e); }
         }
 
-        // Kickoff
-        if(AppState.user) initApp();
+        // Initialize App if already logged in
+        window.onload = () => {
+            if(localStorage.getItem("theme") === "dark") toggleDarkMode();
+            if(AppState.user) initApp();
+        };
 
     </script>
 </body>
