@@ -361,7 +361,7 @@
                             <h3 style="margin-bottom: 10px;">عذراً، الفيديو غير متوفر</h3>
                             <p style="font-size:14px; color:#ccc;">يرجى التأكد من رفع الفيديو على GitHub بالاسم الصحيح <br><strong id="expectedFileName" style="color:var(--accent);"></strong></p>
                         </div>
-                        <!-- تم إزالة وسم الـ source الداخلي لمنع تضارب المتصفحات -->
+                        <!-- تم إضافة المسار الصريح للمجلد الحالي ./ لضمان عمل الفيديوهات على GitHub Pages -->
                         <video id="workoutVideo" autoplay loop muted playsinline></video>
                     </div>
 
@@ -677,11 +677,12 @@
             en: ["Health is wealth.", "A small stretch goes a long way.", "Consistency is key.", "A healthy body hosts a healthy mind.", "Invest in your posture."]
         };
 
+        // تم تحديث اسم فيديو الكتف هنا ليطابقex-shoulder.mp4 تماماً
         const dbExercises = {
             neck: [
                 { id: 'n1', vid: 'exercise1.mp4', titleAr: 'دوران الرقبة', titleEn: 'Neck Turn', descAr: 'أدر رأسك يميناً ويساراً مع الثبات.', descEn: 'Turn head side to side and hold.' },
                 { id: 'n2', vid: 'nexkexercise2.mp4', titleAr: 'إمالة الرقبة', titleEn: 'Neck Tilt', descAr: 'أمل رأسك نحو كتفك ببطء.', descEn: 'Slowly tilt head toward shoulder.' },
-                { id: 'n3', vid: 'shoulder.mp4', titleAr: 'تحريك الكتفين', titleEn: 'Shoulder Mobility', descAr: 'ارفع كتفيك ثم أنزلهما لإرخاء التوتر.', descEn: 'Lift shoulders and lower to release tension.' }
+                { id: 'n3', vid: 'ex-shoulder.mp4', titleAr: 'تحريك الكتفين', titleEn: 'Shoulder Mobility', descAr: 'ارفع كتفيك ثم أنزلهما لإرخاء التوتر.', descEn: 'Lift shoulders and lower to release tension.' }
             ],
             back: [{ id: 'b1', vid: 'exercise5.mp4', titleAr: 'تمدد الأكتاف', titleEn: 'Shoulder Stretch', descAr: 'مد ذراعيك للأمام وظهرك للخلف.', descEn: 'Stretch arms forward, push back.' }],
             legs: [{ id: 'l1', vid: 'exercise13.mp4', titleAr: 'تمدد الحوض', titleEn: 'Hip Stretch', descAr: 'ضع كاحلك على ركبتك وانحنِ للأمام.', descEn: 'Place ankle on knee and lean forward.' }],
@@ -910,7 +911,8 @@
 
             if(ex.vid !== '') {
                 document.getElementById('videoBoxWrapper').style.display = 'block';
-                vidPlayer.src = ex.vid;
+                // استخدام المسار النسبي الصحيح مع بادئة ./ لضمان تشغيل الفيديو على GitHub Pages
+                vidPlayer.src = "./" + ex.vid;
                 vidPlayer.load();
                 vidPlayer.play().catch(e => console.log("Autoplay handled", e));
 
