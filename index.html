@@ -2,845 +2,1455 @@
 <html lang="ar" dir="rtl" id="html-tag">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Office Therapy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2c5e7b">
+    <title>Office Therapy Ultimate</title>
     <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & THEMES (Enterprise Architecture)
+           ========================================================================== */
         :root {
-            --primary: #2c5e7b;
-            --primary-dark: #1a3a4c;
-            /* نسبة شفافية 85% لتبدو الصورة واضحة بشكل أنيق تحت النصوص */
-            --bg-overlay: rgba(240, 244, 248, 0.85);
-            --box-bg: #ffffff;
-            --text-color: #333333;
-            --sub-text: #666666;
-            --highlight: #27ae60;
-            --highlight-dark: #1e8449;
-            --calc-color: #e67e22;
-            --border-color: #dfe6e9;
-            --box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            --primary: #2563eb;
+            --primary-light: #60a5fa;
+            --primary-dark: #1e40af;
+            --secondary: #8b5cf6;
+            --accent: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --info: #0ea5e9;
+            
+            --bg-base: #f1f5f9;
+            --bg-surface: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.75);
+            
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --text-light: #f8fafc;
+            
+            --border-light: rgba(0, 0, 0, 0.08);
+            --border-heavy: rgba(0, 0, 0, 0.15);
+            
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 8px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.12);
+            --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.07);
+            
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+            
+            --sidebar-width: 280px;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         [data-theme="dark"] {
-            --primary: #5ba4d9;
-            --primary-dark: #2c5e7b;
-            --bg-overlay: rgba(18, 18, 18, 0.88);
-            --box-bg: #1e1e1e;
-            --text-color: #e0e0e0;
-            --sub-text: #a0a0a0;
-            --highlight: #2ecc71;
-            --highlight-dark: #27ae60;
-            --calc-color: #f39c12;
-            --border-color: #333333;
-            --box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            --primary: #3b82f6;
+            --primary-light: #93c5fd;
+            --primary-dark: #1d4ed8;
+            --secondary: #a855f7;
+            
+            --bg-base: #0f172a;
+            --bg-surface: #1e293b;
+            --bg-glass: rgba(30, 41, 59, 0.85);
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            
+            --border-light: rgba(255, 255, 255, 0.08);
+            --border-heavy: rgba(255, 255, 255, 0.15);
+            
+            --shadow-md: 0 8px 16px rgba(0,0,0,0.3);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: var(--bg-color); /* لون احتياطي */
-            background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('./background.jpg');
+        /* ==========================================================================
+           2. RESET & GLOBAL STYLES
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg-base) 0%, var(--bg-surface) 100%), url('background.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 20px; 
-            color: var(--text-color);
-            margin: 0;
+            background-blend-mode: overlay;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        /* Custom Scrollbar for professional look */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: var(--radius-full); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* Typography */
+        h1, h2, h3, h4 { color: var(--text-main); font-weight: 800; line-height: 1.2; }
+        p { line-height: 1.6; color: var(--text-muted); }
+        
+        /* ==========================================================================
+           3. LAYOUT & SIDEBAR
+           ========================================================================== */
+        .app-layout {
+            display: flex;
             min-height: 100vh;
-            transition: background 0.3s, color 0.3s;
+            width: 100%;
         }
 
-        .top-bar { width: 100%; max-width: 600px; display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 20px; }
-        .top-btn { 
-            background: var(--box-bg); border: 2px solid var(--primary); color: var(--primary); 
-            padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.2s;
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-inline-end: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            transition: var(--transition-smooth);
+            z-index: 100;
+            box-shadow: var(--shadow-glass);
         }
-        .top-btn:hover { background: var(--primary); color: white; }
 
-        .app-container { 
-            background: var(--box-bg); padding: 40px 30px; border-radius: 20px; 
-            box-shadow: var(--box-shadow); max-width: 600px; width: 100%;
-            box-sizing: border-box; text-align: center;
-            transition: background-color 0.3s, box-shadow 0.3s;
+        .sidebar-hidden {
+            transform: translateX(100%); /* RTL adaptation */
+            margin-inline-end: calc(-1 * var(--sidebar-width));
         }
-
-        .screen { display: none; }
-        .screen.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        h1 { color: var(--primary); font-size: 28px; margin-top: 0; }
         
-        .name-input {
-            width: 100%; padding: 15px; font-size: 18px; border: 2px solid var(--border-color);
-            background: var(--box-bg); color: var(--text-color);
-            border-radius: 12px; box-sizing: border-box; margin: 20px 0; text-align: center;
-            outline: none; transition: 0.2s;
-        }
-        .name-input:focus { border-color: var(--primary); }
-
-        .submit-name-btn {
-            background: var(--primary); color: white; border: none; padding: 15px;
-            font-size: 18px; font-weight: bold; border-radius: 12px; cursor: pointer;
-            width: 100%; box-shadow: 0 4px 0 var(--primary-dark); transition: 0.1s;
-        }
-        .submit-name-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--primary-dark); }
-
-        .category-grid { display: flex; flex-direction: column; gap: 20px; margin-top: 25px; }
-        .btn-3d {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white; border: none; border-radius: 16px; padding: 22px 20px;
-            font-size: 20px; font-weight: 900; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-            box-shadow: 0 8px 0 #1a5276, 0 12px 15px rgba(0,0,0,0.2);
-            cursor: pointer; transition: all 0.1s ease-in-out; width: 100%;
-        }
-        .btn-3d:active {
-            transform: translateY(8px);
-            box-shadow: 0 0 0 #1a5276, 0 4px 8px rgba(0,0,0,0.2);
+        [dir="ltr"] .sidebar-hidden {
+            transform: translateX(-100%);
+            margin-inline-start: calc(-1 * var(--sidebar-width));
+            margin-inline-end: 0;
         }
 
-        .btn-calc-main {
-            background: linear-gradient(135deg, #e67e22, #d35400);
-            box-shadow: 0 8px 0 #9c3f00, 0 12px 15px rgba(0,0,0,0.2);
-        }
-        .btn-calc-main:active {
-            box-shadow: 0 0 0 #9c3f00, 0 4px 8px rgba(0,0,0,0.2);
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 40px;
         }
 
-        .exercise-list-item {
-            background: var(--box-bg); color: var(--primary); padding: 18px; border-radius: 12px;
-            margin-bottom: 12px; cursor: pointer; font-weight: bold; font-size: 18px; width: 100%;
-            border: 2px solid var(--border-color); transition: 0.2s;
+        .brand svg { width: 32px; height: 32px; fill: currentColor; }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
         }
-        .exercise-list-item:hover { background: var(--primary); color: white; border-color: var(--primary); }
 
-        .video-wrapper { position: relative; width: 100%; border-radius: 12px; overflow: hidden; background: #000; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);}
-        video { width: 100%; display: block; }
-        .sound-btn { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight: bold;}
-        
-        .instructions { background: rgba(44, 94, 123, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: start; border-inline-start: 4px solid var(--primary); line-height: 1.6; font-size: 16px;}
-        .guidance-box { background: rgba(243, 156, 18, 0.15); color: var(--calc-color); padding: 12px; border-radius: 8px; font-weight: bold; margin-bottom: 20px; border-inline-start: 4px solid var(--calc-color); text-align: start; }
-
-        .counter-box { background: rgba(39, 174, 96, 0.1); border: 2px solid var(--highlight); padding: 25px; border-radius: 15px; margin-bottom: 20px;}
-        .count-number { font-size: 45px; font-weight: bold; color: var(--highlight); margin: 10px 0; }
-        .count-btn { background: var(--highlight); color: white; border: none; padding: 15px; font-size: 20px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; box-shadow: 0 6px 0 var(--highlight-dark); transition: 0.1s;}
-        .count-btn:active { transform: translateY(6px); box-shadow: 0 0 0 var(--highlight-dark); }
-
-        /* أزرار الرجوع في الأعلى */
-        .top-action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; width: 100%; }
-        .back-btn-top { background: #95a5a6; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.2s; box-shadow: 0 4px 0 #7f8c8d; }
-        .back-btn-top:active { transform: translateY(4px); box-shadow: 0 0 0 #7f8c8d; }
-
-        .calc-form { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; text-align: start; max-width: 100%; }
-        .calc-form label { font-weight: bold; color: var(--calc-color); font-size: 15px; margin-bottom: -5px; }
-        .calc-form input, .calc-form select { 
-            padding: 12px; border: 2px solid var(--border-color); background: var(--box-bg); color: var(--text-color);
-            border-radius: 8px; font-size: 16px; outline: none; transition: 0.2s; width: 100%; box-sizing: border-box;
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition-smooth);
+            border: 1px solid transparent;
         }
-        .calc-form input:focus, .calc-form select:focus { border-color: var(--calc-color); }
-        .calc-btn {
-            background: var(--calc-color); color: white; border: none; padding: 15px;
-            font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer;
-            margin-top: 10px; transition: 0.2s; box-shadow: 0 4px 0 #9c3f00; width: 100%;
+
+        .nav-item:hover {
+            background: rgba(37, 99, 235, 0.05);
+            color: var(--primary);
         }
-        .calc-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #9c3f00; }
-        
-        .diet-btn {
-            background: var(--highlight); color: white; border: none; padding: 15px;
-            font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer;
-            margin-top: 10px; transition: 0.2s; box-shadow: 0 4px 0 var(--highlight-dark); width: 100%;
+
+        .nav-item.active {
+            background: var(--primary);
+            color: var(--text-light);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .nav-item svg { width: 24px; height: 24px; fill: currentColor; }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            height: 100vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            margin-bottom: 30px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            color: var(--text-main);
+            width: 45px;
+            height: 45px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: var(--transition-smooth);
+        }
+
+        .icon-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ==========================================================================
+           4. COMPONENTS & SCREENS
+           ========================================================================== */
+        .screen-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
             display: none;
-        }
-        .diet-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--highlight-dark); }
-
-        .calc-result {
-            margin-top: 15px; padding: 15px; background: rgba(230, 126, 34, 0.1); 
-            border-radius: 8px; font-weight: bold; color: var(--calc-color);
-            display: none; font-size: 16px; line-height: 1.8; border: 2px solid var(--calc-color); text-align: center;
+            animation: fadeScale 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .diet-section {
-            margin-top: 20px; padding: 15px; background: var(--box-bg); border-radius: 12px;
-            border: 2px solid var(--border-color); text-align: start; display: none; animation: fadeIn 0.4s ease-in-out;
+        .screen-container.active { display: block; }
+
+        @keyframes fadeScale {
+            0% { opacity: 0; transform: scale(0.98) translateY(15px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
-        .macros-grid {
-            display: flex; gap: 10px; margin-top: 15px; margin-bottom: 25px;
+
+        /* Login Screen Special Styles */
+        .login-wrapper {
+            max-width: 500px;
+            margin: 10vh auto;
+            background: var(--bg-surface);
+            padding: 50px 40px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            border: 1px solid var(--border-light);
         }
-        .macro-box {
-            flex: 1; padding: 12px 5px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 14px;
+
+        .fancy-input {
+            width: 100%;
+            padding: 18px 25px;
+            font-size: 18px;
+            background: var(--bg-base);
+            border: 2px solid var(--border-light);
+            color: var(--text-main);
+            border-radius: var(--radius-md);
+            margin: 30px 0;
+            outline: none;
+            transition: var(--transition-smooth);
+            text-align: center;
+            font-weight: 600;
         }
-        .macro-box span { font-size: 22px; display: block; margin-top: 5px; }
-        .meal-card {
-            background: var(--bg-overlay); padding: 15px; border-radius: 8px; margin-bottom: 12px;
-            border-inline-start: 5px solid;
+
+        .fancy-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+            background: var(--bg-surface);
         }
-        .meal-card p { margin: 8px 0 0 0; font-size: 15px; line-height: 1.5; font-weight: normal; color: var(--sub-text); }
+
+        .fancy-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+            transition: var(--transition-smooth);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fancy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        .fancy-btn:active {
+            transform: translateY(2px);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .dash-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dash-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 5px;
+            background: var(--primary);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .dash-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .dash-card:hover::after { opacity: 1; }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        /* Chart Area */
+        .chart-container {
+            background: var(--bg-surface);
+            padding: 25px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-top: 30px;
+            border: 1px solid var(--border-light);
+        }
+
+        #activityChart {
+            width: 100%;
+            height: 250px;
+            margin-top: 20px;
+        }
+
+        /* Video Player Screen */
+        .player-container {
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            position: relative;
+        }
+
+        .video-box {
+            width: 100%;
+            max-height: 500px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: #000;
+            margin: 25px 0;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .vid-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .btn-rep {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 24px;
+            font-weight: 900;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            box-shadow: 0 8px 0 #059669;
+            transition: all 0.1s ease;
+        }
+        .btn-rep:active { transform: translateY(8px); box-shadow: 0 0 0 #059669; }
+
+        /* Pomodoro Timer */
+        .pomodoro-box {
+            text-align: center;
+            background: var(--bg-surface);
+            padding: 50px 30px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pomo-ring {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .pomo-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .pomo-ring circle {
+            fill: transparent;
+            stroke-width: 12;
+            stroke-linecap: round;
+        }
+        .pomo-bg { stroke: var(--border-light); }
+        .pomo-progress {
+            stroke: var(--accent);
+            stroke-dasharray: 879; /* 2 * pi * r (r=140) */
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear, stroke 0.3s;
+        }
+
+        .pomo-time {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 64px;
+            font-weight: 900;
+            color: var(--text-main);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Confetti Canvas */
+        #confettiCanvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999;
+        }
+
+        /* Toasts System */
+        .toast-wrapper {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 10000;
+        }
+
+        .toast-msg {
+            background: var(--text-main);
+            color: var(--bg-base);
+            padding: 16px 32px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards, fadeOut 0.4s ease 3.5s forwards;
+        }
+
+        @keyframes popIn { 0% { opacity: 0; transform: translateY(50px) scale(0.8); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes fadeOut { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(50px); } }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                height: 100vh;
+                box-shadow: 20px 0 50px rgba(0,0,0,0.5);
+            }
+            .main-content { padding: 10px; }
+            .top-header { padding: 10px 15px; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .pomo-ring { width: 250px; height: 250px; }
+            .pomo-time { font-size: 48px; }
+        }
+
+        /* Utility Classes */
+        .text-primary { color: var(--primary); }
+        .text-accent { color: var(--accent); }
+        .text-success { color: var(--success); }
+        .text-warning { color: var(--warning); }
         
-        .streak-badge {
-            background: rgba(231, 76, 60, 0.15); color: #e74c3c; padding: 8px 15px; border-radius: 20px;
-            font-weight: bold; display: inline-block; margin-bottom: 10px; border: 1px solid #e74c3c;
-        }
-        .quote-box {
-            font-style: italic; color: var(--calc-color); margin: 10px 0 20px 0; font-size: 16px; line-height: 1.6;
-            background: rgba(230, 126, 34, 0.08); padding: 15px; border-radius: 10px; border: 2px dashed var(--calc-color);
-        }
+        .bg-primary-light { background: rgba(37, 99, 235, 0.1); }
+        .bg-accent-light { background: rgba(239, 68, 68, 0.1); }
+        .bg-success-light { background: rgba(16, 185, 129, 0.1); }
+        .bg-warning-light { background: rgba(245, 158, 11, 0.1); }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <button class="top-btn" onclick="toggleDarkMode()" id="darkModeBtn">🌙</button>
-        <button class="top-btn" onclick="toggleLanguage()" id="langBtn">English</button>
-    </div>
+    <!-- Confetti Canvas overlay -->
+    <canvas id="confettiCanvas"></canvas>
 
-    <div class="app-container">
+    <!-- Global Toast Notifications Container -->
+    <div class="toast-wrapper" id="toastHub"></div>
+
+    <div class="app-layout">
         
-        <div id="loginScreen" class="screen active">
-            <h1 id="loginTitle">مرحباً بك في العلاج المكتبي</h1>
-            <p id="loginSub" style="color: var(--sub-text); font-size: 16px;">الرجاء إدخال اسمك الكريم للبدء:</p>
-            <input type="text" id="userNameInput" class="name-input" placeholder="اكتب اسمك هنا...">
-            <button class="submit-name-btn" id="startAppBtn" onclick="saveNameAndEnter()">دخول</button>
-        </div>
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar sidebar-hidden" id="mainSidebar">
+            <div class="brand">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                <span>Office Therapy</span>
+            </div>
 
-        <div id="welcomeScreen" class="screen">
-            <div id="streakDisplay" class="streak-badge">🔥 الأيام المتتالية: 1 يوم</div>
-            <h1 id="welcomeTitle">أهلاً بك</h1>
-            <div id="motivationalQuote" class="quote-box"></div>
-            <p id="welcomeSub" style="color: var(--sub-text); font-size: 15px; margin-bottom: 15px;">اختر القسم الذي ترغب بتمرينه اليوم:</p>
+            <nav class="nav-menu">
+                <div class="nav-item active" onclick="navigateTo('dashboardScreen')" id="navDash">
+                    <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                    لوحة التحكم
+                </div>
+                <div class="nav-item" onclick="navigateTo('exercisesScreen')" id="navEx">
+                    <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>
+                    التمارين المكتبية
+                </div>
+                <div class="nav-item" onclick="navigateTo('pomoScreen')" id="navPomo">
+                    <svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+                    مؤقت التركيز
+                </div>
+                <div class="nav-item" onclick="navigateTo('dietScreen')" id="navDiet">
+                    <svg viewBox="0 0 24 24"><path d="M18 4H6v2h12V4zm0 4H6v2h12V8zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zM19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                    الدايت والحاسبة
+                </div>
+                <div class="nav-item" onclick="navigateTo('waterScreen')" id="navWater">
+                    <svg viewBox="0 0 24 24"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8zm0 18c-3.35 0-6-2.57-6-6.2 0-2.34 1.95-5.44 6-9.14 4.05 3.7 6 6.79 6 9.14 0 3.63-2.65 6.2-6 6.2z"/></svg>
+                    الماء والصحة
+                </div>
+                <div class="nav-item" onclick="navigateTo('settingsScreen')" id="navSettings">
+                    <svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>
+                    الإعدادات
+                </div>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
             
-            <div class="category-grid">
-                <button class="btn-3d" id="btnCat1" onclick="openCategory('neck')">1. تمارين الرقبة والأكتاف</button>
-                <button class="btn-3d" id="btnCat2" onclick="openCategory('back')">2. تمارين الظهر والجذع</button>
-                <button class="btn-3d" id="btnCat3" onclick="openCategory('legs')">3. تمارين الساقين والحوض</button>
-                <button class="btn-3d btn-calc-main" id="btnCalcMain" onclick="openCalcScreen()">4. حاسبة السعرات والوجبات 🔥</button>
-            </div>
-        </div>
+            <!-- Header -->
+            <header class="top-header" id="mainHeader" style="display: none;">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="icon-btn" onclick="toggleSidebar()">☰</button>
+                    <h2 id="headerGreeting">مرحباً</h2>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" onclick="toggleDarkMode()" id="btnDark">🌙</button>
+                    <button class="icon-btn" onclick="toggleLanguage()" id="btnLang" style="font-weight: bold; width: auto; padding: 0 15px;">EN</button>
+                </div>
+            </header>
 
-        <!-- شاشة قائمة التمارين (أزرار الرجوع بالأعلى) -->
-        <div id="listScreen" class="screen">
-            <div class="top-action-bar">
-                <button class="back-btn-top" id="backToWelcomeBtn" onclick="goHome()">🔙 الرئيسية</button>
-                <h2 id="listTitle" style="color: var(--primary); margin: 0; font-size: 20px;">اختر التمرين:</h2>
-                <div style="width: 100px;"></div>
-            </div>
-            <div id="exercisesContainer"></div>
-        </div>
-
-        <!-- شاشة الفيديو (أزرار الرجوع بالأعلى) -->
-        <div id="videoScreen" class="screen">
-            <div class="top-action-bar">
-                <button class="back-btn-top" id="backToListBtn" onclick="goToList()">🔙 القائمة</button>
-                <h2 id="videoTitle" style="color: var(--primary); margin: 0; font-size: 18px; flex:1; text-align:center;"></h2>
-                <button class="back-btn-top" id="jumpHomeBtn" onclick="goHome()" style="background: var(--primary); box-shadow: 0 4px 0 var(--primary-dark);">🏠 الرئيسية</button>
-            </div>
-            
-            <div class="video-wrapper">
-                <button class="sound-btn" id="soundBtn" onclick="toggleSound()">🔇</button>
-                <video id="exVideo" autoplay loop muted playsinline>
-                    <source id="videoSource" src="" type="video/mp4">
-                </video>
-            </div>
-
-            <div class="guidance-box" id="guidanceText"></div>
-            <div class="instructions" id="videoDesc"></div>
-
-            <div class="counter-box">
-                <div id="counterLabel" style="font-weight: bold; color: var(--text-color); font-size: 18px;"></div>
-                <div class="count-number" id="counterValue">0</div>
-                <button class="count-btn" id="addCountBtn" onclick="addCount()"></button>
-            </div>
-        </div>
-
-        <!-- شاشة الحاسبة (أزرار الرجوع بالأعلى) -->
-        <div id="calcScreen" class="screen">
-            <div class="top-action-bar">
-                <button class="back-btn-top" id="backFromCalcBtn" onclick="goHome()">🔙 الرئيسية</button>
-                <h2 id="calcTitleText" style="color: var(--calc-color); margin: 0; font-size: 20px;">حاسبة السعرات الدقيقة</h2>
-                <div style="width: 100px;"></div>
-            </div>
-            
-            <div class="calc-form">
-                <label id="lblGender">الجنس:</label>
-                <select id="calcGender">
-                    <option value="male" id="optMale" selected>ذكر</option>
-                    <option value="female" id="optFemale">أنثى</option>
-                </select>
-                
-                <label id="lblAge">العمر (سنة):</label>
-                <input type="number" id="calcAge" value="32" min="10" max="100">
-                
-                <label id="lblWeight">الوزن (كجم):</label>
-                <input type="number" id="calcWeight" placeholder="مثال: 75">
-                
-                <label id="lblHeight">الطول (سم):</label>
-                <input type="number" id="calcHeight" placeholder="مثال: 175">
-                
-                <label id="lblActivity">معدل النشاط:</label>
-                <select id="calcActivity">
-                    <option value="1.2" id="optAct1">خامل (عمل مكتبي/بدون رياضة)</option>
-                    <option value="1.375" id="optAct2">نشاط خفيف (رياضة 1-3 أيام)</option>
-                    <option value="1.55" id="optAct3">نشاط متوسط (رياضة 3-5 أيام)</option>
-                    <option value="1.725" id="optAct4">نشط جداً (رياضة يومية)</option>
-                </select>
-                
-                <button class="calc-btn" id="btnCalcCalories" onclick="calculateCalories()">احسب السعرات</button>
-                
-                <div id="calcResult" class="calc-result"></div>
-
-                <button class="diet-btn" id="btnShowDiet" onclick="toggleDietPlan()">عرض النظام الغذائي المقترح 🥗</button>
-
-                <div id="dietSection" class="diet-section">
-                    <h3 id="macrosTitle" style="color: var(--primary); margin-top: 0;">توزيع الماكروز (للمحافظة على الوزن):</h3>
+            <!-- ==========================================
+                 SCREEN 1: LOGIN (Landing)
+                 ========================================== -->
+            <div id="loginScreen" class="screen-container active">
+                <div class="login-wrapper">
+                    <svg width="100" height="100" viewBox="0 0 24 24" fill="var(--primary)" style="margin-bottom:20px;">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                    </svg>
+                    <h1 id="txtLoginTitle" style="font-size: 32px; margin-bottom: 10px;">Office Therapy Pro</h1>
+                    <p id="txtLoginSub">أدخل اسمك لنبدأ رحلة العناية بصحتك خلال العمل:</p>
                     
-                    <div class="macros-grid">
-                        <div class="macro-box" style="background: rgba(255, 234, 167, 0.2); color: #d35400;">
-                            <div id="lblCarbs">كربوهيدرات (40%)</div>
-                            <span id="valCarbs">0g</span>
+                    <input type="text" id="inputName" class="fancy-input" placeholder="اسمك الكريم..." autocomplete="off">
+                    
+                    <button class="fancy-btn" onclick="appLogin()">
+                        <span id="txtStartBtn">دخول للمنصة</span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 SCREEN 2: DASHBOARD
+                 ========================================== -->
+            <div id="dashboardScreen" class="screen-container">
+                <div class="quote-box" id="quoteBox">💡 "الصحة تاج على رؤوس الأصحاء."</div>
+                
+                <!-- Quick Stats -->
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <div style="background: rgba(245, 158, 11, 0.1); color: var(--warning); padding: 10px 20px; border-radius: 20px; font-weight: bold; border: 1px solid var(--warning);">
+                        🔥 <span id="txtStreak">الأيام المتتالية: 0</span>
+                    </div>
+                    <div style="background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 10px 20px; border-radius: 20px; font-weight: bold; border: 1px solid var(--success);">
+                        🏋️ <span id="txtTotalWorkouts">إجمالي التمارين: 0</span>
+                    </div>
+                </div>
+
+                <!-- Feature Grid -->
+                <div class="dashboard-grid">
+                    <div class="dash-card" onclick="navigateTo('exercisesScreen')">
+                        <div class="card-header">
+                            <div class="card-icon bg-primary-light text-primary">🏃‍♂️</div>
+                            <h3 id="dashExerTitle">التمارين</h3>
                         </div>
-                        <div class="macro-box" style="background: rgba(250, 177, 160, 0.2); color: #c0392b;">
-                            <div id="lblProtein">بروتين (30%)</div>
-                            <span id="valProtein">0g</span>
+                        <p id="dashExerDesc">تمارين الرقبة، الظهر، والحوض للتخلص من التوتر المكتبي.</p>
+                    </div>
+
+                    <div class="dash-card" onclick="navigateTo('pomoScreen')">
+                        <div class="card-header">
+                            <div class="card-icon bg-accent-light text-accent">⏱️</div>
+                            <h3 id="dashPomoTitle">التركيز</h3>
                         </div>
-                        <div class="macro-box" style="background: rgba(162, 155, 254, 0.2); color: #6c5ce7;">
-                            <div id="lblFats">دهون (30%)</div>
-                            <span id="valFats">0g</span>
+                        <p id="dashPomoDesc">مؤقت بومودورو مع تنبيهات ذكية لتنظيم وقتك وحماية عينيك.</p>
+                    </div>
+
+                    <div class="dash-card" onclick="navigateTo('dietScreen')">
+                        <div class="card-header">
+                            <div class="card-icon bg-warning-light text-warning">🥗</div>
+                            <h3 id="dashDietTitle">التغذية</h3>
                         </div>
+                        <p id="dashDietDesc">حاسبة دقيقة للسعرات الحرارية وجداول وجبات صحية للمكتب.</p>
                     </div>
 
-                    <h3 id="mealsTitle" style="color: var(--primary);">أمثلة لوجبات صحية مرنة ومتنوعة:</h3>
+                    <div class="dash-card" onclick="navigateTo('waterScreen')">
+                        <div class="card-header">
+                            <div class="card-icon bg-success-light text-success">💧</div>
+                            <h3 id="dashWaterTitle">الماء</h3>
+                        </div>
+                        <p id="dashWaterDesc">تتبع شربك للماء وتعرف على الوضعية الصحيحة للجلوس.</p>
+                    </div>
+                </div>
+
+                <!-- Activity Chart (SVG Rendered by JS) -->
+                <div class="chart-container">
+                    <h3 id="chartTitle" style="margin-bottom: 10px;">نشاطك هذا الأسبوع</h3>
+                    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">عدد التمارين المنجزة في آخر 7 أيام</p>
+                    <svg id="activityChart" viewBox="0 0 800 250" preserveAspectRatio="none">
+                        <!-- Chart generated via JS -->
+                    </svg>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 SCREEN 3: EXERCISES CATEGORIES
+                 ========================================== -->
+            <div id="exercisesScreen" class="screen-container">
+                <h2 id="exerMainTitle" style="margin-bottom: 20px; color: var(--primary);">أقسام التمارين</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <button class="fancy-btn" style="background: var(--primary);" onclick="loadCategory('neck')">
+                        <span id="catNeck">تمارين الرقبة والأكتاف</span>
+                    </button>
+                    <button class="fancy-btn" style="background: var(--secondary);" onclick="loadCategory('back')">
+                        <span id="catBack">تمارين الظهر والجذع</span>
+                    </button>
+                    <button class="fancy-btn" style="background: var(--success);" onclick="loadCategory('legs')">
+                        <span id="catLegs">تمارين الساقين والحوض</span>
+                    </button>
+                    <button class="fancy-btn" style="background: var(--info);" onclick="loadCategory('eyes')">
+                        <span id="catEyes">إراحة العين (20-20-20)</span>
+                    </button>
+                </div>
+
+                <div id="exerciseListArea" style="display: none; margin-top: 40px;">
+                    <h3 style="margin-bottom: 20px; border-bottom: 2px solid var(--border-light); padding-bottom: 10px;" id="lblAvailableExer">قائمة التمارين:</h3>
+                    <div id="dynamicExerciseList" style="display: flex; flex-direction: column; gap: 15px;"></div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 SCREEN 4: VIDEO PLAYER
+                 ========================================== -->
+            <div id="videoScreen" class="screen-container">
+                <button class="icon-btn" onclick="navigateTo('exercisesScreen')" style="margin-bottom: 20px;">🔙</button>
+                
+                <div class="player-container">
+                    <h2 id="vidTitle" style="color: var(--primary); margin-bottom: 10px;">اسم التمرين</h2>
+                    <p id="vidDesc" style="color: var(--text-muted); font-size: 16px; margin-bottom: 20px;">وصف التمرين يكتب هنا...</p>
                     
-                    <div class="meal-card" style="border-color: #3498db;">
-                        <strong id="mealBreakfastTitle" style="color: var(--primary);">الفطور (طاقة الصباح):</strong>
-                        <p id="mealBreakfastDesc">شوفان بالحليب، مع شرائح الموز، قطرات العسل، ورشة قرفة مع حبات التوت.</p>
+                    <div class="video-box" id="videoBoxWrapper">
+                        <!-- Custom Error Overlay -->
+                        <div id="vidErrorOverlay" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); color:white; flex-direction:column; justify-content:center; align-items:center; z-index:10; padding:20px;">
+                            <span style="font-size: 40px; margin-bottom:15px;">⚠️</span>
+                            <h3 style="margin-bottom: 10px;">عذراً، الفيديو غير متوفر</h3>
+                            <p style="font-size:14px; color:#ccc;">يرجى التأكد من رفع الفيديو على GitHub بالاسم الصحيح <br><strong id="expectedFileName" style="color:var(--accent);"></strong></p>
+                        </div>
+
+                        <video id="workoutVideo" autoplay loop muted playsinline>
+                            <source id="videoSource" src="" type="video/mp4">
+                        </video>
                     </div>
 
-                    <div class="meal-card" style="border-color: var(--highlight);">
-                        <strong id="meal1Title" style="color: var(--primary);">الغداء (عالي البروتين):</strong>
-                        <p id="meal1Desc">سلطة متكاملة (بيض مسلوق، شرائح لحم عجل، خس، طماطم، خيار، وتفاح أخضر) مع تتبيلة من الزبادي اليوناني وزيت الزيتون.</p>
-                    </div>
-                    
-                    <div class="meal-card" style="border-color: #f39c12;">
-                        <strong id="meal2Title" style="color: var(--primary);">وجبة خفيفة (سناك طاقة):</strong>
-                        <p id="meal2Desc">سموثي الفواكه المنعش (فراولة، توت أزرق، موز، مانجو، حليب، وقليل من العسل).</p>
-                    </div>
-                    
-                    <div class="meal-card" style="border-color: #e74c3c;">
-                        <strong id="meal3Title" style="color: var(--primary);">العشاء (كارب معتدل):</strong>
-                        <p id="meal3Desc">مكس سباغيتي وبيني باستا مع صوص الطماطم والثوم والفطر، ومزينة برشة من جبن القشقوان.</p>
-                    </div>
-
-                    <div class="meal-card" style="border-color: #9b59b6;">
-                        <strong id="mealExtraTitle" style="color: var(--primary);">بديل خفيف (قبل النوم):</strong>
-                        <p id="mealExtraDesc">كوب زبادي يوناني مع بذور الشيا وبضع قطرات من العسل لتعزيز الاستشفاء الليلي.</p>
+                    <div style="background: var(--bg-base); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                        <h3 style="margin-bottom: 10px; color: var(--text-main);" id="lblReps">التكرارات المنجزة: <span id="repCounterDisplay" style="color: var(--success); font-size: 28px;">0</span></h3>
+                        <div class="vid-controls">
+                            <button class="btn-rep" onclick="recordRep()" id="btnAddRep">+ سجل تكرار</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <!-- ==========================================
+                 SCREEN 5: POMODORO TIMER
+                 ========================================== -->
+            <div id="pomoScreen" class="screen-container">
+                <div class="pomodoro-box">
+                    <h2 id="lblTimerTitle" style="font-size: 32px; margin-bottom: 10px; color: var(--accent);">مؤقت التركيز</h2>
+                    <p id="lblTimerSub" style="margin-bottom: 40px;">نظم وقتك لزيادة الإنتاجية وتقليل الجهد.</p>
+
+                    <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
+                        <button class="fancy-btn" style="width: auto; padding: 10px 25px; font-size: 16px;" onclick="setTimerMode('work')" id="btnModeWork">العمل (25د)</button>
+                        <button class="fancy-btn" style="width: auto; padding: 10px 25px; font-size: 16px; background: var(--success);" onclick="setTimerMode('break')" id="btnModeBreak">استراحة (5د)</button>
+                    </div>
+
+                    <div class="pomo-ring">
+                        <svg>
+                            <circle class="pomo-bg" cx="150" cy="150" r="140"></circle>
+                            <circle class="pomo-progress" id="timerProgress" cx="150" cy="150" r="140"></circle>
+                        </svg>
+                        <div class="pomo-time" id="timerClock">25:00</div>
+                    </div>
+
+                    <div style="display: flex; justify-content: center; gap: 20px;">
+                        <button class="icon-btn" style="width: 70px; height: 70px; font-size: 28px; background: var(--primary); color: white;" onclick="toggleTimer()" id="btnTimerPlay">▶️</button>
+                        <button class="icon-btn" style="width: 70px; height: 70px; font-size: 28px;" onclick="resetTimer()">🔄</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 SCREEN 6: CALC & DIET
+                 ========================================== -->
+            <div id="dietScreen" class="screen-container">
+                <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-light);">
+                    <h2 id="lblCalcHead" style="color: var(--calc-color); margin-bottom: 25px;">حاسبة السعرات الدقيقة</h2>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <div>
+                            <label style="font-weight: bold; color: var(--text-muted); display:block; margin-bottom:8px;" id="lblGen">الجنس:</label>
+                            <select id="inpGender" class="fancy-input" style="margin:0; padding:12px;">
+                                <option value="male" id="optM">ذكر</option><option value="female" id="optF">أنثى</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="font-weight: bold; color: var(--text-muted); display:block; margin-bottom:8px;" id="lblAgeInp">العمر:</label>
+                            <input type="number" id="inpAge" class="fancy-input" value="30" style="margin:0; padding:12px;">
+                        </div>
+                        <div>
+                            <label style="font-weight: bold; color: var(--text-muted); display:block; margin-bottom:8px;" id="lblW">الوزن (كجم):</label>
+                            <input type="number" id="inpWeight" class="fancy-input" placeholder="75" style="margin:0; padding:12px;">
+                        </div>
+                        <div>
+                            <label style="font-weight: bold; color: var(--text-muted); display:block; margin-bottom:8px;" id="lblH">الطول (سم):</label>
+                            <input type="number" id="inpHeight" class="fancy-input" placeholder="175" style="margin:0; padding:12px;">
+                        </div>
+                    </div>
+                    
+                    <label style="font-weight: bold; color: var(--text-muted); display:block; margin-bottom:8px;" id="lblAct">معدل النشاط:</label>
+                    <select id="inpActivity" class="fancy-input" style="margin:0 0 25px 0; padding:12px;">
+                        <option value="1.2" id="act1">خامل (مكتبي فقط)</option>
+                        <option value="1.375" id="act2">خفيف (رياضة 1-3 أيام)</option>
+                        <option value="1.55" id="act3">متوسط (رياضة 3-5 أيام)</option>
+                        <option value="1.725" id="act4">نشط (رياضة يومية)</option>
+                    </select>
+
+                    <button class="fancy-btn" style="background: var(--calc-color); box-shadow: 0 6px 0 #b95c00;" onclick="executeCalc()" id="btnDoCalc">احسب السعرات</button>
+
+                    <div id="calcResultsBox" style="display: none; margin-top: 30px; padding: 25px; background: rgba(230, 126, 34, 0.05); border: 2px dashed var(--calc-color); border-radius: var(--radius-md);">
+                        <h3 style="text-align: center; color: var(--calc-color); margin-bottom: 20px;" id="lblResTitle">النتائج اليومية</h3>
+                        
+                        <div style="display: flex; justify-content: space-between; font-size: 18px; margin-bottom: 15px; border-bottom: 1px solid var(--border-light); padding-bottom: 10px;">
+                            <span id="lblMaint">🔥 المحافظة على الوزن:</span>
+                            <strong style="font-size: 24px;" id="valMaint">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 16px; margin-bottom: 15px;">
+                            <span id="lblLoss">📉 إنقاص الوزن:</span>
+                            <strong style="color: var(--success);" id="valLoss">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 16px;">
+                            <span id="lblGain">📈 زيادة الوزن:</span>
+                            <strong style="color: var(--accent);" id="valGain">0</strong>
+                        </div>
+
+                        <h4 style="margin: 25px 0 15px; color: var(--primary);" id="lblMacros">الماكروز المقترح:</h4>
+                        <div style="display: flex; gap: 10px; text-align: center;">
+                            <div style="flex:1; background: rgba(245,158,11,0.1); padding: 15px; border-radius: var(--radius-sm); color: #d35400;">
+                                <div style="font-size: 12px; font-weight: bold;" id="lblC">كارب</div><div style="font-size: 20px; font-weight: 900; margin-top: 5px;" id="valC">0g</div>
+                            </div>
+                            <div style="flex:1; background: rgba(239,68,68,0.1); padding: 15px; border-radius: var(--radius-sm); color: #c0392b;">
+                                <div style="font-size: 12px; font-weight: bold;" id="lblP">بروتين</div><div style="font-size: 20px; font-weight: 900; margin-top: 5px;" id="valP">0g</div>
+                            </div>
+                            <div style="flex:1; background: rgba(139,92,246,0.1); padding: 15px; border-radius: var(--radius-sm); color: #6d28d9;">
+                                <div style="font-size: 12px; font-weight: bold;" id="lblF">دهون</div><div style="font-size: 20px; font-weight: 900; margin-top: 5px;" id="valF">0g</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 SCREEN 7: WATER & WELLNESS
+                 ========================================== -->
+            <div id="waterScreen" class="screen-container">
+                <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--info); margin-bottom: 30px;">
+                    <h2 id="lblWaterHead" style="color: var(--info); text-align: center; margin-bottom: 10px;">متتبع شرب الماء 💧</h2>
+                    <p id="lblWaterSub" style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">حافظ على رطوبة جسدك. الهدف 8 أكواب يومياً.</p>
+                    
+                    <div id="waterGridArea" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 25px;">
+                        <!-- Generated via JS -->
+                    </div>
+                    
+                    <h3 style="text-align: center; color: var(--info);" id="waterTotalText">المنجز: 0 / 8 أكواب</h3>
+                </div>
+
+                <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-light);">
+                    <h2 id="lblErgoHead" style="color: var(--primary); margin-bottom: 20px;">دليل الجلسة الصحية (Ergonomics) 🪑</h2>
+                    <ul id="ergoListItems" style="list-style-position: inside; color: var(--text-muted); line-height: 2; font-size: 16px; padding: 0 15px;">
+                        <li><strong>الشاشة:</strong> الثلث العلوي في مستوى العين وعلى بُعد ذراع.</li>
+                        <li><strong>الظهر:</strong> مستقيم ومدعوم بمسند الكرسي.</li>
+                        <li><strong>الأكتاف:</strong> مسترخية غير مشدودة للأعلى.</li>
+                        <li><strong>المرفقين:</strong> مثنية بزاوية 90 إلى 100 درجة قريبة من الجسم.</li>
+                        <li><strong>القدمين:</strong> مسطحة على الأرض بالكامل.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 SCREEN 8: SETTINGS
+                 ========================================== -->
+            <div id="settingsScreen" class="screen-container">
+                <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-light);">
+                    <h2 id="lblSetHead" style="color: var(--text-main); margin-bottom: 25px;">إعدادات المنصة ⚙️</h2>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <label style="font-weight: bold; display:block; margin-bottom:10px;" id="lblSetPomoWork">زمن العمل (بومودورو):</label>
+                        <input type="number" id="inpSetWork" class="fancy-input" value="25" style="margin:0; padding:12px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <label style="font-weight: bold; display:block; margin-bottom:10px;" id="lblSetPomoBreak">زمن الراحة (بومودورو):</label>
+                        <input type="number" id="inpSetBreak" class="fancy-input" value="5" style="margin:0; padding:12px;">
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <label style="font-weight: bold; display:block; margin-bottom:10px;" id="lblSetWater">الهدف اليومي للماء (أكواب):</label>
+                        <input type="number" id="inpSetWater" class="fancy-input" value="8" style="margin:0; padding:12px;">
+                    </div>
+
+                    <button class="fancy-btn" onclick="saveSettings()" id="btnSaveSet">حفظ الإعدادات</button>
+                    <button class="fancy-btn" style="background: var(--accent); box-shadow: 0 6px 0 #b91c1c; margin-top: 15px;" onclick="logoutUser()" id="btnLogout">تسجيل الخروج</button>
+                </div>
+            </div>
+
+        </main>
     </div>
 
+    <!-- ==========================================================================
+         JAVASCRIPT ENGINE (Object Oriented & Modular)
+         ========================================================================== -->
     <script>
-        let currentLang = 'ar';
-        let currentCategory = '';
-        let activeExercise = null;
-        let userName = '';
-        let count = 0;
-        let currentTDEE = 0;
-        const video = document.getElementById("exVideo");
-
-        // الجمل التحفيزية
-        const quotesAr = [
-            "الصحة تاج على رؤوس الأصحاء لا يراه إلا المرضى.",
-            "حركة بسيطة اليوم تحميك من آلام كثيرة غداً.",
-            "الاستمرارية في التمارين البسيطة تصنع فارقاً عظيماً.",
-            "عقلك السليم في جسمك النشيط خلال العمل.",
-            "خذ استراحة قصيرة، فجسدك يستحق العناية.",
-            "النشاط البدني يزيد من تركيزك وإنتاجيتك.",
-            "اجعل التمدد عادة يومية في مكتبك.",
-            "الخطوات الصغيرة المتسقة تؤدي إلى نتائج مذهلة.",
-            "صحتك المهنية تبدأ بالاهتمام بوضعية جسمك.",
-            "كل دقيقة تمرين هي استثمار في راحتك.",
-            "لا تنتظر حتى تتعب، بادر بإرخاء عضلاتك الآن.",
-            "الطاقة الإيجابية تبدأ من جسد مرن ونشط.",
-            "الجلوس الطويل عدو صحتك، اهزمه بحركة بسيطة.",
-            "اجعل مكتبك بيئة تدعم صحتك وحيويتك.",
-            "النفس العميق والحركة يصنعان يومك.",
-            "تحديث وضعية جلوسك يجدد نشاطك الفكري.",
-            "العناية بالجسد ليست رفاهية بل ضرورة.",
-            "كل تمرين صغير يقربك من صحة أفضل.",
-            "استمع لجسدك وامنحه ما يستحقه من راحة وحركة.",
-            "الاستثمار الأفضل هو الاستثمار في صحتك.",
-            "اجعل الحركة جزءاً من روتينك العملي اليومي.",
-            "التوازن بين العمل والراحة سر الاستمرارية.",
-            "صحتك اليوم هي أساس إنجازات الغد.",
-            "التغلب على الكسل يبدأ بتمرين تمدد واحد.",
-            "جسدك مرآة لمدى اهتمامك بنفسك.",
-            "أرح عينيك وكتفيك وواصل إبداعك.",
-            "التركيز العالي يبدأ بجسد خالي من التوتر.",
-            "لا تؤجل تمرينك المكتبي إلى الغد.",
-            "خطوة صغيرة نحو الحركة تصنع يوماً عظيماً.",
-            "الحيوية في العمل تبدأ من فقرات ظهر مرتاحة.",
-            "اجعل صفاء ذهنك مرتبطاً براحة عضلاتك.",
-            "كل تمدد يحرر طاقة جديدة بداخلك.",
-            "النجاح في العمل يبدأ بصحة مستدامة.",
-            "التنفس الصحيح يغير مجرى يومك المهني.",
-            "حافظ على نشاطك لتكون دائماً في قمة أدائك.",
-            "التغيرات البسيطة تصنع أكبر النتائج.",
-            "امنح رقبتك وعضلاتك دقيقة حب واسترخاء.",
-            "العمل الذكي يتخلله اهتمام بالصحة.",
-            "لا تدع التوتر المكتبي يسرق نشاطك.",
-            "الاسترخاء الواعي يجدد طاقة الإبداع.",
-            "قوة إرادتك تبدأ بالاهتمام بصحتك الجسدية.",
-            "كن لطيفاً مع جسدك طوال ساعات العمل.",
-            "كل حركة تمنحك عمراً جديداً من النشاط.",
-            "الإنجاز الحقيقي لا يُخل بصحتك.",
-            "اجعل العافية رفيقك الدائم في المكتب.",
-            "التدريب المنتظم يصنع جداراً ضد إرهاق المكتب.",
-            "الرشاقة والمرونة تبدأ من هنا.",
-            "استمتع بلحظات الاسترخاء القصيرة أثناء عملك.",
-            "جسدك يمتن لك عندما تمنحه هذه التمارين.",
-            "يوم عمل صحي هو يوم عمل ناجح ومثمر."
-        ];
-
-        const quotesEn = [
-            "Health is a crown worn by the healthy that only the ill can see.",
-            "A small movement today saves you from much pain tomorrow.",
-            "Consistency in simple exercises makes a huge difference.",
-            "A sound mind thrives in an active body during work.",
-            "Take a short break; your body deserves care.",
-            "Physical activity boosts your focus and productivity.",
-            "Make stretching a daily habit at your desk.",
-            "Small, consistent steps lead to amazing results.",
-            "Your occupational health begins with good posture.",
-            "Every minute of exercise is an investment in your comfort.",
-            "Don't wait until you're tired; stretch your muscles now.",
-            "Positive energy starts with a flexible and active body.",
-            "Prolonged sitting is the enemy of health; defeat it with movement.",
-            "Make your workspace an environment that supports your vitality.",
-            "A deep breath and movement shape your workday.",
-            "Correcting your posture refreshes your intellectual energy.",
-            "Body care is not a luxury; it is a necessity.",
-            "Every small exercise brings you closer to better health.",
-            "Listen to your body and give it the rest and movement it deserves.",
-            "The best investment is an investment in your health.",
-            "Make movement a part of your daily work routine.",
-            "The balance between work and rest is the secret to consistency.",
-            "Your health today is the foundation of tomorrow's achievements.",
-            "Overcoming laziness starts with a single stretch.",
-            "Your body is a reflection of how much you care for yourself.",
-            "Rest your eyes and shoulders and keep creating.",
-            "High focus starts with a tension-free body.",
-            "Don't postpone your office stretches for tomorrow.",
-            "A small step toward movement makes a great day.",
-            "Vitality at work starts with relaxed back vertebrae.",
-            "Let your mental clarity be tied to your muscle relaxation.",
-            "Every stretch releases a new wave of energy inside you.",
-            "Success at work begins with sustainable health.",
-            "Proper breathing changes the course of your workday.",
-            "Stay active to always be at your absolute best.",
-            "Simple changes yield the greatest results.",
-            "Give your neck and muscles a minute of love and relaxation.",
-            "Smart work involves caring for your health.",
-            "Don't let office stress steal your energy.",
-            "Mindful relaxation renews your creative energy.",
-            "Your willpower starts with caring for your physical health.",
-            "Be kind to your body throughout your working hours.",
-            "Every movement grants you a new lease on activity.",
-            "True achievement does not compromise your health.",
-            "Let wellness be your constant companion at the office.",
-            "Regular training builds a wall against office fatigue.",
-            "Agility and flexibility start right here.",
-            "Enjoy moments of short relaxation during your work.",
-            "Your body thanks you when you give it these exercises.",
-            "A healthy workday is a successful and productive workday."
-        ];
-
-        const db = {
-            neck: [
-                { id: 'n1', vid: 'exercise1.mp4', titleAr: '1. تمرين دوران الرقبة', titleEn: '1. Basic Neck Turn', descAr: 'أدر رأسك يميناً ويساراً مع الثبات 10 ثوانٍ.', descEn: 'Turn head side to side, hold for 10 seconds.' },
-                { id: 'n2', vid: 'nexkexercise2.mp4', titleAr: '2. إمالة الرقبة', titleEn: '2. Neck Tilt', descAr: 'أمل رأسك نحو كتفك ببطء واثبت.', descEn: 'Tilt head towards shoulder slowly and hold.' },
-                { id: 'n3', vid: 'shoulder.mp4', titleAr: '3. تمرين تحريك الكتفين', titleEn: '3. Shoulder Mobility', descAr: 'ارفع كتفيك نحو أذنيك ثم أنزلهما ببطء لإرخاء التوتر.', descEn: 'Lift shoulders toward ears and slowly lower to release tension.' }
-            ],
-            back: [
-                { id: 'b1', vid: 'exercise5.mp4', titleAr: '1. تمدد الأكتاف', titleEn: '1. Shoulder Stretch', descAr: 'مد ذراعيك للأمام وادفع ظهرك للخلف.', descEn: 'Stretch arms forward and push back.' }
-            ],
-            legs: [
-                { id: 'l1', vid: 'exercise13.mp4', titleAr: '1. تمدد الحوض', titleEn: '1. Hip Stretch', descAr: 'ضع كاحلك على ركبتك وانحنِ للأمام.', descEn: 'Place ankle on knee and lean forward.' }
-            ]
+        /**
+         * State Management Database
+         */
+        const AppState = {
+            user: localStorage.getItem('ot_user_pro') || '',
+            streak: parseInt(localStorage.getItem('ot_streak_pro') || '1'),
+            lastVisit: localStorage.getItem('ot_visit_pro') || '',
+            water: parseInt(localStorage.getItem('ot_water_pro') || '0'),
+            waterGoal: parseInt(localStorage.getItem('ot_water_goal') || '8'),
+            waterDate: localStorage.getItem('ot_water_date') || new Date().toDateString(),
+            totalWorkouts: parseInt(localStorage.getItem('ot_workouts') || '0'),
+            pomoWorkTime: parseInt(localStorage.getItem('ot_pomo_work') || '25'),
+            pomoBreakTime: parseInt(localStorage.getItem('ot_pomo_break') || '5'),
+            weeklyStats: JSON.parse(localStorage.getItem('ot_weekly') || '[0,0,0,0,0,0,0]')
         };
 
-        const trans = {
+        // Reset daily water
+        if (AppState.waterDate !== new Date().toDateString()) {
+            AppState.water = 0;
+            AppState.waterDate = new Date().toDateString();
+            
+            // Shift weekly stats (simple simulation: drop oldest, add 0 for today)
+            AppState.weeklyStats.shift();
+            AppState.weeklyStats.push(0);
+            
+            saveStateToLocal();
+        }
+
+        let currentLang = 'ar';
+        let currentVideoObj = null;
+
+        /**
+         * Translations Dictionary (Comprehensive)
+         */
+        const langDB = {
             ar: {
-                langBtn: "English", 
-                loginTitle: "مرحباً بك في العلاج المكتبي", loginSub: "الرجاء إدخال اسمك الكريم للبدء:", inputPlaceholder: "اكتب اسمك هنا...", startBtn: "دخول",
-                welcomeTitle: "أهلاً بك", welcomeSub: "اختر القسم الذي ترغب بتمرينه اليوم:",
-                cat1: "1. تمارين الرقبة والأكتاف", cat2: "2. تمارين الظهر والجذع", cat3: "3. تمارين الساقين والحوض",
-                btnCalcMain: "4. حاسبة السعرات والوجبات 🔥",
-                listTitle: "اختر التمرين:", backHome: "🔙 الرئيسية", backList: "🔙 القائمة", jumpHome: "🏠 الرئيسية",
-                countLabel: "عدد التكرارات المنجزة:", countBtn: "+ عدّ تمرين واحد", mute: "🔇 مكتوم", unmute: "🔊 يعمل",
-                guidance: "🎯 الهدف: يُنصح بعمل 3 إلى 5 تكرارات لكل جهة لضمان الفائدة.", instructionPrefix: "التعليمات: ",
-                calcTitle: "حاسبة السعرات الدقيقة", lblGender: "الجنس:", optMale: "ذكر", optFemale: "أنثى",
-                lblAge: "العمر (سنة):", lblWeight: "الوزن (كجم):", lblHeight: "الطول (سم):", lblActivity: "معدل النشاط:",
-                optAct1: "خامل (عمل مكتبي/بدون رياضة)", optAct2: "نشاط خفيف (رياضة 1-3 أيام)", optAct3: "نشاط متوسط (رياضة 3-5 أيام)", optAct4: "نشط جداً (رياضة يومية)",
-                btnCalc: "احسب السعرات", calcError: "الرجاء إدخال الوزن والطول بشكل صحيح.",
-                resMaint: "🔥 للمحافظة على الوزن:", resLoss: "📉 لإنقاص الوزن (عجز 500 سعرة):", resGain: "📈 لزيادة الوزن (فائض 500 سعرة):",
-                btnShowDiet: "عرض النظام الغذائي المقترح 🥗", btnHideDiet: "إخفاء النظام الغذائي ❌",
-                macrosTitle: "توزيع الماكروز (للمحافظة على الوزن):", lblCarbs: "كربوهيدرات (40%)", lblProtein: "بروتين (30%)", lblFats: "دهون (30%)",
-                mealsTitle: "أمثلة لوجبات صحية مرنة ومتنوعة:", 
-                mealBreakfastTitle: "الفطور (طاقة الصباح):",
-                mealBreakfastDesc: "شوفان بالحليب، مع شرائح الموز، قطرات العسل، ورشة قرفة مع حبات التوت.",
-                meal1Title: "الغداء (عالي البروتين):", 
-                meal1Desc: "سلطة متكاملة (بيض مسلوق، شرائح لحم عجل، خس، طماطم، خيار، وتفاح أخضر) مع تتبيلة من الزبادي اليوناني وزيت الزيتون.",
-                meal2Title: "وجبة خفيفة (سناك طاقة):", 
-                meal2Desc: "سموثي الفواكه المنعش (فراولة، توت أزرق، موز، مانجو، حليب، وقليل من العسل).",
-                meal3Title: "العشاء (كارب معتدل):", 
-                meal3Desc: "مكس سباغيتي وبيني باستا مع صوص الطماطم والثوم والفطر، ومزينة برشة من جبن القشقوان.",
-                mealExtraTitle: "بديل خفيف (قبل النوم):",
-                mealExtraDesc: "كوب زبادي يوناني مع بذور الشيا وبضع قطرات من العسل لتعزيز الاستشفاء الليلي."
+                appName: "العلاج المكتبي برو",
+                loginSub: "أدخل اسمك لنبدأ رحلة العناية بصحتك خلال العمل:", btnLogin: "دخول للمنصة",
+                greet: "مرحباً،", navDash: "لوحة التحكم", navEx: "التمارين", navPomo: "مؤقت التركيز", navDiet: "الدايت", navWater: "الصحة والماء", navSet: "الإعدادات",
+                dashStreak: "الأيام المتتالية:", dashWrk: "إجمالي التمارين:", dashTitleEx: "التمارين", dashDescEx: "تخلص من التوتر المكتبي.", dashTitlePo: "التركيز", dashDescPo: "مؤقت بومودورو ذكي.", dashTitleDi: "التغذية", dashDescDi: "حاسبة وجداول صحية.", dashTitleWa: "الماء", dashDescWa: "تتبع شربك وجلستك.", chartTitle: "نشاطك هذا الأسبوع",
+                exMainT: "أقسام التمارين", catN: "الرقبة والأكتاف", catB: "الظهر والجذع", catL: "الساقين والحوض", catE: "إراحة العين (20-20-20)", listAv: "التمارين المتاحة:",
+                vidReps: "التكرارات المنجزة:", btnAddRep: "+ سجل تكرار", errVidHead: "عذراً، الفيديو غير متوفر", errVidSub: "يرجى التأكد من رفع الفيديو على GitHub بالاسم الصحيح",
+                poTitle: "مؤقت التركيز", poSub: "نظم وقتك لزيادة الإنتاجية وتقليل الجهد.", btnW: "العمل", btnB: "استراحة",
+                calcH: "حاسبة السعرات الدقيقة", lG: "الجنس:", m: "ذكر", f: "أنثى", lA: "العمر:", lW: "الوزن (كجم):", lH: "الطول (سم):", lAct: "النشاط:",
+                a1: "خامل", a2: "خفيف", a3: "متوسط", a4: "نشط", btnCalc: "احسب", resT: "النتائج اليومية", rM: "المحافظة:", rL: "إنقاص:", rG: "زيادة:", mac: "الماكروز المقترح:",
+                waH: "متتبع شرب الماء 💧", waS: "الهدف اليومي:", waT: "المنجز:", ergH: "دليل الجلسة الصحية 🪑",
+                setH: "إعدادات المنصة ⚙️", sPw: "زمن العمل (دقيقة):", sPb: "زمن الراحة (دقيقة):", sW: "هدف الماء (أكواب):", btnS: "حفظ الإعدادات", btnOut: "تسجيل الخروج",
+                toastWelcome: "تم تسجيل الدخول بنجاح!", toastSave: "تم الحفظ بنجاح!", toastWater: "عاش! استمر في شرب الماء.", toastRep: "بطل! استمر.", toastDone: "انتهى الوقت!"
             },
             en: {
-                langBtn: "العربية", 
-                loginTitle: "Welcome to Office Therapy", loginSub: "Please enter your name to start:", inputPlaceholder: "Type your name here...", startBtn: "Enter",
-                welcomeTitle: "Welcome", welcomeSub: "Choose a category to start:",
-                cat1: "1. Neck & Shoulders", cat2: "2. Back & Trunk", cat3: "3. Legs & Hips",
-                btnCalcMain: "4. Calories & Diet Calc 🔥",
-                listTitle: "Select Exercise:", backHome: "🔙 Home", backList: "🔙 List", jumpHome: "🏠 Home",
-                countLabel: "Repetitions completed:", countBtn: "+ Add 1 Rep", mute: "🔇 Muted", unmute: "🔊 Sound On",
-                guidance: "🎯 Goal: Recommended 3 to 5 repetitions per side.", instructionPrefix: "Instructions: ",
-                calcTitle: "Accurate Calorie Calc", lblGender: "Gender:", optMale: "Male", optFemale: "Female",
-                lblAge: "Age (Years):", lblWeight: "Weight (kg):", lblHeight: "Height (cm):", lblActivity: "Activity Level:",
-                optAct1: "Sedentary (Office job)", optAct2: "Lightly active (1-3 days)", optAct3: "Moderately active (3-5 days)", optAct4: "Very active (daily)",
-                btnCalc: "Calculate Calories", calcError: "Please enter your weight and height correctly.",
-                resMaint: "🔥 Maintenance:", resLoss: "📉 Weight Loss (-500 cal):", resGain: "📈 Weight Gain (+500 cal):",
-                btnShowDiet: "Show Suggested Diet Plan 🥗", btnHideDiet: "Hide Diet Plan ❌",
-                macrosTitle: "Macro Distribution (Maintenance):", lblCarbs: "Carbs (40%)", lblProtein: "Protein (30%)", lblFats: "Fats (30%)",
-                mealsTitle: "Healthy Flexible Meal Examples:", 
-                mealBreakfastTitle: "Breakfast (Morning Energy):",
-                mealBreakfastDesc: "Oatmeal with milk, banana slices, honey drops, a dash of cinnamon, and fresh berries.",
-                meal1Title: "Lunch (High Protein):", 
-                meal1Desc: "Full salad (boiled eggs, veal slices, lettuce, tomato, cucumber, green apple) with Greek yogurt and olive oil dressing.",
-                meal2Title: "Snack (Energy Boost):", 
-                meal2Desc: "Fruit smoothie (strawberries, blueberries, banana, mango, milk, and a little honey).",
-                meal3Title: "Dinner (Moderate Carbs):", 
-                meal3Desc: "Mixed Spaghetti and Penne pasta with tomato, garlic, and mushroom sauce, topped with Kashkaval cheese.",
-                mealExtraTitle: "Light Option (Before Bed):",
-                mealExtraDesc: "A cup of Greek yogurt with chia seeds and a few drops of honey to support overnight recovery."
+                appName: "Office Therapy Pro",
+                loginSub: "Enter your name to start your wellness journey:", btnLogin: "Enter Platform",
+                greet: "Hello,", navDash: "Dashboard", navEx: "Exercises", navPomo: "Focus Timer", navDiet: "Diet Calc", navWater: "Wellness", navSet: "Settings",
+                dashStreak: "Streak Days:", dashWrk: "Total Workouts:", dashTitleEx: "Exercises", dashDescEx: "Relieve office stress.", dashTitlePo: "Focus", dashDescPo: "Smart Pomodoro timer.", dashTitleDi: "Nutrition", dashDescDi: "Calc & healthy plans.", dashTitleWa: "Water", dashDescWa: "Track hydration & posture.", chartTitle: "Your Weekly Activity",
+                exMainT: "Exercise Categories", catN: "Neck & Shoulders", catB: "Back & Trunk", catL: "Legs & Hips", catE: "Eye Rest (20-20-20)", listAv: "Available Exercises:",
+                vidReps: "Completed Reps:", btnAddRep: "+ Add Rep", errVidHead: "Sorry, Video Unavailable", errVidSub: "Ensure the video is uploaded to GitHub with the exact name",
+                poTitle: "Focus Timer", poSub: "Organize time to boost productivity.", btnW: "Work", btnB: "Break",
+                calcH: "Accurate Calorie Calc", lG: "Gender:", m: "Male", f: "Female", lA: "Age:", lW: "Weight (kg):", lH: "Height (cm):", lAct: "Activity:",
+                a1: "Sedentary", a2: "Light", a3: "Moderate", a4: "Active", btnCalc: "Calculate", resT: "Daily Results", rM: "Maintain:", rL: "Lose:", rG: "Gain:", mac: "Suggested Macros:",
+                waH: "Water Tracker 💧", waS: "Daily Goal:", waT: "Completed:", ergH: "Ergonomic Guide 🪑",
+                setH: "Platform Settings ⚙️", sPw: "Work Time (min):", sPb: "Break Time (min):", sW: "Water Goal (cups):", btnS: "Save Settings", btnOut: "Logout",
+                toastWelcome: "Logged in successfully!", toastSave: "Saved successfully!", toastWater: "Great! Keep hydrating.", toastRep: "Hero! Keep going.", toastDone: "Time's Up!"
             }
         };
 
-        function setRandomQuote() {
-            const list = currentLang === 'ar' ? quotesAr : quotesEn;
-            const randomQuote = list[Math.floor(Math.random() * list.length)];
-            document.getElementById("motivationalQuote").innerText = `💡 "${randomQuote}"`;
+        // Database
+        const dbExercises = {
+            neck: [
+                { id: 'n1', vid: 'exercise1.mp4', titleAr: 'دوران الرقبة', titleEn: 'Neck Turn', descAr: 'أدر رأسك يميناً ويساراً.', descEn: 'Turn head side to side.' },
+                { id: 'n2', vid: 'nexkexercise2.mp4', titleAr: 'إمالة الرقبة', titleEn: 'Neck Tilt', descAr: 'أمل رأسك نحو كتفك.', descEn: 'Tilt head toward shoulder.' },
+                { id: 'n3', vid: 'shoulder.mp4', titleAr: 'تحريك الكتفين', titleEn: 'Shoulder Mobility', descAr: 'ارفع كتفيك ثم أنزلهما.', descEn: 'Lift shoulders and lower.' }
+            ],
+            back: [{ id: 'b1', vid: 'exercise5.mp4', titleAr: 'تمدد الأكتاف', titleEn: 'Shoulder Stretch', descAr: 'مد ذراعيك للأمام وظهرك للخلف.', descEn: 'Stretch arms forward, push back.' }],
+            legs: [{ id: 'l1', vid: 'exercise13.mp4', titleAr: 'تمدد الحوض', titleEn: 'Hip Stretch', descAr: 'ضع كاحلك على ركبتك وانحنِ.', descEn: 'Ankle on knee, lean forward.' }],
+            eyes: [{ id: 'e1', vid: '', titleAr: 'تمرين 20-20-20', titleEn: '20-20-20 Rule', descAr: 'أغمض عينيك 20 ثانية لترتاح.', descEn: 'Close eyes for 20s to rest.' }]
+        };
+
+        /**
+         * Core Utilities
+         */
+        function saveStateToLocal() {
+            localStorage.setItem('ot_user_pro', AppState.user);
+            localStorage.setItem('ot_streak_pro', AppState.streak);
+            localStorage.setItem('ot_water_pro', AppState.water);
+            localStorage.setItem('ot_water_date', AppState.waterDate);
+            localStorage.setItem('ot_workouts', AppState.totalWorkouts);
+            localStorage.setItem('ot_pomo_work', AppState.pomoWorkTime);
+            localStorage.setItem('ot_pomo_break', AppState.pomoBreakTime);
+            localStorage.setItem('ot_water_goal', AppState.waterGoal);
+            localStorage.setItem('ot_weekly', JSON.stringify(AppState.weeklyStats));
         }
 
-        function updateStreak() {
-            let lastVisit = localStorage.getItem('ot_last_visit');
-            let streak = parseInt(localStorage.getItem('ot_streak') || '1');
-            let today = new Date().toDateString();
-
-            if (lastVisit !== today) {
-                let yesterday = new Date();
-                yesterday.setDate(yesterday.getDate() - 1);
-
-                if (lastVisit === yesterday.toDateString()) {
-                    streak++;
-                } else if (!lastVisit) {
-                    streak = 1;
-                } else {
-                    streak = 1;
-                }
-                localStorage.setItem('ot_last_visit', today);
-                localStorage.setItem('ot_streak', streak);
-            }
-
-            const streakText = currentLang === 'ar' ? `🔥 الأيام المتتالية: ${streak} أيام` : `🔥 Streak: ${streak} Days`;
-            document.getElementById("streakDisplay").innerText = streakText;
+        function showToast(msg) {
+            const hub = document.getElementById('toastHub');
+            const t = document.createElement('div');
+            t.className = 'toast-msg';
+            t.innerHTML = `<span>✨</span> ${msg}`;
+            hub.appendChild(t);
+            setTimeout(() => t.remove(), 4000);
         }
 
-        function toggleDarkMode() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute("data-theme");
-            if (currentTheme === "dark") {
-                html.removeAttribute("data-theme");
-                localStorage.setItem("theme", "light");
-                document.getElementById("darkModeBtn").innerText = "🌙";
-            } else {
-                html.setAttribute("data-theme", "dark");
-                localStorage.setItem("theme", "dark");
-                document.getElementById("darkModeBtn").innerText = "☀️";
-            }
+        // Web Audio API Beep (For Pomodoro)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playBeep() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            gain.gain.setValueAtTime(1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+            osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime + 0.5);
         }
 
-        if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.setAttribute("data-theme", "dark");
-            document.getElementById("darkModeBtn").innerText = "☀️";
-        }
+        /**
+         * Confetti Particle System (Advanced Graphics)
+         */
+        const canvas = document.getElementById('confettiCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let confettiActive = false;
 
-        function saveNameAndEnter() {
-            const inputVal = document.getElementById("userNameInput").value.trim();
-            if(inputVal === "") {
-                alert(currentLang === 'ar' ? "الرجاء إدخال الاسم أولاً" : "Please enter your name first");
-                return;
-            }
-            userName = inputVal;
-            
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbycyOEfQfDToRbMvNuIc24LThOp3M3A_g6tWvIxpo7qAcsvT5Y4lY5T7jjlaZvHxpZd/exec';
-            if (scriptURL) {
-                const img = new Image();
-                img.src = scriptURL + '?name=' + encodeURIComponent(userName);
-            }
-            
-            updateStreak();
-            setRandomQuote();
-            document.getElementById("welcomeTitle").innerText = (currentLang === 'ar' ? "أهلاً بك، " : "Welcome, ") + userName + "!";
-            document.getElementById("loginScreen").classList.remove("active");
-            document.getElementById("welcomeScreen").classList.add("active");
-        }
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
 
-        function updateUITexts() {
-            const t = trans[currentLang];
-            
-            document.getElementById("langBtn").innerText = t.langBtn;
-            document.getElementById("loginTitle").innerText = t.loginTitle;
-            document.getElementById("loginSub").innerText = t.loginSub;
-            document.getElementById("userNameInput").placeholder = t.inputPlaceholder;
-            document.getElementById("startAppBtn").innerText = t.startBtn;
-
-            if(userName !== "") {
-                document.getElementById("welcomeTitle").innerText = (currentLang === 'ar' ? "أهلاً بك، " : "Welcome, ") + userName + "!";
-            } else {
-                document.getElementById("welcomeTitle").innerText = t.welcomeTitle;
-            }
-            document.getElementById("welcomeSub").innerText = t.welcomeSub;
-            document.getElementById("btnCat1").innerText = t.cat1;
-            document.getElementById("btnCat2").innerText = t.cat2;
-            document.getElementById("btnCat3").innerText = t.cat3;
-            document.getElementById("btnCalcMain").innerText = t.btnCalcMain;
-            
-            document.getElementById("listTitle").innerText = t.listTitle;
-            document.getElementById("backToWelcomeBtn").innerText = t.backHome;
-            document.getElementById("backFromCalcBtn").innerText = t.backHome;
-
-            // تغيير نصوص أزرار الفيديو باللغتين
-            document.getElementById("backToListBtn").innerText = t.backList;
-            document.getElementById("jumpHomeBtn").innerText = t.jumpHome;
-
-            document.getElementById("calcTitleText").innerText = t.calcTitle;
-            document.getElementById("lblGender").innerText = t.lblGender;
-            document.getElementById("optMale").innerText = t.optMale;
-            document.getElementById("optFemale").innerText = t.optFemale;
-            document.getElementById("lblAge").innerText = t.lblAge;
-            document.getElementById("lblWeight").innerText = t.lblWeight;
-            document.getElementById("lblHeight").innerText = t.lblHeight;
-            document.getElementById("lblActivity").innerText = t.lblActivity;
-            document.getElementById("optAct1").innerText = t.optAct1;
-            document.getElementById("optAct2").innerText = t.optAct2;
-            document.getElementById("optAct3").innerText = t.optAct3;
-            document.getElementById("optAct4").innerText = t.optAct4;
-            document.getElementById("btnCalcCalories").innerText = t.btnCalc;
-            
-            const dietSec = document.getElementById("dietSection");
-            const dietBtn = document.getElementById("btnShowDiet");
-            if (dietSec.style.display === "block") {
-                dietBtn.innerText = t.btnHideDiet;
-            } else {
-                dietBtn.innerText = t.btnShowDiet;
-            }
-            
-            document.getElementById("macrosTitle").innerText = t.macrosTitle;
-            document.getElementById("lblCarbs").innerText = t.lblCarbs;
-            document.getElementById("lblProtein").innerText = t.lblProtein;
-            document.getElementById("lblFats").innerText = t.lblFats;
-            document.getElementById("mealsTitle").innerText = t.mealsTitle;
-            
-            document.getElementById("mealBreakfastTitle").innerText = t.mealBreakfastTitle;
-            document.getElementById("mealBreakfastDesc").innerText = t.mealBreakfastDesc;
-            document.getElementById("meal1Title").innerText = t.meal1Title;
-            document.getElementById("meal1Desc").innerText = t.meal1Desc;
-            document.getElementById("meal2Title").innerText = t.meal2Title;
-            document.getElementById("meal2Desc").innerText = t.meal2Desc;
-            document.getElementById("meal3Title").innerText = t.meal3Title;
-            document.getElementById("meal3Desc").innerText = t.meal3Desc;
-            document.getElementById("mealExtraTitle").innerText = t.mealExtraTitle;
-            document.getElementById("mealExtraDesc").innerText = t.mealExtraDesc;
-
-            if(document.getElementById("calcResult").style.display === "block") {
-                calculateCalories();
-            }
-
-            if(currentCategory !== '') {
-                const container = document.getElementById("exercisesContainer");
-                container.innerHTML = ""; 
-                db[currentCategory].forEach(ex => {
-                    let btn = document.createElement("button");
-                    btn.className = "exercise-list-item";
-                    btn.innerText = currentLang === 'ar' ? ex.titleAr : ex.titleEn;
-                    btn.onclick = () => openVideo(ex);
-                    container.appendChild(btn);
+        function fireConfetti() {
+            if(confettiActive) return;
+            confettiActive = true;
+            particles = [];
+            const colors = ['#2563eb', '#ef4444', '#10b981', '#f59e0b', '#a855f7'];
+            for(let i=0; i<100; i++) {
+                particles.push({
+                    x: canvas.width/2, y: canvas.height/2,
+                    r: Math.random() * 6 + 4,
+                    dx: Math.random() * 10 - 5, dy: Math.random() * -10 - 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    tilt: Math.floor(Math.random() * 10) - 10,
+                    tiltAngleInc: (Math.random() * 0.07) + 0.05,
+                    tiltAngle: 0
                 });
             }
+            animateConfetti();
+            setTimeout(() => { confettiActive = false; ctx.clearRect(0,0,canvas.width,canvas.height); }, 3000);
+        }
 
-            if(activeExercise) {
-                document.getElementById("videoTitle").innerText = currentLang === 'ar' ? activeExercise.titleAr : activeExercise.titleEn;
-                document.getElementById("videoDesc").innerHTML = "<strong>" + t.instructionPrefix + "</strong>" + (currentLang === 'ar' ? activeExercise.descAr : activeExercise.descEn);
-            }
-            document.getElementById("guidanceText").innerText = t.guidance;
-            document.getElementById("counterLabel").innerText = t.countLabel;
-            document.getElementById("addCountBtn").innerText = t.countBtn;
+        function animateConfetti() {
+            if(!confettiActive) return;
+            requestAnimationFrame(animateConfetti);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.tiltAngle += p.tiltAngleInc;
+                p.y += (Math.cos(p.tiltAngle) + 1 + p.r / 2) / 2;
+                p.x += Math.sin(p.tiltAngle) * 2;
+                p.dy += 0.1; // gravity
+                p.x += p.dx; p.y += p.dy;
+                
+                ctx.beginPath();
+                ctx.lineWidth = p.r;
+                ctx.strokeStyle = p.color;
+                ctx.moveTo(p.x + p.tilt + p.r, p.y);
+                ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r);
+                ctx.stroke();
+            });
+        }
+
+        /**
+         * Navigation & Initialization
+         */
+        function toggleSidebar() { document.getElementById('mainSidebar').classList.toggle('sidebar-hidden'); }
+        
+        function navigateTo(screenId) {
+            document.querySelectorAll('.screen-container').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
             
-            updateSoundBtn();
-            updateStreak();
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             
-            if (userName !== "") {
-                setRandomQuote();
-            }
+            const navMap = {
+                'dashboardScreen': 'navDash', 'exercisesScreen': 'navEx', 'videoScreen': 'navEx',
+                'pomoScreen': 'navPomo', 'dietScreen': 'navDiet', 'waterScreen': 'navWater', 'settingsScreen': 'navSettings'
+            };
+            if(navMap[screenId]) document.getElementById(navMap[screenId]).classList.add('active');
+            
+            // Close sidebar on mobile
+            if(window.innerWidth <= 768) document.getElementById('mainSidebar').classList.add('sidebar-hidden');
+            
+            // Render specific components
+            if(screenId === 'dashboardScreen') drawChart();
+            if(screenId === 'waterScreen') renderWater();
+            if(screenId !== 'videoScreen') document.getElementById('workoutVideo').pause();
         }
 
         function toggleLanguage() {
             currentLang = currentLang === 'ar' ? 'en' : 'ar';
-            document.getElementById("html-tag").dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-            document.getElementById("html-tag").lang = currentLang;
-            updateUITexts();
+            document.getElementById('html-tag').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('btnLang').innerText = currentLang === 'ar' ? 'EN' : 'AR';
+            applyTranslations();
         }
 
-        function openCalcScreen() {
-            document.getElementById("welcomeScreen").classList.remove("active");
-            document.getElementById("calcScreen").classList.add("active");
-        }
-
-        function calculateCalories() {
-            const gender = document.getElementById("calcGender").value;
-            const age = parseFloat(document.getElementById("calcAge").value);
-            const weight = parseFloat(document.getElementById("calcWeight").value);
-            const height = parseFloat(document.getElementById("calcHeight").value);
-            const activity = parseFloat(document.getElementById("calcActivity").value);
-            const resultDiv = document.getElementById("calcResult");
-            const t = trans[currentLang];
-
-            if(!age || !weight || !height) {
-                resultDiv.style.display = "block";
-                resultDiv.style.background = "rgba(255, 243, 205, 0.2)";
-                resultDiv.style.borderColor = "#ffeeba";
-                resultDiv.style.color = "#856404";
-                resultDiv.innerHTML = t.calcError;
-                document.getElementById("btnShowDiet").style.display = "none";
-                document.getElementById("dietSection").style.display = "none";
-                return;
-            }
-
-            let bmr;
-            if(gender === "male") {
-                bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            if (html.getAttribute("data-theme") === "dark") {
+                html.removeAttribute("data-theme"); localStorage.setItem("theme", "light");
+                document.getElementById("btnDark").innerText = "🌙";
             } else {
-                bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+                html.setAttribute("data-theme", "dark"); localStorage.setItem("theme", "dark");
+                document.getElementById("btnDark").innerText = "☀️";
+            }
+            if(document.getElementById('dashboardScreen').classList.contains('active')) drawChart(); // redraw chart with new colors
+        }
+
+        function appLogin() {
+            const name = document.getElementById('inputName').value.trim();
+            if(!name) return showToast(langDB[currentLang].loginSub);
+            
+            AppState.user = name;
+            
+            // Process Streak
+            let today = new Date().toDateString();
+            if(AppState.lastVisit !== today) {
+                let yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
+                if(AppState.lastVisit === yesterday.toDateString()) AppState.streak++;
+                else AppState.streak = 1;
+                AppState.lastVisit = today;
+            }
+            saveStateToLocal();
+            
+            // Send to Google Sheets (Hidden Image Hack to avoid CORS)
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbycyOEfQfDToRbMvNuIc24LThOp3M3A_g6tWvIxpo7qAcsvT5Y4lY5T7jjlaZvHxpZd/exec';
+            new Image().src = scriptURL + '?name=' + encodeURIComponent(AppState.user);
+            
+            initApp();
+            showToast(langDB[currentLang].toastWelcome);
+        }
+
+        function logoutUser() {
+            AppState.user = ''; saveStateToLocal();
+            document.getElementById('mainHeader').style.display = 'none';
+            document.getElementById('mainSidebar').classList.add('sidebar-hidden');
+            navigateTo('loginScreen');
+        }
+
+        function initApp() {
+            applyTranslations();
+            document.getElementById('mainHeader').style.display = 'flex';
+            if(window.innerWidth > 768) document.getElementById('mainSidebar').classList.remove('sidebar-hidden');
+            
+            // Populate Settings Values
+            document.getElementById('inpSetWork').value = AppState.pomoWorkTime;
+            document.getElementById('inpSetBreak').value = AppState.pomoBreakTime;
+            document.getElementById('inpSetWater').value = AppState.waterGoal;
+            
+            navigateTo('dashboardScreen');
+        }
+
+        /**
+         * SVG Chart Renderer (Pure JS)
+         */
+        function drawChart() {
+            const svg = document.getElementById('activityChart');
+            svg.innerHTML = '';
+            const data = AppState.weeklyStats;
+            const maxVal = Math.max(...data, 5); // Minimum scale is 5
+            
+            const width = 800; const height = 250;
+            const barWidth = 40; const gap = (width - (7 * barWidth)) / 8;
+            
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const barColor = isDark ? '#3b82f6' : '#2563eb';
+            const textColor = isDark ? '#94a3b8' : '#64748b';
+
+            const daysAr = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+            const daysEn = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+            const todayIdx = new Date().getDay();
+            
+            // Generate last 7 days labels ending with today
+            let labels = [];
+            for(let i=6; i>=0; i--) {
+                let d = new Date(); d.setDate(d.getDate() - i);
+                labels.push(currentLang === 'ar' ? daysAr[d.getDay()] : daysEn[d.getDay()]);
             }
 
-            currentTDEE = Math.round(bmr * activity);
-            const weightLoss = currentTDEE - 500;
-            const weightGain = currentTDEE + 500;
+            for(let i=0; i<7; i++) {
+                let h = (data[i] / maxVal) * (height - 50);
+                let x = gap + i * (barWidth + gap);
+                let y = height - 30 - h;
+                
+                // Bar
+                let rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', x); rect.setAttribute('y', y);
+                rect.setAttribute('width', barWidth); rect.setAttribute('height', h);
+                rect.setAttribute('fill', barColor); rect.setAttribute('rx', '4');
+                
+                // Label
+                let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', x + barWidth/2); text.setAttribute('y', height - 10);
+                text.setAttribute('text-anchor', 'middle'); text.setAttribute('fill', textColor);
+                text.setAttribute('font-size', '14'); text.textContent = labels[i];
 
-            resultDiv.style.display = "block";
-            resultDiv.style.background = "rgba(230, 126, 34, 0.1)";
-            resultDiv.style.borderColor = "var(--calc-color)";
-            resultDiv.style.color = "var(--calc-color)";
-            
-            resultDiv.innerHTML = `
-                <div style="font-size: 18px; margin-bottom: 8px;">${t.resMaint} <strong style="color:var(--calc-color); font-size:22px;">${currentTDEE}</strong></div>
-                <hr style="border: 1px solid rgba(230, 126, 34, 0.2); margin: 10px 0;">
-                <div style="font-size: 15px;">${t.resLoss} <strong style="color:#27ae60;">${weightLoss}</strong></div>
-                <div style="font-size: 15px; margin-top: 5px;">${t.resGain} <strong style="color:#c0392b;">${weightGain}</strong></div>
-            `;
+                // Value
+                if(data[i] > 0) {
+                    let valText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    valText.setAttribute('x', x + barWidth/2); valText.setAttribute('y', y - 5);
+                    valText.setAttribute('text-anchor', 'middle'); valText.setAttribute('fill', barColor);
+                    valText.setAttribute('font-weight', 'bold'); valText.textContent = data[i];
+                    svg.appendChild(valText);
+                }
 
-            document.getElementById("btnShowDiet").style.display = "block";
-            
-            if(document.getElementById("dietSection").style.display === "block"){
-                calculateMacros();
+                svg.appendChild(rect); svg.appendChild(text);
             }
         }
 
-        function toggleDietPlan() {
-            const dietSec = document.getElementById("dietSection");
-            const dietBtn = document.getElementById("btnShowDiet");
-            const t = trans[currentLang];
+        /**
+         * Exercises Module
+         */
+        function loadCategory(cat) {
+            const list = document.getElementById('dynamicExerciseList');
+            list.innerHTML = '';
+            dbExercises[cat].forEach(ex => {
+                let btn = document.createElement('button');
+                btn.className = 'fancy-btn';
+                btn.style.background = 'var(--bg-glass)';
+                btn.style.color = 'var(--primary)';
+                btn.style.border = '1px solid var(--primary)';
+                btn.style.boxShadow = 'var(--shadow-sm)';
+                btn.innerText = currentLang === 'ar' ? ex.titleAr : ex.titleEn;
+                btn.onclick = () => openVideoPlayer(ex);
+                list.appendChild(btn);
+            });
+            document.getElementById('exerciseListArea').style.display = 'block';
+        }
+
+        function openVideoPlayer(ex) {
+            currentVideoObj = ex;
+            document.getElementById('vidTitle').innerText = currentLang === 'ar' ? ex.titleAr : ex.titleEn;
+            document.getElementById('vidDesc').innerText = currentLang === 'ar' ? ex.descAr : ex.descEn;
             
-            if (dietSec.style.display === "none" || dietSec.style.display === "") {
-                calculateMacros();
-                dietSec.style.display = "block";
-                dietBtn.innerText = t.btnHideDiet;
+            const vidPlayer = document.getElementById('workoutVideo');
+            const errOverlay = document.getElementById('vidErrorOverlay');
+            
+            errOverlay.style.display = 'none';
+            count = 0; document.getElementById('repCounterDisplay').innerText = count;
+
+            if(ex.vid !== '') {
+                document.getElementById('videoBoxWrapper').style.display = 'block';
+                vidPlayer.src = ex.vid;
+                
+                // Advanced Error Handling for Shoulder.mp4 issue
+                vidPlayer.onerror = function() {
+                    errOverlay.style.display = 'flex';
+                    document.getElementById('expectedFileName').innerText = ex.vid;
+                };
             } else {
-                dietSec.style.display = "none";
-                dietBtn.innerText = t.btnShowDiet;
+                document.getElementById('videoBoxWrapper').style.display = 'none';
             }
+            navigateTo('videoScreen');
         }
 
-        function calculateMacros() {
-            const carbsCal = currentTDEE * 0.40;
-            const proteinCal = currentTDEE * 0.30;
-            const fatsCal = currentTDEE * 0.30;
-
-            const carbsGrams = Math.round(carbsCal / 4);
-            const proteinGrams = Math.round(proteinCal / 4);
-            const fatsGrams = Math.round(fatsCal / 9);
-
-            document.getElementById("valCarbs").innerText = carbsGrams + "g";
-            document.getElementById("valProtein").innerText = proteinGrams + "g";
-            document.getElementById("valFats").innerText = fatsGrams + "g";
-        }
-
-        function openCategory(cat) {
-            currentCategory = cat;
-            updateUITexts();
-            
-            document.getElementById("welcomeScreen").classList.remove("active");
-            document.getElementById("videoScreen").classList.remove("active");
-            document.getElementById("listScreen").classList.add("active");
-        }
-
-        function openVideo(ex) {
-            activeExercise = ex;
-            updateUITexts();
-            
-            video.src = ex.vid;
-            count = 0;
-            document.getElementById("counterValue").innerText = count;
-
-            document.getElementById("listScreen").classList.remove("active");
-            document.getElementById("videoScreen").classList.add("active");
-        }
-
-        function goHome() {
-            video.pause();
-            activeExercise = null;
-            document.getElementById("listScreen").classList.remove("active");
-            document.getElementById("videoScreen").classList.remove("active");
-            document.getElementById("calcScreen").classList.remove("active");
-            document.getElementById("welcomeScreen").classList.add("active");
-        }
-
-        function goToList() {
-            video.pause();
-            activeExercise = null;
-            document.getElementById("videoScreen").classList.remove("active");
-            document.getElementById("listScreen").classList.add("active");
-        }
-
-        function addCount() {
+        function recordRep() {
             count++;
-            document.getElementById("counterValue").innerText = count;
+            document.getElementById('repCounterDisplay').innerText = count;
+            AppState.totalWorkouts++;
+            AppState.weeklyStats[6]++; // Add to today's stats
+            saveStateToLocal();
+            fireConfetti();
+            showToast(langDB[currentLang].toastRep);
         }
 
         function toggleSound() {
-            video.muted = !video.muted;
-            updateSoundBtn();
+            const v = document.getElementById('workoutVideo');
+            v.muted = !v.muted;
+            document.getElementById('soundBtn').innerText = v.muted ? langDB[currentLang].mute : langDB[currentLang].unmute;
         }
 
-        function updateSoundBtn() {
-            document.getElementById("soundBtn").innerText = video.muted ? trans[currentLang].mute : trans[currentLang].unmute;
+        /**
+         * Pomodoro Timer Module
+         */
+        let pomoInterval;
+        let pomoTimeLeft = AppState.pomoWorkTime * 60;
+        let isPomoRunning = false;
+        let currentPomoMode = 'work'; // work | break
+        
+        function setTimerMode(mode) {
+            clearInterval(pomoInterval); isPomoRunning = false;
+            currentPomoMode = mode;
+            pomoTimeLeft = (mode === 'work' ? AppState.pomoWorkTime : AppState.pomoBreakTime) * 60;
+            document.getElementById('btnTimerPlay').innerText = "▶️";
+            document.getElementById('timerProgress').style.stroke = mode === 'work' ? 'var(--accent)' : 'var(--success)';
+            updatePomoDisplay();
         }
 
-        updateUITexts();
+        function updatePomoDisplay() {
+            let m = Math.floor(pomoTimeLeft / 60).toString().padStart(2, '0');
+            let s = (pomoTimeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('timerClock').innerText = `${m}:${s}`;
+            
+            const total = (currentPomoMode === 'work' ? AppState.pomoWorkTime : AppState.pomoBreakTime) * 60;
+            const circle = document.getElementById('timerProgress');
+            let offset = 879 - (pomoTimeLeft / total) * 879;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        function toggleTimer() {
+            if(isPomoRunning) {
+                clearInterval(pomoInterval); isPomoRunning = false;
+                document.getElementById('btnTimerPlay').innerText = "▶️";
+            } else {
+                isPomoRunning = true; document.getElementById('btnTimerPlay').innerText = "⏸️";
+                pomoInterval = setInterval(() => {
+                    if(pomoTimeLeft > 0) {
+                        pomoTimeLeft--; updatePomoDisplay();
+                    } else {
+                        clearInterval(pomoInterval); isPomoRunning = false;
+                        playBeep(); showToast(langDB[currentLang].toastDone);
+                        setTimerMode(currentPomoMode === 'work' ? 'break' : 'work');
+                    }
+                }, 1000);
+            }
+        }
+        function resetTimer() { setTimerMode(currentPomoMode); }
+
+        /**
+         * Diet & Calculator Module
+         */
+        function executeCalc() {
+            const age = parseFloat(document.getElementById('inpAge').value);
+            const w = parseFloat(document.getElementById('inpWeight').value);
+            const h = parseFloat(document.getElementById('inpHeight').value);
+            if(!w || !h) return showToast(langDB[currentLang].calcError);
+
+            const gen = document.getElementById('inpGender').value;
+            const act = parseFloat(document.getElementById('inpActivity').value);
+            
+            let bmr = gen === 'male' ? (10*w)+(6.25*h)-(5*age)+5 : (10*w)+(6.25*h)-(5*age)-161;
+            let tdee = Math.round(bmr * act);
+
+            document.getElementById('valMaint').innerText = tdee;
+            document.getElementById('valLoss').innerText = tdee - 500;
+            document.getElementById('valGain').innerText = tdee + 500;
+            
+            document.getElementById('valC').innerText = Math.round((tdee*0.4)/4) + "g";
+            document.getElementById('valP').innerText = Math.round((tdee*0.3)/4) + "g";
+            document.getElementById('valF').innerText = Math.round((tdee*0.3)/9) + "g";
+
+            document.getElementById('calcResultsBox').style.display = 'block';
+        }
+
+        /**
+         * Water Tracker Module
+         */
+        function renderWater() {
+            const grid = document.getElementById('waterGridArea');
+            grid.innerHTML = '';
+            for(let i=0; i<AppState.waterGoal; i++) {
+                let btn = document.createElement('button');
+                btn.style.width = '60px'; btn.style.height = '70px';
+                btn.style.border = '2px solid var(--info)';
+                btn.style.borderRadius = '5px 5px 15px 15px';
+                btn.style.background = i < AppState.water ? 'var(--info)' : 'transparent';
+                btn.style.color = i < AppState.water ? 'white' : 'var(--info)';
+                btn.style.fontSize = '24px'; btn.style.cursor = 'pointer';
+                btn.style.transition = 'all 0.2s';
+                btn.innerText = '💧';
+                btn.onclick = () => {
+                    if(AppState.water === i) { AppState.water++; fireConfetti(); showToast(langDB[currentLang].toastWater); }
+                    else if(AppState.water === i+1) AppState.water--;
+                    saveStateToLocal(); renderWater();
+                };
+                grid.appendChild(btn);
+            }
+            document.getElementById('waterTotalText').innerText = `${langDB[currentLang].waT} ${AppState.water} / ${AppState.waterGoal}`;
+        }
+
+        /**
+         * Settings Module
+         */
+        function saveSettings() {
+            AppState.pomoWorkTime = parseInt(document.getElementById('inpSetWork').value) || 25;
+            AppState.pomoBreakTime = parseInt(document.getElementById('inpSetBreak').value) || 5;
+            AppState.waterGoal = parseInt(document.getElementById('inpSetWater').value) || 8;
+            saveStateToLocal();
+            setTimerMode('work'); // Reset timer with new values
+            showToast(langDB[currentLang].toastSave);
+            navigateTo('dashboardScreen');
+        }
+
+        /**
+         * Apply Translations UI update
+         */
+        function applyTranslations() {
+            const t = langDB[currentLang];
+            
+            // Login & Header
+            document.getElementById('txtLoginTitle').innerText = t.appName;
+            document.getElementById('txtLoginSub').innerText = t.loginSub;
+            document.getElementById('txtStartBtn').innerText = t.btnLogin;
+            document.getElementById('headerGreeting').innerText = `${t.greet} ${AppState.user}`;
+            
+            // Sidebar
+            document.getElementById('navDash').innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>${t.navDash}`;
+            document.getElementById('navEx').innerHTML = `<svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>${t.navEx}`;
+            document.getElementById('navPomo').innerHTML = `<svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>${t.navPomo}`;
+            document.getElementById('navDiet').innerHTML = `<svg viewBox="0 0 24 24"><path d="M18 4H6v2h12V4zm0 4H6v2h12V8zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zM19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>${t.navDiet}`;
+            document.getElementById('navWater').innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8zm0 18c-3.35 0-6-2.57-6-6.2 0-2.34 1.95-5.44 6-9.14 4.05 3.7 6 6.79 6 9.14 0 3.63-2.65 6.2-6 6.2z"/></svg>${t.navWater}`;
+            document.getElementById('navSettings').innerHTML = `<svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>${t.navSet}`;
+            
+            // Dashboard
+            document.getElementById('txtStreak').innerText = `${t.dashStreak} ${AppState.streak}`;
+            document.getElementById('txtTotalWorkouts').innerText = `${t.dashWrk} ${AppState.totalWorkouts}`;
+            document.getElementById('dashExerTitle').innerText = t.dashTitleEx; document.getElementById('dashExerDesc').innerText = t.dashDescEx;
+            document.getElementById('dashPomoTitle').innerText = t.dashTitlePo; document.getElementById('dashPomoDesc').innerText = t.dashDescPo;
+            document.getElementById('dashDietTitle').innerText = t.dashTitleDi; document.getElementById('dashDietDesc').innerText = t.dashDescDi;
+            document.getElementById('dashWaterTitle').innerText = t.dashTitleWa; document.getElementById('dashWaterDesc').innerText = t.dashDescWa;
+            document.getElementById('chartTitle').innerText = t.chartTitle;
+            
+            // Exercises
+            document.getElementById('exerMainTitle').innerText = t.exMainT;
+            document.getElementById('catNeck').innerText = t.catN; document.getElementById('catBack').innerText = t.catB;
+            document.getElementById('catLegs').innerText = t.catL; document.getElementById('catEyes').innerText = t.catE;
+            document.getElementById('lblAvailableExer').innerText = t.listAv;
+            
+            // Video
+            document.getElementById('lblReps').innerHTML = `${t.vidReps} <span id="repCounterDisplay" style="color: var(--success); font-size: 28px;">${count}</span>`;
+            document.getElementById('btnAddRep').innerText = t.btnAddRep;
+            document.querySelector('#vidErrorOverlay h3').innerText = t.errVidHead;
+            document.querySelector('#vidErrorOverlay p').innerHTML = `${t.errVidSub} <br><strong id="expectedFileName" style="color:var(--accent);"></strong>`;
+            
+            // Pomodoro
+            document.getElementById('lblTimerTitle').innerText = t.poTitle; document.getElementById('lblTimerSub').innerText = t.poSub;
+            document.getElementById('btnModeWork').innerText = `${t.btnW} (${AppState.pomoWorkTime})`;
+            document.getElementById('btnModeBreak').innerText = `${t.btnB} (${AppState.pomoBreakTime})`;
+            document.getElementById('timerModeText').innerText = currentPomoMode === 'work' ? (currentLang==='ar'?'وقت العمل 🔥':'Focus Time 🔥') : (currentLang==='ar'?'وقت الراحة ☕':'Break Time ☕');
+
+            // Calc
+            document.getElementById('lblCalcHead').innerText = t.calcH;
+            document.getElementById('lblGen').innerText = t.lG; document.getElementById('optM').innerText = t.m; document.getElementById('optF').innerText = t.f;
+            document.getElementById('lblAgeInp').innerText = t.lA; document.getElementById('lblW').innerText = t.lW; document.getElementById('lblH').innerText = t.lH;
+            document.getElementById('lblAct').innerText = t.lAct;
+            document.getElementById('act1').innerText = t.a1; document.getElementById('act2').innerText = t.a2; document.getElementById('act3').innerText = t.a3; document.getElementById('act4').innerText = t.a4;
+            document.getElementById('btnDoCalc').innerText = t.btnCalc;
+            document.getElementById('lblResTitle').innerText = t.resT;
+            document.getElementById('lblMaint').innerText = t.rM; document.getElementById('lblLoss').innerText = t.rL; document.getElementById('lblGain').innerText = t.rG;
+            document.getElementById('lblMacros').innerText = t.mac;
+            document.getElementById('lblC').innerText = t.lblCarbs; document.getElementById('lblP').innerText = t.lblProtein; document.getElementById('lblF').innerText = t.lblFats;
+            
+            // Water
+            document.getElementById('lblWaterHead').innerText = t.waH; document.getElementById('lblWaterSub').innerText = `${t.waS} ${AppState.waterGoal}`;
+            document.getElementById('waterTotalText').innerText = `${t.waT} ${AppState.water} / ${AppState.waterGoal}`;
+            document.getElementById('lblErgoHead').innerText = t.ergH; document.getElementById('ergoListItems').innerHTML = t.ergoList;
+            
+            // Settings
+            document.getElementById('lblSetHead').innerText = t.setH;
+            document.getElementById('lblSetPomoWork').innerText = t.sPw; document.getElementById('lblSetPomoBreak').innerText = t.sPb;
+            document.getElementById('lblSetWater').innerText = t.sW;
+            document.getElementById('btnSaveSet').innerText = t.btnS; document.getElementById('btnLogout').innerText = t.btnOut;
+
+            // Re-render specifics if active
+            if(document.getElementById('dashboardScreen').classList.contains('active')) drawChart();
+            if(currentCategory !== '') loadCategory(currentCategory);
+        }
+
+        // Kickoff
+        if(AppState.user) initApp();
+
     </script>
 </body>
 </html>
