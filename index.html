@@ -353,15 +353,16 @@
                 </div>
                 
                 <div class="player-container">
+                    <p id="vidDesc" style="color: var(--text-muted); font-size: 16px; margin-bottom: 20px;"></p>
+                    
                     <div class="video-box" id="videoBoxWrapper">
                         <div id="vidErrorOverlay" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); color:white; flex-direction:column; justify-content:center; align-items:center; z-index:10; padding:20px;">
                             <span style="font-size: 40px; margin-bottom:15px;">⚠️</span>
                             <h3 style="margin-bottom: 10px;">عذراً، الفيديو غير متوفر</h3>
                             <p style="font-size:14px; color:#ccc;">يرجى التأكد من رفع الفيديو على GitHub بالاسم الصحيح <br><strong id="expectedFileName" style="color:var(--accent);"></strong></p>
                         </div>
-                        <video id="workoutVideo" autoplay loop muted playsinline>
-                            <source id="videoSource" src="" type="video/mp4">
-                        </video>
+                        <!-- تم إزالة وسم الـ source الداخلي لمنع تضارب المتصفحات -->
+                        <video id="workoutVideo" autoplay loop muted playsinline></video>
                     </div>
 
                     <div style="background: var(--bg-base); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
@@ -1064,7 +1065,7 @@
                 document.getElementById('lblWaterHead').innerText = t.waH; document.getElementById('waterTotalText').innerText = `${t.waT} ${AppState.water} / ${AppState.waterGoal}`;
                 document.getElementById('lblErgoHead').innerText = t.ergH;
                 
-                document.getElementById('settingsScreen').querySelector('h2').innerText = t.setH;
+                document.getElementById('lblSetHead').innerText = t.setH;
                 document.getElementById('lblSetPomoWork').innerText = t.sPw; document.getElementById('lblSetPomoBreak').innerText = t.sPb;
                 document.getElementById('lblSetWater').innerText = t.sW; document.getElementById('btnSaveSet').innerText = t.btnS; document.getElementById('btnLogout').innerText = t.btnOut;
                 
