@@ -949,7 +949,12 @@
 
         function openVideoPlayer(ex) {
             document.getElementById('vidTitle').innerText = currentLang === 'ar' ? ex.titleAr : ex.titleEn;
-            document.getElementById('vidDesc').innerText = currentLang === 'ar' ? ex.descAr : ex.descEn;
+            
+            // تم إضافة هذا الشرط للتأكد من وجود العنصر قبل تعديله لتجنب الأخطاء
+            const descElement = document.getElementById('vidDesc');
+            if (descElement) {
+                descElement.innerText = currentLang === 'ar' ? ex.descAr : ex.descEn;
+            }
             
             const vidPlayer = document.getElementById('workoutVideo');
             const errOverlay = document.getElementById('vidErrorOverlay');
