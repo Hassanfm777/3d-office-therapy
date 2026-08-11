@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#2c5e7b">
+    <meta name="theme-color" content="#1e293b">
     <title>Office Therapy Ultimate Pro</title>
     <style>
         :root {
-            --primary: #2563eb;
+            --primary: #3b82f6;
             --primary-light: #60a5fa;
-            --primary-dark: #1e40af;
+            --primary-dark: #1d4ed8;
             --secondary: #8b5cf6;
             --accent: #ef4444;
             --success: #10b981;
@@ -17,9 +17,9 @@
             --info: #0ea5e9;
             --calc-color: #e67e22;
             
-            --bg-base: #f1f5f9;
+            --bg-base: #f8fafc;
             --bg-surface: #ffffff;
-            --bg-glass: rgba(255, 255, 255, 0.88);
+            --bg-glass: rgba(255, 255, 255, 0.95);
             
             --text-main: #0f172a;
             --text-muted: #64748b;
@@ -38,217 +38,195 @@
             --radius-lg: 24px;
             --radius-full: 9999px;
             
-            --sidebar-width: 280px;
+            --sidebar-width: 260px;
             --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         [data-theme="dark"] {
-            --primary: #3b82f6;
-            --primary-light: #93c5fd;
-            --primary-dark: #1d4ed8;
-            --secondary: #a855f7;
-            
             --bg-base: #0f172a;
             --bg-surface: #1e293b;
-            --bg-glass: rgba(30, 41, 59, 0.92);
+            --bg-glass: rgba(30, 41, 59, 0.95);
             
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             
             --border-light: rgba(255, 255, 255, 0.08);
             --border-heavy: rgba(255, 255, 255, 0.15);
-            
-            --shadow-md: 0 8px 16px rgba(0,0,0,0.3);
-            --shadow-lg: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, var(--bg-base) 0%, var(--bg-surface) 100%), url('background.jpg');
-            background-size: cover; background-position: center; background-attachment: fixed; background-blend-mode: overlay;
+            background: var(--bg-base);
             color: var(--text-main); overflow-x: hidden; transition: var(--transition-smooth);
         }
 
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: var(--radius-full); }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         h1, h2, h3, h4 { color: var(--text-main); font-weight: 800; line-height: 1.2; }
         p { line-height: 1.6; color: var(--text-muted); }
         
         .app-layout { display: flex; min-height: 100vh; width: 100%; }
 
+        /* Sidebar Styling */
         .sidebar {
-            width: var(--sidebar-width); background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-inline-end: 1px solid var(--border-light); display: flex; flex-direction: column; padding: 30px 20px;
-            transition: var(--transition-smooth); z-index: 100; box-shadow: var(--shadow-glass);
+            width: var(--sidebar-width); background: var(--bg-glass); backdrop-filter: blur(20px);
+            border-inline-end: 1px solid var(--border-light); display: flex; flex-direction: column; padding: 25px 15px;
+            transition: var(--transition-smooth); z-index: 100; box-shadow: var(--shadow-glass); height: 100vh; position: sticky; top: 0; overflow-y: auto;
         }
+        .sidebar-hidden { transform: translateX(100%); margin-inline-end: calc(-1 * var(--sidebar-width)); display: none; }
+        [dir="ltr"] .sidebar-hidden { transform: translateX(-100%); }
 
-        .sidebar-hidden { transform: translateX(100%); margin-inline-end: calc(-1 * var(--sidebar-width)); }
-        [dir="ltr"] .sidebar-hidden { transform: translateX(-100%); margin-inline-start: calc(-1 * var(--sidebar-width)); margin-inline-end: 0; }
+        .brand { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 900; color: var(--primary); margin-bottom: 30px; padding: 0 10px; }
+        .brand svg { width: 28px; height: 28px; fill: currentColor; }
 
-        .brand { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 900; color: var(--primary); margin-bottom: 40px; }
-        .brand svg { width: 32px; height: 32px; fill: currentColor; }
-
-        .nav-menu { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .nav-menu { display: flex; flex-direction: column; gap: 5px; flex: 1; }
         .nav-item {
-            display: flex; align-items: center; gap: 15px; padding: 15px; border-radius: var(--radius-md); cursor: pointer;
-            color: var(--text-muted); font-weight: 600; font-size: 16px; transition: var(--transition-smooth); border: 1px solid transparent;
+            display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: var(--radius-md); cursor: pointer;
+            color: var(--text-muted); font-weight: 600; font-size: 15px; transition: var(--transition-smooth);
         }
-        .nav-item:hover { background: rgba(37, 99, 235, 0.05); color: var(--primary); }
-        .nav-item.active { background: var(--primary); color: var(--text-light); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); }
-        .nav-item svg { width: 24px; height: 24px; fill: currentColor; }
+        .nav-item:hover { background: rgba(59, 130, 246, 0.08); color: var(--primary); transform: translateX(5px); }
+        [dir="ltr"] .nav-item:hover { transform: translateX(-5px); }
+        .nav-item.active { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transform: none; }
+        .nav-item svg { width: 20px; height: 20px; fill: currentColor; }
+        .nav-divider { height: 1px; background: var(--border-light); margin: 10px 0; }
 
-        .main-content { flex: 1; display: flex; flex-direction: column; padding: 20px; height: 100vh; overflow-y: auto; position: relative; }
+        .main-content { flex: 1; display: flex; flex-direction: column; padding: 20px; min-height: 100vh; overflow-x: hidden; }
 
         .top-header {
-            display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: var(--bg-glass);
-            backdrop-filter: blur(10px); border-radius: var(--radius-lg); margin-bottom: 30px; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background: var(--bg-glass);
+            backdrop-filter: blur(10px); border-radius: var(--radius-lg); margin-bottom: 25px; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);
         }
-        .header-actions { display: flex; gap: 15px; align-items: center; }
-
+        
         .icon-btn {
-            background: transparent; border: 1px solid var(--border-light); color: var(--text-main); width: 45px; height: 45px;
-            border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; transition: var(--transition-smooth);
+            background: var(--bg-surface); border: 1px solid var(--border-light); color: var(--text-main); width: 40px; height: 40px;
+            border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; transition: var(--transition-smooth); box-shadow: var(--shadow-sm);
         }
-        .icon-btn:hover { background: var(--primary); color: white; border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .icon-btn:hover { background: var(--primary); color: white; border-color: var(--primary); transform: translateY(-2px); }
 
-        .screen-container { max-width: 1000px; margin: 0 auto; width: 100%; display: none; animation: fadeScale 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .screen-container { max-width: 1000px; margin: 0 auto; width: 100%; display: none; animation: fadeScale 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .screen-container.active { display: block; }
-        @keyframes fadeScale { 0% { opacity: 0; transform: scale(0.98) translateY(15px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        @keyframes fadeScale { 0% { opacity: 0; transform: scale(0.98) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
 
-        .top-action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; width: 100%; }
-        .back-btn-top {
-            background: var(--bg-surface); color: var(--text-main); border: 1px solid var(--border-heavy); padding: 10px 18px;
-            border-radius: var(--radius-md); cursor: pointer; font-weight: bold; font-size: 16px; transition: var(--transition-smooth);
-            box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 8px;
-        }
-        .back-btn-top:hover { background: var(--primary); color: white; border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .back-btn-top:active { transform: translateY(2px); }
-
+        /* Login Screen */
         .login-wrapper {
-            max-width: 500px; margin: 8vh auto; background: var(--bg-surface); padding: 40px; border-radius: var(--radius-lg);
+            max-width: 450px; margin: 10vh auto; background: var(--bg-surface); padding: 40px; border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg); text-align: center; border: 1px solid var(--border-light);
         }
-
         .lang-select-box { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
         .lang-option-btn {
             background: var(--bg-base); border: 2px solid var(--border-heavy); color: var(--text-muted);
             padding: 10px 25px; border-radius: var(--radius-full); font-weight: bold; cursor: pointer; transition: var(--transition-smooth);
         }
-        .lang-option-btn.selected {
-            background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(37,99,235,0.3);
-        }
+        .lang-option-btn.selected { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
 
         .fancy-input {
-            width: 100%; padding: 18px 25px; font-size: 18px; background: var(--bg-base); border: 2px solid var(--border-light);
-            color: var(--text-main); border-radius: var(--radius-md); margin: 10px 0 20px 0; outline: none; transition: var(--transition-smooth); text-align: center; font-weight: 600;
+            width: 100%; padding: 15px 20px; font-size: 16px; background: var(--bg-base); border: 2px solid var(--border-light);
+            color: var(--text-main); border-radius: var(--radius-md); margin-bottom: 20px; outline: none; transition: var(--transition-smooth); font-weight: 600;
         }
-        .fancy-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15); background: var(--bg-surface); }
+        .fancy-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); background: var(--bg-surface); }
 
         .fancy-btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; padding: 18px 30px;
-            font-size: 18px; font-weight: bold; border-radius: var(--radius-md); cursor: pointer; width: 100%;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3); transition: var(--transition-smooth); display: flex; justify-content: center; align-items: center; gap: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; padding: 15px 25px;
+            font-size: 16px; font-weight: bold; border-radius: var(--radius-md); cursor: pointer; width: 100%;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3); transition: var(--transition-smooth); display: flex; justify-content: center; align-items: center; gap: 10px;
         }
-        .fancy-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4); }
+        .fancy-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(59, 130, 246, 0.4); }
         .fancy-btn:active { transform: translateY(2px); }
 
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
-        .dash-card {
+        /* Dashboard specific */
+        .section-card {
             background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 25px;
-            box-shadow: var(--shadow-md); transition: var(--transition-smooth); cursor: pointer; position: relative; overflow: hidden;
+            box-shadow: var(--shadow-md); margin-bottom: 25px;
         }
-        .dash-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--primary); opacity: 0; transition: var(--transition-smooth); }
-        .dash-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-        .dash-card:hover::after { opacity: 1; }
-
-        .card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-        .card-icon { width: 50px; height: 50px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px; }
-
-        .chart-container { background: var(--bg-surface); padding: 25px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); margin-top: 30px; border: 1px solid var(--border-light); }
-        #activityChart { width: 100%; height: 250px; margin-top: 20px; }
-
-        .player-container { background: var(--bg-surface); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-lg); text-align: center; position: relative; }
-        .video-box { width: 100%; max-height: 500px; border-radius: var(--radius-md); overflow: hidden; background: #000; margin: 25px 0; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        video { width: 100%; height: 100%; object-fit: contain; }
-        .vid-controls { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
-        .btn-rep { background: var(--success); color: white; border: none; padding: 15px 40px; font-size: 24px; font-weight: 900; border-radius: var(--radius-full); cursor: pointer; box-shadow: 0 8px 0 #059669; transition: all 0.1s ease; }
-        .btn-rep:active { transform: translateY(8px); box-shadow: 0 0 0 #059669; }
-
-        .pomodoro-box { text-align: center; background: var(--bg-surface); padding: 40px 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
-        .pomo-ring { width: 300px; height: 300px; margin: 0 auto 30px; position: relative; }
-        .pomo-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .pomo-ring circle { fill: transparent; stroke-width: 12; stroke-linecap: round; }
-        .pomo-bg { stroke: var(--border-light); }
-        .pomo-progress { stroke: var(--accent); stroke-dasharray: 879; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear, stroke 0.3s; }
-        .pomo-time { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 64px; font-weight: 900; color: var(--text-main); font-variant-numeric: tabular-nums; }
-
-        .quote-box {
-            font-style: italic; font-size: 18px; line-height: 1.6;
-            background: linear-gradient(135deg, rgba(230, 126, 34, 0.2), rgba(37, 99, 235, 0.2));
-            padding: 25px; border-radius: var(--radius-md); border: 2px solid var(--calc-color);
-            color: var(--text-main); font-weight: 900; text-align: center;
-            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
-            margin: 15px 0 25px 0;
+        
+        /* Daily Goal Progress */
+        .goal-progress-container { width: 100%; height: 16px; background: var(--bg-base); border-radius: 8px; overflow: hidden; margin: 15px 0; border: 1px solid var(--border-light); }
+        .goal-progress-bar { height: 100%; background: var(--success); transition: width 0.5s ease; width: 0%; }
+        
+        .task-list { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .task-item {
+            display: flex; align-items: center; gap: 15px; padding: 12px 15px; background: var(--bg-base); border-radius: var(--radius-md);
+            cursor: pointer; transition: var(--transition-smooth); border: 1px solid var(--border-light); font-weight: 600;
         }
-
-        .breath-card {
-            background: var(--bg-surface); padding: 40px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
-            text-align: center; border: 2px solid var(--info); margin-bottom: 30px;
+        .task-item:hover { border-color: var(--primary); }
+        .task-checkbox {
+            width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--text-muted); display: flex; align-items: center; justify-content: center; transition: var(--transition-smooth);
         }
-        .breath-circle {
-            width: 180px; height: 180px; border-radius: 50%; background: rgba(14, 165, 233, 0.15);
-            border: 4px solid var(--info); margin: 30px auto; display: flex; align-items: center; justify-content: center;
-            font-size: 20px; font-weight: 800; color: var(--info); transition: transform 4s ease-in-out;
-        }
-        .breath-anim { transform: scale(1.3); background: rgba(14, 165, 233, 0.3); }
+        .task-item.completed { opacity: 0.6; }
+        .task-item.completed .task-checkbox { background: var(--success); border-color: var(--success); color: white; }
+        .task-item.completed .task-text { text-decoration: line-through; }
 
-        /* تصميم كوب الماء 3D */
+        /* Schedule Table */
+        .schedule-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .schedule-table th, .schedule-table td { padding: 15px; text-align: right; border-bottom: 1px solid var(--border-light); }
+        [dir="ltr"] .schedule-table th, [dir="ltr"] .schedule-table td { text-align: left; }
+        .schedule-table th { color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        .schedule-table tr:last-child td { border-bottom: none; }
+        .time-badge { background: rgba(59, 130, 246, 0.1); color: var(--primary); padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+        
+        /* Badges Grid */
+        .badges-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 20px; margin-top: 20px; }
+        .badge-card {
+            background: var(--bg-base); border: 2px solid var(--border-light); border-radius: var(--radius-lg); padding: 20px;
+            text-align: center; transition: var(--transition-smooth); opacity: 0.5; filter: grayscale(100%);
+        }
+        .badge-card.unlocked {
+            opacity: 1; filter: grayscale(0%); background: var(--bg-surface); border-color: var(--warning);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.15); transform: translateY(-5px);
+        }
+        .badge-icon { font-size: 40px; margin-bottom: 10px; }
+        .badge-title { font-weight: bold; font-size: 14px; color: var(--text-main); }
+
+        /* 3D Water Glass */
         .glass-container {
-            width: 140px; height: 220px; margin: 0 auto 30px; position: relative;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 5px 5px 25px 25px;
-            border: 4px solid rgba(14, 165, 233, 0.3);
-            border-top: none;
-            box-shadow: inset 0 -10px 20px rgba(14, 165, 233, 0.1), 0 10px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
-            display: flex; align-items: flex-end;
+            width: 120px; height: 200px; margin: 0 auto 30px; position: relative; background: rgba(255, 255, 255, 0.03);
+            border-radius: 5px 5px 20px 20px; border: 3px solid rgba(14, 165, 233, 0.3); border-top: none;
+            box-shadow: inset 0 -10px 20px rgba(14, 165, 233, 0.1), 0 10px 20px rgba(0,0,0,0.1); overflow: hidden; display: flex; align-items: flex-end;
         }
         .glass-water {
-            width: 100%; height: 0%;
-            background: linear-gradient(180deg, rgba(56, 189, 248, 0.8) 0%, rgba(2, 132, 199, 0.9) 100%);
-            transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 0 0 20px 20px;
-            box-shadow: inset 0 5px 10px rgba(255,255,255,0.3);
-            position: relative;
+            width: 100%; height: 0%; background: linear-gradient(180deg, rgba(56, 189, 248, 0.8) 0%, rgba(2, 132, 199, 0.9) 100%);
+            transition: height 1s cubic-bezier(0.4, 0, 0.2, 1); position: relative;
         }
         .glass-water::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px;
-            background: rgba(255,255,255,0.4); border-radius: 50%; transform: translateY(-3px);
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: rgba(255,255,255,0.4); border-radius: 50%; transform: translateY(-3px);
         }
 
+        /* Chart */
+        #activityChart { width: 100%; height: 250px; margin-top: 20px; }
+
+        /* Video Player */
+        .video-box { width: 100%; max-height: 450px; border-radius: var(--radius-md); overflow: hidden; background: #000; margin-bottom: 20px; position: relative; box-shadow: var(--shadow-md); }
+        video { width: 100%; height: 100%; object-fit: contain; }
+
+        /* Pomodoro */
+        .pomo-ring { width: 280px; height: 280px; margin: 0 auto 30px; position: relative; }
+        .pomo-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .pomo-ring circle { fill: transparent; stroke-width: 8; stroke-linecap: round; }
+        .pomo-bg { stroke: var(--border-light); }
+        .pomo-progress { stroke: var(--accent); stroke-dasharray: 879; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear, stroke 0.3s; }
+        .pomo-time { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 56px; font-weight: 900; color: var(--text-main); font-variant-numeric: tabular-nums; }
+
+        /* Toast */
         #confettiCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
-        .toast-wrapper { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; gap: 15px; z-index: 10000; }
-        .toast-msg { background: var(--text-main); color: var(--bg-base); padding: 16px 32px; border-radius: var(--radius-full); font-weight: 600; font-size: 16px; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 12px; animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards, fadeOut 0.4s ease 3.5s forwards; }
+        .toast-wrapper { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 10000; }
+        .toast-msg { background: var(--text-main); color: var(--bg-base); padding: 14px 28px; border-radius: var(--radius-full); font-weight: 600; font-size: 15px; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 10px; animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards, fadeOut 0.4s ease 3.5s forwards; }
         @keyframes popIn { 0% { opacity: 0; transform: translateY(50px) scale(0.8); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes fadeOut { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(50px); } }
 
         @media (max-width: 768px) {
-            .sidebar { position: fixed; height: 100vh; box-shadow: 20px 0 50px rgba(0,0,0,0.5); }
-            .main-content { padding: 10px; }
+            .sidebar { position: fixed; left: 0; box-shadow: 20px 0 50px rgba(0,0,0,0.5); }
+            [dir="rtl"] .sidebar { left: auto; right: 0; }
             .top-header { padding: 10px 15px; }
-            .dashboard-grid { grid-template-columns: 1fr; }
-            .pomo-ring { width: 250px; height: 250px; }
-            .pomo-time { font-size: 48px; }
-            .top-action-bar h2 { font-size: 18px !important; }
+            .pomo-ring { width: 220px; height: 220px; }
+            .pomo-time { font-size: 40px; }
+            .badges-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         .text-primary { color: var(--primary); } .text-accent { color: var(--accent); } .text-success { color: var(--success); } .text-warning { color: var(--warning); }
-        .bg-primary-light { background: rgba(37, 99, 235, 0.1); } .bg-accent-light { background: rgba(239, 68, 68, 0.1); } .bg-success-light { background: rgba(16, 185, 129, 0.1); } .bg-warning-light { background: rgba(245, 158, 11, 0.1); }
     </style>
 </head>
 <body>
@@ -268,25 +246,42 @@
                 <div class="nav-item active" onclick="playTick(); navigateTo('dashboardScreen')" id="navDash">
                     <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg> <span id="txtNavDash">لوحة التحكم</span>
                 </div>
+                
+                <div class="nav-divider"></div>
+                
                 <div class="nav-item" onclick="playTick(); navigateTo('exercisesScreen')" id="navEx">
-                    <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg> <span id="txtNavEx">التمارين المكتبية</span>
+                    <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg> <span id="txtNavEx">التمارين</span>
                 </div>
-                <div class="nav-item" onclick="playTick(); navigateTo('pomoScreen')" id="navPomo">
-                    <svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg> <span id="txtNavPomo">مؤقت التركيز</span>
-                </div>
-                <div class="nav-item" onclick="playTick(); navigateTo('dietScreen')" id="navDiet">
-                    <svg viewBox="0 0 24 24"><path d="M18 4H6v2h12V4zm0 4H6v2h12V8zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zM19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> <span id="txtNavDiet">الدايت والحاسبة</span>
-                </div>
-                <div class="nav-item" onclick="playTick(); navigateTo('waterScreen')" id="navWater">
-                    <svg viewBox="0 0 24 24"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8zm0 18c-3.35 0-6-2.57-6-6.2 0-2.34 1.95-5.44 6-9.14 4.05 3.7 6 6.79 6 9.14 0 3.63-2.65 6.2-6 6.2z"/></svg> <span id="txtNavWater">الماء والصحة</span>
-                </div>
-                <!-- قائمة الجلسة الصحية الجديدة -->
                 <div class="nav-item" onclick="playTick(); navigateTo('ergoScreen')" id="navErgo">
                     <svg viewBox="0 0 24 24"><path d="M20 2H4v2h16V2zm-2 4H6v2h12V6zm-4 4H10v2h4v-2zM4 14v8h2v-8H4zm14 0v8h2v-8h-2z"/></svg> <span id="txtNavErgo">الجلسة الصحية</span>
                 </div>
                 <div class="nav-item" onclick="playTick(); navigateTo('breathScreen')" id="navBreath">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg> <span id="txtNavBreath">تمرين التنفس</span>
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg> <span id="txtNavBreath">التنفس</span>
                 </div>
+                <div class="nav-item" onclick="playTick(); navigateTo('eyeScreen')" id="navEye">
+                    <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg> <span id="txtNavEye">إراحة العين</span>
+                </div>
+                <div class="nav-item" onclick="playTick(); navigateTo('waterScreen')" id="navWater">
+                    <svg viewBox="0 0 24 24"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8zm0 18c-3.35 0-6-2.57-6-6.2 0-2.34 1.95-5.44 6-9.14 4.05 3.7 6 6.79 6 9.14 0 3.63-2.65 6.2-6 6.2z"/></svg> <span id="txtNavWater">الماء</span>
+                </div>
+                <div class="nav-item" onclick="playTick(); navigateTo('pomoScreen')" id="navPomo">
+                    <svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg> <span id="txtNavPomo">مؤقت التركيز</span>
+                </div>
+
+                <div class="nav-divider"></div>
+                
+                <div class="nav-item" onclick="playTick(); navigateTo('progressScreen')" id="navProgress">
+                    <svg viewBox="0 0 24 24"><path d="M16 11V3H8v6H2v12h20V11h-6zm-6-6h4v14h-4V5zm-6 6h4v8H4v-8zm16 8h-4v-6h4v6z"/></svg> <span id="txtNavProgress">التقدم</span>
+                </div>
+                <div class="nav-item" onclick="playTick(); navigateTo('achieveScreen')" id="navAchieve">
+                    <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg> <span id="txtNavAchieve">الإنجازات</span>
+                </div>
+                <div class="nav-item" onclick="playTick(); navigateTo('dietScreen')" id="navDiet">
+                    <svg viewBox="0 0 24 24"><path d="M18 4H6v2h12V4zm0 4H6v2h12V8zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zM19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> <span id="txtNavDietMenu">التغذية</span>
+                </div>
+                
+                <div class="nav-divider"></div>
+
                 <div class="nav-item" onclick="playTick(); navigateTo('settingsScreen')" id="navSettings">
                     <svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg> <span id="txtNavSet">الإعدادات</span>
                 </div>
@@ -298,115 +293,129 @@
             <header class="top-header" id="mainHeader" style="display: none;">
                 <div style="display: flex; align-items: center; gap: 15px;">
                     <button class="icon-btn" onclick="playTick(); toggleSidebar()">☰</button>
-                    <h2 id="headerGreeting">مرحباً</h2>
+                    <h2 id="headerGreeting" style="font-size: 20px;">مرحباً</h2>
                 </div>
                 <div class="header-actions">
                     <button class="icon-btn" onclick="playTick(); toggleDarkMode()" id="btnDark">🌙</button>
-                    <!-- إزالة زر تغيير اللغة من هنا لتفادي الأخطاء كما طلبت -->
                 </div>
             </header>
 
+            <!-- Login Screen -->
             <div id="loginScreen" class="screen-container active">
                 <div class="login-wrapper">
-                    <svg width="100" height="100" viewBox="0 0 24 24" fill="var(--primary)" style="margin-bottom:15px;">
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="var(--primary)" style="margin-bottom:15px;">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
                     </svg>
-                    
-                    <h1 id="txtLoginTitle" style="font-size: 28px; margin-bottom: 8px;">Office Therapy Pro</h1>
-                    <p id="txtLoginSub" style="margin-bottom: 20px;">اختر لغتك المفضلة وأدخل اسمك للبدء:</p>
+                    <h1 id="txtLoginTitle" style="font-size: 26px; margin-bottom: 8px;">Office Therapy Pro</h1>
+                    <p id="txtLoginSub" style="margin-bottom: 25px;">اختر لغتك المفضلة وأدخل اسمك للبدء:</p>
                     
                     <div class="lang-select-box">
                         <button type="button" class="lang-option-btn selected" id="optLangAr" onclick="playTick(); preSelectLang('ar')">العربية 🇸🇦</button>
                         <button type="button" class="lang-option-btn" id="optLangEn" onclick="playTick(); preSelectLang('en')">English 🇺🇸</button>
                     </div>
 
-                    <input type="text" id="inputName" class="fancy-input" placeholder="اكتب اسمك هنا..." autocomplete="off">
+                    <input type="text" id="inputName" class="fancy-input" placeholder="...اكتب اسمك هنا" autocomplete="off">
                     
                     <button class="fancy-btn" onclick="playTick(); appLogin()">
                         <span id="txtStartBtn">دخول للمنصة</span>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
                     </button>
                 </div>
             </div>
 
+            <!-- Dashboard Screen -->
             <div id="dashboardScreen" class="screen-container">
-                <div class="quote-box" id="quoteBox">💡 "الصحة تاج على رؤوس الأصحاء."</div>
                 
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <div style="background: rgba(245, 158, 11, 0.1); color: var(--warning); padding: 10px 20px; border-radius: 20px; font-weight: bold; border: 1px solid var(--warning);">
-                        🔥 <span id="txtStreak">الأيام المتتالية: 0</span>
+                <!-- Daily Goal -->
+                <div class="section-card">
+                    <h3 id="lblGoalTitle" style="color: var(--primary); margin-bottom: 5px;">هدف اليوم</h3>
+                    <p id="lblGoalSub" style="font-size: 14px; font-weight: bold; color: var(--text-muted);">0 / 5 نشاطات مكتملة</p>
+                    
+                    <div class="goal-progress-container">
+                        <div class="goal-progress-bar" id="dailyProgressBar"></div>
                     </div>
-                    <div style="background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 10px 20px; border-radius: 20px; font-weight: bold; border: 1px solid var(--success);">
-                        🏋️ <span id="txtTotalWorkouts">إجمالي التمارين: 0</span>
+                    
+                    <div class="task-list">
+                        <div class="task-item" id="taskRow0" onclick="playTick(); toggleTask(0)">
+                            <div class="task-checkbox" id="check0"></div> <span class="task-text" id="lblTaskErgo">🪑 الجلسة الصحية</span>
+                        </div>
+                        <div class="task-item" id="taskRow1" onclick="playTick(); toggleTask(1)">
+                            <div class="task-checkbox" id="check1"></div> <span class="task-text" id="lblTaskStretch">🧘 تمارين الإطالة</span>
+                        </div>
+                        <div class="task-item" id="taskRow2" onclick="playTick(); toggleTask(2)">
+                            <div class="task-checkbox" id="check2"></div> <span class="task-text" id="lblTaskWater">💧 شرب الماء</span>
+                        </div>
+                        <div class="task-item" id="taskRow3" onclick="playTick(); toggleTask(3)">
+                            <div class="task-checkbox" id="check3"></div> <span class="task-text" id="lblTaskEye">👀 إراحة العين</span>
+                        </div>
+                        <div class="task-item" id="taskRow4" onclick="playTick(); toggleTask(4)">
+                            <div class="task-checkbox" id="check4"></div> <span class="task-text" id="lblTaskMove">🚶 الحركة والمشي</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="dashboard-grid">
-                    <div class="dash-card" onclick="playTick(); navigateTo('exercisesScreen')">
-                        <div class="card-header"><div class="card-icon bg-primary-light text-primary">🏃‍♂️</div><h3 id="dashExerTitle">التمارين</h3></div>
-                        <p id="dashExerDesc">تمارين الرقبة، الظهر، والحوض للتخلص من التوتر المكتبي.</p>
-                    </div>
-                    <div class="dash-card" onclick="playTick(); navigateTo('pomoScreen')">
-                        <div class="card-header"><div class="card-icon bg-accent-light text-accent">⏱️</div><h3 id="dashPomoTitle">التركيز</h3></div>
-                        <p id="dashPomoDesc">مؤقت بومودورو مع تنبيهات ذكية لتنظيم وقتك وحماية عينيك.</p>
-                    </div>
-                    <div class="dash-card" onclick="playTick(); navigateTo('dietScreen')">
-                        <div class="card-header"><div class="card-icon bg-warning-light text-warning">🥗</div><h3 id="dashDietTitle">التغذية</h3></div>
-                        <p id="dashDietDesc">حاسبة دقيقة للسعرات الحرارية وجداول وجبات صحية للمكتب.</p>
-                    </div>
-                    <div class="dash-card" onclick="playTick(); navigateTo('waterScreen')">
-                        <div class="card-header"><div class="card-icon bg-success-light text-success">💧</div><h3 id="dashWaterTitle">الماء</h3></div>
-                        <p id="dashWaterDesc">تتبع شربك للماء وتعرف على الوضعية الصحيحة للجلوس.</p>
-                    </div>
+                <!-- Your Plan Today -->
+                <div class="section-card">
+                    <h3 id="lblPlanTitle" style="color: var(--secondary); margin-bottom: 15px;">خطتك لليوم</h3>
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th id="lblPlanTime" style="width: 100px;">الوقت</th>
+                                <th id="lblPlanAct">النشاط</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><span class="time-badge">09:30</span></td><td id="planItem1">🧘 إطالة الرقبة</td></tr>
+                            <tr><td><span class="time-badge">11:00</span></td><td id="planItem2">👀 إراحة العين</td></tr>
+                            <tr><td><span class="time-badge">13:00</span></td><td id="planItem3">🚶 حركة ومشي</td></tr>
+                            <tr><td><span class="time-badge">15:30</span></td><td id="planItem4">🪑 ضبط الجلسة</td></tr>
+                        </tbody>
+                    </table>
                 </div>
 
-                <div class="chart-container">
-                    <h3 id="chartTitle" style="margin-bottom: 10px;">نشاطك هذا الأسبوع</h3>
-                    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">عدد التمارين المنجزة في آخر 7 أيام</p>
-                    <svg id="activityChart" viewBox="0 0 800 250" preserveAspectRatio="none"></svg>
-                </div>
             </div>
 
+            <!-- Exercises Screen -->
             <div id="exercisesScreen" class="screen-container">
                 <div class="top-action-bar">
                     <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
-                    <h2 id="exerMainTitle" style="color: var(--primary); margin: 0; font-size: 22px;">أقسام التمارين</h2>
+                    <h2 id="exerMainTitle" style="color: var(--primary); margin: 0; font-size: 20px;">التمارين المكتبية</h2>
                     <div style="width: 100px;"></div>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                    <button class="fancy-btn" style="background: var(--primary);" onclick="playTick(); loadCategory('neck')"><span id="catNeck">تمارين الرقبة والأكتاف</span></button>
-                    <button class="fancy-btn" style="background: var(--secondary);" onclick="playTick(); loadCategory('back')"><span id="catBack">تمارين الظهر والجذع</span></button>
-                    <button class="fancy-btn" style="background: var(--success);" onclick="playTick(); loadCategory('legs')"><span id="catLegs">تمارين الساقين والحوض</span></button>
-                    <button class="fancy-btn" style="background: var(--info);" onclick="playTick(); loadCategory('eyes')"><span id="catEyes">إراحة العين (20-20-20)</span></button>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <button class="fancy-btn" style="background: var(--primary);" onclick="playTick(); loadCategory('neck')"><span id="catNeck">الرقبة والأكتاف</span></button>
+                    <button class="fancy-btn" style="background: var(--secondary);" onclick="playTick(); loadCategory('back')"><span id="catBack">الظهر والجذع</span></button>
+                    <button class="fancy-btn" style="background: var(--success);" onclick="playTick(); loadCategory('legs')"><span id="catLegs">الساقين والحوض</span></button>
                 </div>
 
-                <div id="exerciseListArea" style="display: none; margin-top: 40px;">
-                    <h3 style="margin-bottom: 20px; border-bottom: 2px solid var(--border-light); padding-bottom: 10px;" id="lblAvailableExer">قائمة التمارين:</h3>
-                    <div id="dynamicExerciseList" style="display: flex; flex-direction: column; gap: 15px;"></div>
+                <div id="exerciseListArea" style="display: none; margin-top: 30px;">
+                    <h3 style="margin-bottom: 15px; border-bottom: 2px solid var(--border-light); padding-bottom: 10px;" id="lblAvailableExer">قائمة التمارين:</h3>
+                    <div id="dynamicExerciseList" style="display: flex; flex-direction: column; gap: 12px;"></div>
                 </div>
             </div>
 
+            <!-- Video Screen -->
             <div id="videoScreen" class="screen-container">
                 <div class="top-action-bar">
                     <button class="back-btn-top" onclick="playTick(); navigateTo('exercisesScreen')">🔙 <span class="btn-txt-back">رجوع</span></button>
-                    <h2 id="vidTitle" style="color: var(--primary); margin: 0; font-size: 20px; flex:1; text-align:center;">اسم التمرين</h2>
-                    <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')" style="background: var(--primary); color: white; border-color: var(--primary);">🏠 <span class="btn-txt-home">الرئيسية</span></button>
+                    <h2 id="vidTitle" style="color: var(--primary); margin: 0; font-size: 18px; flex:1; text-align:center;">اسم التمرين</h2>
+                    <div style="width: 80px;"></div>
                 </div>
                 
-                <div class="player-container">
+                <div class="section-card" style="text-align: center;">
                     <div class="video-box" id="videoBoxWrapper">
                         <div id="vidErrorOverlay" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); color:white; flex-direction:column; justify-content:center; align-items:center; z-index:10; padding:20px;">
-                            <span style="font-size: 40px; margin-bottom:15px;">⚠️</span>
-                            <h3 style="margin-bottom: 10px;" id="errVidH">عذراً، الفيديو غير متوفر</h3>
-                            <p style="font-size:14px; color:#ccc;" id="errVidP">يرجى التأكد من رفع الفيديو على GitHub بالاسم الصحيح <br><strong id="expectedFileName" style="color:var(--accent);"></strong></p>
+                            <span style="font-size: 40px; margin-bottom:10px;">⚠️</span>
+                            <h3 style="margin-bottom: 5px;" id="errVidH">عذراً، الفيديو غير متوفر</h3>
+                            <p style="font-size:12px; color:#ccc;" id="errVidP">يرجى التأكد من الرفع بالاسم الصحيح <br><strong id="expectedFileName" style="color:var(--accent);"></strong></p>
                         </div>
                         <video id="workoutVideo" autoplay loop muted playsinline></video>
                     </div>
-                    <p id="vidDesc" style="margin-bottom: 20px; color: var(--text-muted); font-size: 16px;"></p>
+                    <p id="vidDesc" style="margin-bottom: 20px; color: var(--text-muted); font-size: 15px;"></p>
 
-                    <div style="background: var(--bg-base); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
-                        <h3 style="margin-bottom: 10px; color: var(--text-main);" id="lblReps">التكرارات المنجزة: <span id="repCounterDisplay" style="color: var(--success); font-size: 28px;">0</span></h3>
+                    <div style="background: var(--bg-base); padding: 15px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+                        <h3 style="margin-bottom: 10px; color: var(--text-main);" id="lblReps">التكرارات: <span id="repCounterDisplay" style="color: var(--success); font-size: 24px;">0</span></h3>
                         <div class="vid-controls">
                             <button class="btn-rep" onclick="playTick(); recordRep()" id="btnAddRep">+ سجل تكرار</button>
                         </div>
@@ -414,261 +423,307 @@
                 </div>
             </div>
 
+            <!-- Focus Timer (Pomodoro) -->
             <div id="pomoScreen" class="screen-container">
                 <div class="top-action-bar">
                     <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
                     <div style="width: 100px;"></div>
                 </div>
 
-                <div class="pomodoro-box">
-                    <h2 id="lblTimerTitle" style="font-size: 32px; margin-bottom: 10px; color: var(--accent);">مؤقت التركيز</h2>
-                    <p id="lblTimerSub" style="margin-bottom: 30px;">نظم وقتك لزيادة الإنتاجية وتقليل الجهد.</p>
+                <div class="section-card" style="text-align: center;">
+                    <h2 id="lblTimerTitle" style="font-size: 28px; margin-bottom: 5px; color: var(--accent);">مؤقت التركيز</h2>
+                    <p id="lblTimerSub" style="margin-bottom: 25px;">نظم وقتك لزيادة الإنتاجية وتقليل الجهد.</p>
 
-                    <!-- إمكانية تعديل الوقت المباشر من نفس الشاشة -->
-                    <div style="display: flex; gap: 15px; justify-content: center; align-items: center; margin-bottom: 25px; background: var(--bg-base); padding: 15px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
-                        <div>
-                            <label style="font-size: 12px; font-weight: bold; color: var(--text-muted); display: block; margin-bottom: 5px;" id="lblSetWorkQuick">عمل (دقائق)</label>
-                            <input type="number" id="quickPomoWork" class="fancy-input" style="margin:0; padding:10px; width: 90px;" min="1" max="120">
+                    <div style="display: flex; gap: 10px; justify-content: center; align-items: flex-end; margin-bottom: 25px; background: var(--bg-base); padding: 15px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                        <div style="flex:1;">
+                            <label style="font-size: 11px; font-weight: bold; color: var(--text-muted); display: block; margin-bottom: 5px;" id="lblSetWorkQuick">عمل (د)</label>
+                            <input type="number" id="quickPomoWork" class="fancy-input" style="margin:0; padding:10px;" min="1" max="120">
                         </div>
-                        <div>
-                            <label style="font-size: 12px; font-weight: bold; color: var(--text-muted); display: block; margin-bottom: 5px;" id="lblSetBreakQuick">راحة (دقائق)</label>
-                            <input type="number" id="quickPomoBreak" class="fancy-input" style="margin:0; padding:10px; width: 90px;" min="1" max="30">
+                        <div style="flex:1;">
+                            <label style="font-size: 11px; font-weight: bold; color: var(--text-muted); display: block; margin-bottom: 5px;" id="lblSetBreakQuick">راحة (د)</label>
+                            <input type="number" id="quickPomoBreak" class="fancy-input" style="margin:0; padding:10px;" min="1" max="30">
                         </div>
-                        <button class="fancy-btn" style="width: auto; padding: 10px 20px; font-size: 14px; margin-top: 18px;" onclick="playTick(); updateQuickPomo()" id="btnUpdateTimer">تحديث</button>
+                        <button class="fancy-btn" style="width: auto; padding: 10px 15px; font-size: 14px;" onclick="playTick(); updateQuickPomo()" id="btnUpdateTimer">تحديث</button>
                     </div>
 
-                    <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
-                        <button class="fancy-btn" style="width: auto; padding: 10px 25px; font-size: 16px;" onclick="playTick(); setTimerMode('work')" id="btnModeWork">العمل (25)</button>
-                        <button class="fancy-btn" style="width: auto; padding: 10px 25px; font-size: 16px; background: var(--success);" onclick="playTick(); setTimerMode('break')" id="btnModeBreak">استراحة (5)</button>
+                    <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 25px;">
+                        <button class="fancy-btn" style="width: auto; padding: 10px 20px; font-size: 15px;" onclick="playTick(); setTimerMode('work')" id="btnModeWork">العمل</button>
+                        <button class="fancy-btn" style="width: auto; padding: 10px 20px; font-size: 15px; background: var(--success);" onclick="playTick(); setTimerMode('break')" id="btnModeBreak">استراحة</button>
                     </div>
 
                     <div class="pomo-ring">
                         <svg>
-                            <circle class="pomo-bg" cx="150" cy="150" r="140"></circle>
-                            <circle class="pomo-progress" id="timerProgress" cx="150" cy="150" r="140"></circle>
+                            <circle class="pomo-bg" cx="140" cy="140" r="130"></circle>
+                            <circle class="pomo-progress" id="timerProgress" cx="140" cy="140" r="130"></circle>
                         </svg>
                         <div class="pomo-time" id="timerClock">25:00</div>
                     </div>
 
                     <div id="timerModeText" style="color: var(--accent); font-weight: bold; margin-bottom: 20px; font-size: 18px;">وقت العمل 🔥</div>
 
-                    <div style="display: flex; justify-content: center; gap: 20px;">
-                        <button class="icon-btn" style="width: 70px; height: 70px; font-size: 28px; background: var(--primary); color: white;" onclick="playTick(); toggleTimer()" id="btnTimerPlay">▶️</button>
-                        <button class="icon-btn" style="width: 70px; height: 70px; font-size: 28px;" onclick="playTick(); resetTimer()">🔄</button>
+                    <div style="display: flex; justify-content: center; gap: 15px;">
+                        <button class="icon-btn" style="width: 60px; height: 60px; font-size: 24px; background: var(--primary); color: white;" onclick="playTick(); toggleTimer()" id="btnTimerPlay">▶️</button>
+                        <button class="icon-btn" style="width: 60px; height: 60px; font-size: 24px;" onclick="playTick(); resetTimer()">🔄</button>
                     </div>
                 </div>
             </div>
 
-            <div id="breathScreen" class="screen-container">
-                <div class="top-action-bar">
-                    <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
-                    <div style="width: 100px;"></div>
-                </div>
-
-                <div class="breath-card">
-                    <h2 id="breathTitle" style="color: var(--info); margin-bottom: 10px;">تمرين التنفس العميق 🌬️</h2>
-                    <p id="breathSub" style="color: var(--text-muted); margin-bottom: 20px;">خذ نفسًا عميقًا لتصفية ذهنك وإرخاء عضلاتك.</p>
-                    
-                    <div class="breath-circle" id="breathCircle" style="transition: transform 4s linear, background 4s linear;">استعد</div>
-                    
-                    <button class="fancy-btn" style="background: var(--info); max-width: 250px; margin: 0 auto; box-shadow: 0 6px 0 #0284c7;" onclick="playTick(); startBreathing()" id="btnStartBreath">ابدأ التمرين</button>
-                </div>
-            </div>
-
-            <div id="dietScreen" class="screen-container">
-                <div class="top-action-bar">
-                    <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
-                    <div style="width: 100px;"></div>
-                </div>
-
-                <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-light);">
-                    <h2 id="lblCalcHead" style="color: var(--calc-color); margin-bottom: 25px;">حاسبة السعرات الدقيقة</h2>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                        <div>
-                            <label style="font-weight: bold; color: var(--text-muted); display:block; margin-bottom:8px;" id="lblGen">الجنس:</label>
-                            <select id="inpGender" class="fancy-input" style="margin:0; padding:12px;">
-                                <option value="male" id="optM">ذكر</option><option value="female" id="optF">أنثى</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label style="font-weight: bold; color: var(--text-muted); display:block; margin-bottom:8px;" id="lblAgeInp">العمر:</label>
-                            <input type="number" id="inpAge" class="fancy-input" value="30" style="margin:0; padding:12px;">
-                        </div>
-                        <div>
-                            <label style="font-weight: bold; color: var(--text-muted); display:block; margin-bottom:8px;" id="lblW">الوزن (كجم):</label>
-                            <input type="number" id="inpWeight" class="fancy-input" placeholder="75" style="margin:0; padding:12px;">
-                        </div>
-                        <div>
-                            <label style="font-weight: bold; color: var(--text-muted); display:block; margin-bottom:8px;" id="lblH">الطول (سم):</label>
-                            <input type="number" id="inpHeight" class="fancy-input" placeholder="175" style="margin:0; padding:12px;">
-                        </div>
-                    </div>
-                    
-                    <label style="font-weight: bold; color: var(--text-muted); display:block; margin-bottom:8px;" id="lblAct">معدل النشاط:</label>
-                    <select id="inpActivity" class="fancy-input" style="margin:0 0 25px 0; padding:12px;">
-                        <option value="1.2" id="act1">خامل (مكتبي فقط)</option>
-                        <option value="1.375" id="act2">خفيف (رياضة 1-3 أيام)</option>
-                        <option value="1.55" id="act3">متوسط (رياضة 3-5 أيام)</option>
-                        <option value="1.725" id="act4">نشط (رياضة يومية)</option>
-                    </select>
-
-                    <button class="fancy-btn" style="background: var(--calc-color); box-shadow: 0 6px 0 #b95c00;" onclick="playTick(); executeCalc()" id="btnDoCalc">احسب السعرات</button>
-
-                    <div id="calcResultsBox" style="display: none; margin-top: 30px; padding: 25px; background: rgba(230, 126, 34, 0.05); border: 2px dashed var(--calc-color); border-radius: var(--radius-md);">
-                        <h3 style="text-align: center; color: var(--calc-color); margin-bottom: 20px;" id="lblResTitle">النتائج اليومية</h3>
-                        
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 18px; margin-bottom: 15px; border-bottom: 1px solid var(--border-light); padding-bottom: 10px;">
-                            <span id="lblMaint">🔥 المحافظة على الوزن:</span>
-                            <strong style="font-size: 24px; color: var(--calc-color);" id="valMaint">0</strong>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; margin-bottom: 15px;">
-                            <span id="lblLoss">📉 إنقاص الوزن:</span>
-                            <strong style="color: var(--success);" id="valLoss">0</strong>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px;">
-                            <span id="lblGain">📈 زيادة الوزن:</span>
-                            <strong style="color: var(--accent);" id="valGain">0</strong>
-                        </div>
-
-                        <h4 style="margin: 25px 0 15px; color: var(--primary);" id="lblMacros">الماكروز المقترح:</h4>
-                        <div style="display: flex; gap: 10px; text-align: center;">
-                            <div style="flex:1; background: rgba(245,158,11,0.1); padding: 15px; border-radius: var(--radius-sm); color: #d35400;">
-                                <div style="font-size: 12px; font-weight: bold;" id="lblC">كارب</div><div style="font-size: 20px; font-weight: 900; margin-top: 5px;" id="valC">0g</div>
-                            </div>
-                            <div style="flex:1; background: rgba(239,68,68,0.1); padding: 15px; border-radius: var(--radius-sm); color: #c0392b;">
-                                <div style="font-size: 12px; font-weight: bold;" id="lblP">بروتين</div><div style="font-size: 20px; font-weight: 900; margin-top: 5px;" id="valP">0g</div>
-                            </div>
-                            <div style="flex:1; background: rgba(139,92,246,0.1); padding: 15px; border-radius: var(--radius-sm); color: #6d28d9;">
-                                <div style="font-size: 12px; font-weight: bold;" id="lblF">دهون</div><div style="font-size: 20px; font-weight: 900; margin-top: 5px;" id="valF">0g</div>
-                            </div>
-                        </div>
-
-                        <div style="margin-top: 30px;">
-                            <h3 id="mealsTitle" style="color: var(--primary); margin-bottom: 15px;">قائمتك المفضلة والمقترحة:</h3>
-                            <div style="background: var(--bg-surface); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid #f1c40f;">
-                                <h4 id="meal1Title" style="color: var(--text-main); margin-bottom: 5px;">🍳 الفطور (طاقة الصباح)</h4>
-                                <p id="meal1Desc">شوفان بالحليب، مع شرائح الموز، قطرات العسل، ورشة قرفة مع حبات التوت.</p>
-                            </div>
-                            <div style="background: var(--bg-surface); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid var(--success);">
-                                <h4 id="meal2Title" style="color: var(--text-main); margin-bottom: 5px;">🥗 الغداء (السلطة المتكاملة)</h4>
-                                <p id="meal2Desc">سلطة غنية بالبروتين: بيض مسلوق، شرائح لحم عجل، خس، طماطم، خيار، وتفاح أخضر، بتتبيلة الزبادي اليوناني وزيت الزيتون.</p>
-                            </div>
-                            <div style="background: var(--bg-surface); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid var(--primary);">
-                                <h4 id="meal3Title" style="color: var(--text-main); margin-bottom: 5px;">🥤 سناك (جرعة انتعاش)</h4>
-                                <p id="meal3Desc">سموثي الفواكه المفضل: فراولة، توت أزرق، موز، مانجو، حليب، مع قليل من العسل.</p>
-                            </div>
-                            <div style="background: var(--bg-surface); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid var(--accent);">
-                                <h4 id="meal4Title" style="color: var(--text-main); margin-bottom: 5px;">🍝 العشاء (كارب معتدل)</h4>
-                                <p id="meal4Desc">مكس سباغيتي وبيني باستا بصوص الكريمة المخفوقة مع الطماطم، الثوم، الفطر، ومغطاة بجبن القشقوان اللذيذ.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- شاشة الماء المطورة بتصميم كوب 3D -->
-            <div id="waterScreen" class="screen-container">
-                <div class="top-action-bar">
-                    <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
-                    <div style="width: 100px;"></div>
-                </div>
-
-                <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--info); margin-bottom: 30px; text-align: center;">
-                    <h2 id="lblWaterHead" style="color: var(--info); margin-bottom: 10px;">متتبع شرب الماء 💧</h2>
-                    <p id="lblWaterSub" style="color: var(--text-muted); margin-bottom: 30px;">حافظ على رطوبة جسدك. الهدف الموصى به لعملك المكتبي.</p>
-                    
-                    <div style="font-size: 28px; font-weight: 900; color: var(--info); margin-bottom: 15px;" id="waterTotalText">0 / 2000 ml</div>
-                    
-                    <!-- كوب الماء 3D -->
-                    <div class="glass-container">
-                        <div class="glass-water" id="glassWaterLiquid"></div>
-                    </div>
-
-                    <div style="display: flex; justify-content: center; gap: 10px; max-width: 300px; margin: 0 auto;">
-                        <input type="number" id="customWaterInput" class="fancy-input" placeholder="مثال: 250" style="margin:0; padding:12px; flex: 1;">
-                        <button class="fancy-btn" style="background: var(--info); width: auto; padding: 12px 20px; box-shadow: 0 4px 0 #0284c7;" onclick="addCustomWater()" id="btnAddWater">إضافة (ml)</button>
-                    </div>
-                </div>
-
-                <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-light); margin-bottom: 30px;">
-                    <h2 id="lblWaterInfoHead" style="color: var(--primary); margin-bottom: 20px;">معلومات تهمك عن الماء 🌊</h2>
-                    
-                    <div style="background: rgba(37, 99, 235, 0.05); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 15px; border-inline-start: 4px solid var(--primary);">
-                        <h4 id="wiTypeTitle" style="color: var(--text-main); margin-bottom: 5px;">💧 أنواع مياه الشرب</h4>
-                        <p id="wiTypeDesc" style="color: var(--text-muted); font-size: 15px;">**المياه المعدنية:** تحتوي على أملاح معدنية طبيعية مفيدة للجسم. **المياه المفلترة (المنقاة):** خالية من الشوائب ومناسبة للاستخدام اليومي المستمر.</p>
-                    </div>
-
-                    <div style="background: rgba(245, 158, 11, 0.05); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 15px; border-inline-start: 4px solid var(--warning);">
-                        <h4 id="wiSodTitle" style="color: var(--text-main); margin-bottom: 5px;">🧂 انتبه للصوديوم</h4>
-                        <p id="wiSodDesc" style="color: var(--text-muted); font-size: 15px;">يُفضل اختيار مياه شرب تحتوي على نسبة صوديوم منخفضة (أقل من 20 ملغ/لتر) لتجنب احتباس السوائل وارتفاع ضغط الدم، خاصة في العمل المكتبي قليل الحركة.</p>
-                    </div>
-
-                    <div style="background: rgba(16, 185, 129, 0.05); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 15px; border-inline-start: 4px solid var(--success);">
-                        <h4 id="wiFreqTitle" style="color: var(--text-main); margin-bottom: 5px;">⏱️ متى تشرب؟</h4>
-                        <p id="wiFreqDesc" style="color: var(--text-muted); font-size: 15px;">لا تنتظر حتى تشعر بالعطش (العطش علامة متأخرة للجفاف). يُنصح بشرب كوب (250 مل) كل ساعة أو ساعتين أثناء جلوسك على المكتب.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- شاشة الجلسة الصحية المستقلة الجديدة -->
+            <!-- Ergonomics Screen -->
             <div id="ergoScreen" class="screen-container">
                 <div class="top-action-bar">
                     <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
                     <div style="width: 100px;"></div>
                 </div>
 
-                <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-light);">
-                    <h2 id="lblErgoHead" style="color: var(--primary); margin-bottom: 20px; text-align: center;">دليل الجلسة الصحية (Ergonomics) 🪑</h2>
-                    
-                    <!-- الصورة المطلوبة للجلسة الصحية -->
+                <div class="section-card">
+                    <h2 id="lblErgoHead" style="color: var(--primary); margin-bottom: 20px; text-align: center;">دليل الجلسة الصحية 🪑</h2>
                     <img src="Correct sit.png" alt="Correct Sitting" style="width: 100%; max-width: 400px; display: block; margin: 0 auto 25px auto; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-light);">
                     
                     <div style="background: rgba(139, 92, 246, 0.05); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid var(--secondary);">
                         <h4 id="ergo1Title" style="color: var(--text-main); margin-bottom: 5px;">🖥️ الشاشة</h4>
-                        <p id="ergo1Desc" style="color: var(--text-muted); font-size: 15px;">الثلث العلوي في مستوى العين وعلى بُعد امتداد الذراع.</p>
+                        <p id="ergo1Desc" style="color: var(--text-muted); font-size: 14px;">الثلث العلوي في مستوى العين وعلى بُعد امتداد الذراع.</p>
                     </div>
                     <div style="background: rgba(16, 185, 129, 0.05); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid var(--success);">
                         <h4 id="ergo2Title" style="color: var(--text-main); margin-bottom: 5px;">🪑 الظهر</h4>
-                        <p id="ergo2Desc" style="color: var(--text-muted); font-size: 15px;">مستقيم ومدعوم بالكامل بمسند الكرسي الخلفي.</p>
+                        <p id="ergo2Desc" style="color: var(--text-muted); font-size: 14px;">مستقيم ومدعوم بالكامل بمسند الكرسي الخلفي.</p>
                     </div>
                     <div style="background: rgba(239, 68, 68, 0.05); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid var(--accent);">
                         <h4 id="ergo3Title" style="color: var(--text-main); margin-bottom: 5px;">🤷 الأكتاف والمرفقين</h4>
-                        <p id="ergo3Desc" style="color: var(--text-muted); font-size: 15px;">الأكتاف مسترخية، والمرفقين بزاوية 90 درجة وقريبة من الجسم.</p>
+                        <p id="ergo3Desc" style="color: var(--text-muted); font-size: 14px;">الأكتاف مسترخية، والمرفقين بزاوية 90 درجة قريبة من الجسم.</p>
                     </div>
                     <div style="background: rgba(245, 158, 11, 0.05); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid var(--warning);">
                         <h4 id="ergo4Title" style="color: var(--text-main); margin-bottom: 5px;">👟 القدمين</h4>
-                        <p id="ergo4Desc" style="color: var(--text-muted); font-size: 15px;">مسطحة على الأرض بالكامل أو على مسند للقدمين.</p>
+                        <p id="ergo4Desc" style="color: var(--text-muted); font-size: 14px;">مسطحة على الأرض بالكامل أو على مسند للقدمين.</p>
                     </div>
                 </div>
             </div>
 
+            <!-- Breathing Screen -->
+            <div id="breathScreen" class="screen-container">
+                <div class="top-action-bar">
+                    <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
+                    <div style="width: 100px;"></div>
+                </div>
+
+                <div class="section-card" style="text-align: center;">
+                    <h2 id="breathTitle" style="color: var(--info); margin-bottom: 10px;">تمرين التنفس العميق 🌬️</h2>
+                    <p id="breathSub" style="color: var(--text-muted); margin-bottom: 20px;">خذ نفسًا عميقًا لتصفية ذهنك وإرخاء عضلاتك.</p>
+                    <div class="breath-circle" id="breathCircle" style="transition: transform 4s linear, background 4s linear;">استعد</div>
+                    <button class="fancy-btn" style="background: var(--info); max-width: 200px; margin: 0 auto;" onclick="playTick(); startBreathing()" id="btnStartBreath">ابدأ التمرين</button>
+                </div>
+            </div>
+
+            <!-- Eye Care Screen -->
+            <div id="eyeScreen" class="screen-container">
+                <div class="top-action-bar">
+                    <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
+                    <div style="width: 100px;"></div>
+                </div>
+
+                <div class="section-card" style="text-align: center;">
+                    <h2 id="eyeTitle" style="color: var(--primary); margin-bottom: 10px;">إراحة العين (20-20-20) 👀</h2>
+                    <p id="eyeSub" style="color: var(--text-muted); margin-bottom: 20px; font-size: 15px;">كل 20 دقيقة، انظر لشيء يبعد 20 قدماً، لمدة 20 ثانية.</p>
+                    
+                    <div style="font-size: 72px; font-weight: 900; color: var(--primary); margin: 30px 0; font-variant-numeric: tabular-nums;" id="eyeTimerDisplay">20</div>
+                    
+                    <button class="fancy-btn" style="max-width: 200px; margin: 0 auto;" onclick="playTick(); startEyeTimer()" id="btnStartEye">ابدأ 20 ثانية</button>
+                </div>
+            </div>
+
+            <!-- Water Screen -->
+            <div id="waterScreen" class="screen-container">
+                <div class="top-action-bar">
+                    <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
+                    <div style="width: 100px;"></div>
+                </div>
+
+                <div class="section-card" style="text-align: center;">
+                    <h2 id="lblWaterHead" style="color: var(--info); margin-bottom: 5px;">متتبع شرب الماء 💧</h2>
+                    <p id="lblWaterSub" style="color: var(--text-muted); margin-bottom: 25px; font-size: 14px;">الهدف الموصى به لعملك المكتبي.</p>
+                    
+                    <div style="font-size: 26px; font-weight: 900; color: var(--info); margin-bottom: 15px;" id="waterTotalText">0 / 2000 ml</div>
+                    
+                    <div class="glass-container">
+                        <div class="glass-water" id="glassWaterLiquid"></div>
+                    </div>
+
+                    <div style="display: flex; justify-content: center; gap: 10px; max-width: 250px; margin: 0 auto;">
+                        <input type="number" id="customWaterInput" class="fancy-input" placeholder="250" style="margin:0; padding:10px; flex: 1;">
+                        <button class="fancy-btn" style="background: var(--info); width: auto; padding: 10px 15px;" onclick="addCustomWater()" id="btnAddWater">إضافة</button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <h3 id="lblWaterInfoHead" style="color: var(--primary); margin-bottom: 15px;">معلومات تهمك 🌊</h3>
+                    <div style="background: rgba(37, 99, 235, 0.05); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid var(--primary);">
+                        <h4 id="wiTypeTitle" style="color: var(--text-main); margin-bottom: 4px;">💧 أنواع المياه</h4>
+                        <p id="wiTypeDesc" style="color: var(--text-muted); font-size: 13px;">المعدنية للأملاح الطبيعية، والمفلترة للاستخدام اليومي.</p>
+                    </div>
+                    <div style="background: rgba(245, 158, 11, 0.05); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 10px; border-inline-start: 4px solid var(--warning);">
+                        <h4 id="wiSodTitle" style="color: var(--text-main); margin-bottom: 4px;">🧂 انتبه للصوديوم</h4>
+                        <p id="wiSodDesc" style="color: var(--text-muted); font-size: 13px;">اختر مياه بنسبة صوديوم أقل من 20 ملغ/لتر.</p>
+                    </div>
+                    <div style="background: rgba(16, 185, 129, 0.05); padding: 12px; border-radius: var(--radius-sm); border-inline-start: 4px solid var(--success);">
+                        <h4 id="wiFreqTitle" style="color: var(--text-main); margin-bottom: 4px;">⏱️ متى تشرب؟</h4>
+                        <p id="wiFreqDesc" style="color: var(--text-muted); font-size: 13px;">كوب كل ساعة أو ساعتين، لا تنتظر العطش.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Screen -->
+            <div id="progressScreen" class="screen-container">
+                <div class="top-action-bar">
+                    <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
+                    <h2 id="progTitle" style="color: var(--primary); margin: 0;">التقدم</h2>
+                    <div style="width: 100px;"></div>
+                </div>
+
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <div style="flex:1; background: rgba(245, 158, 11, 0.1); color: var(--warning); padding: 20px; border-radius: var(--radius-md); text-align: center; border: 1px solid var(--warning);">
+                        <div style="font-size: 24px; font-weight: 900;" id="progStreakVal">0</div>
+                        <div style="font-size: 14px; font-weight: bold;" id="progStreakLbl">الأيام المتتالية</div>
+                    </div>
+                    <div style="flex:1; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 20px; border-radius: var(--radius-md); text-align: center; border: 1px solid var(--success);">
+                        <div style="font-size: 24px; font-weight: 900;" id="progWrkVal">0</div>
+                        <div style="font-size: 14px; font-weight: bold;" id="progWrkLbl">التمارين المنجزة</div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <h3 id="chartTitle" style="margin-bottom: 10px;">نشاطك هذا الأسبوع</h3>
+                    <svg id="activityChart" viewBox="0 0 800 250" preserveAspectRatio="none"></svg>
+                </div>
+            </div>
+
+            <!-- Achievements Screen -->
+            <div id="achieveScreen" class="screen-container">
+                <div class="top-action-bar">
+                    <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
+                    <h2 id="achieveMainTitle" style="color: var(--primary); margin: 0;">الإنجازات 🏆</h2>
+                    <div style="width: 100px;"></div>
+                </div>
+
+                <div class="badges-grid">
+                    <div class="badge-card" id="badgeStreak">
+                        <div class="badge-icon">🔥</div>
+                        <div class="badge-title" id="achieveStreak">بطل الاستمرارية (7 أيام)</div>
+                    </div>
+                    <div class="badge-card" id="badgeWorkout">
+                        <div class="badge-icon">💪</div>
+                        <div class="badge-title" id="achieveWorkout">وحش التمارين (50 تمرين)</div>
+                    </div>
+                    <div class="badge-card" id="badgePosture">
+                        <div class="badge-icon">🪑</div>
+                        <div class="badge-title" id="achievePosture">خبير الجلسة (إكمال هدف اليوم)</div>
+                    </div>
+                    <div class="badge-card" id="badgeWater">
+                        <div class="badge-icon">💧</div>
+                        <div class="badge-title" id="achieveWater">بطل الترطيب (الهدف اليومي)</div>
+                    </div>
+                    <div class="badge-card" id="badgeFocus">
+                        <div class="badge-icon">⏱️</div>
+                        <div class="badge-title" id="achieveFocus">بطل التركيز (10 جلسات)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nutrition Screen -->
+            <div id="dietScreen" class="screen-container">
+                <div class="top-action-bar">
+                    <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
+                    <div style="width: 100px;"></div>
+                </div>
+
+                <div class="section-card">
+                    <h2 id="lblCalcHead" style="color: var(--calc-color); margin-bottom: 20px;">حاسبة السعرات الدقيقة</h2>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div>
+                            <label style="font-size: 13px; font-weight: bold; color: var(--text-muted); display:block; margin-bottom:5px;" id="lblGen">الجنس:</label>
+                            <select id="inpGender" class="fancy-input" style="margin:0; padding:10px;">
+                                <option value="male" id="optM">ذكر</option><option value="female" id="optF">أنثى</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="font-size: 13px; font-weight: bold; color: var(--text-muted); display:block; margin-bottom:5px;" id="lblAgeInp">العمر:</label>
+                            <input type="number" id="inpAge" class="fancy-input" value="30" style="margin:0; padding:10px;">
+                        </div>
+                        <div>
+                            <label style="font-size: 13px; font-weight: bold; color: var(--text-muted); display:block; margin-bottom:5px;" id="lblW">الوزن (كجم):</label>
+                            <input type="number" id="inpWeight" class="fancy-input" placeholder="75" style="margin:0; padding:10px;">
+                        </div>
+                        <div>
+                            <label style="font-size: 13px; font-weight: bold; color: var(--text-muted); display:block; margin-bottom:5px;" id="lblH">الطول (سم):</label>
+                            <input type="number" id="inpHeight" class="fancy-input" placeholder="175" style="margin:0; padding:10px;">
+                        </div>
+                    </div>
+                    
+                    <label style="font-size: 13px; font-weight: bold; color: var(--text-muted); display:block; margin-bottom:5px;" id="lblAct">معدل النشاط:</label>
+                    <select id="inpActivity" class="fancy-input" style="margin:0 0 20px 0; padding:10px;">
+                        <option value="1.2" id="act1">خامل (مكتبي فقط)</option>
+                        <option value="1.375" id="act2">خفيف (رياضة 1-3 أيام)</option>
+                        <option value="1.55" id="act3">متوسط (رياضة 3-5 أيام)</option>
+                        <option value="1.725" id="act4">نشط (رياضة يومية)</option>
+                    </select>
+
+                    <button class="fancy-btn" style="background: var(--calc-color);" onclick="playTick(); executeCalc()" id="btnDoCalc">احسب السعرات</button>
+
+                    <div id="calcResultsBox" style="display: none; margin-top: 25px; padding: 20px; background: rgba(230, 126, 34, 0.05); border: 1px dashed var(--calc-color); border-radius: var(--radius-md);">
+                        <h3 style="text-align: center; color: var(--calc-color); margin-bottom: 15px;" id="lblResTitle">النتائج اليومية</h3>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; margin-bottom: 10px; border-bottom: 1px solid var(--border-light); padding-bottom: 8px;">
+                            <span id="lblMaint">🔥 المحافظة:</span> <strong style="color: var(--calc-color);" id="valMaint">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px; margin-bottom: 10px;">
+                            <span id="lblLoss">📉 إنقاص:</span> <strong style="color: var(--success);" id="valLoss">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px;">
+                            <span id="lblGain">📈 زيادة:</span> <strong style="color: var(--accent);" id="valGain">0</strong>
+                        </div>
+
+                        <h4 style="margin: 20px 0 10px; color: var(--primary); font-size: 14px;" id="lblMacros">الماكروز المقترح:</h4>
+                        <div style="display: flex; gap: 8px; text-align: center;">
+                            <div style="flex:1; background: rgba(245,158,11,0.1); padding: 10px; border-radius: var(--radius-sm); color: #d35400;">
+                                <div style="font-size: 11px; font-weight: bold;" id="lblC">كارب</div><div style="font-size: 16px; font-weight: 900;" id="valC">0g</div>
+                            </div>
+                            <div style="flex:1; background: rgba(239,68,68,0.1); padding: 10px; border-radius: var(--radius-sm); color: #c0392b;">
+                                <div style="font-size: 11px; font-weight: bold;" id="lblP">بروتين</div><div style="font-size: 16px; font-weight: 900;" id="valP">0g</div>
+                            </div>
+                            <div style="flex:1; background: rgba(139,92,246,0.1); padding: 10px; border-radius: var(--radius-sm); color: #6d28d9;">
+                                <div style="font-size: 11px; font-weight: bold;" id="lblF">دهون</div><div style="font-size: 16px; font-weight: 900;" id="valF">0g</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Screen -->
             <div id="settingsScreen" class="screen-container">
                 <div class="top-action-bar">
                     <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
                     <div style="width: 100px;"></div>
                 </div>
 
-                <div style="background: var(--bg-surface); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid var(--border-light);">
+                <div class="section-card">
                     <h2 id="lblSetHead" style="color: var(--text-main); margin-bottom: 25px;">إعدادات المنصة ⚙️</h2>
                     
-                    <div style="margin-bottom: 25px;">
-                        <label style="font-weight: bold; display:block; margin-bottom:10px;" id="lblSetPomoWork">زمن العمل (بومودورو):</label>
-                        <input type="number" id="inpSetWork" class="fancy-input" value="25" style="margin:0; padding:12px;">
+                    <div style="margin-bottom: 20px;">
+                        <label style="font-size: 14px; font-weight: bold; display:block; margin-bottom:8px;" id="lblSetPomoWork">زمن العمل (د):</label>
+                        <input type="number" id="inpSetWork" class="fancy-input" style="margin:0; padding:12px;">
                     </div>
                     
-                    <div style="margin-bottom: 25px;">
-                        <label style="font-weight: bold; display:block; margin-bottom:10px;" id="lblSetPomoBreak">زمن الراحة (بومودورو):</label>
-                        <input type="number" id="inpSetBreak" class="fancy-input" value="5" style="margin:0; padding:12px;">
+                    <div style="margin-bottom: 20px;">
+                        <label style="font-size: 14px; font-weight: bold; display:block; margin-bottom:8px;" id="lblSetPomoBreak">زمن الراحة (د):</label>
+                        <input type="number" id="inpSetBreak" class="fancy-input" style="margin:0; padding:12px;">
                     </div>
 
-                    <div style="margin-bottom: 30px;">
-                        <label style="font-weight: bold; display:block; margin-bottom:10px;" id="lblSetWater">الهدف اليومي للماء (بالمليلتر - ml):</label>
-                        <input type="number" step="250" id="inpSetWater" class="fancy-input" value="2000" style="margin:0; padding:12px;">
+                    <div style="margin-bottom: 25px;">
+                        <label style="font-size: 14px; font-weight: bold; display:block; margin-bottom:8px;" id="lblSetWater">الهدف اليومي للماء (ml):</label>
+                        <input type="number" step="250" id="inpSetWater" class="fancy-input" style="margin:0; padding:12px;">
                     </div>
 
                     <button class="fancy-btn" onclick="playTick(); saveSettings()" id="btnSaveSet">حفظ الإعدادات</button>
-                    <button class="fancy-btn" style="background: var(--accent); box-shadow: 0 6px 0 #b91c1c; margin-top: 15px;" onclick="playTick(); logoutUser()" id="btnLogout">تسجيل الخروج</button>
+                    <button class="fancy-btn" style="background: var(--accent); margin-top: 15px;" onclick="playTick(); logoutUser()" id="btnLogout">تسجيل الخروج</button>
                 </div>
             </div>
 
@@ -677,175 +732,146 @@
 
     <script>
         let parsedWeekly;
-        try {
-            parsedWeekly = JSON.parse(localStorage.getItem('ot_weekly'));
-            if (!Array.isArray(parsedWeekly)) parsedWeekly = [0,0,0,0,0,0,0];
-        } catch(e) { parsedWeekly = [0,0,0,0,0,0,0]; }
+        try { parsedWeekly = JSON.parse(localStorage.getItem('ot_weekly')); if (!Array.isArray(parsedWeekly)) parsedWeekly = [0,0,0,0,0,0,0]; } catch(e) { parsedWeekly = [0,0,0,0,0,0,0]; }
+        let parsedTasks;
+        try { parsedTasks = JSON.parse(localStorage.getItem('ot_tasks')); if (!Array.isArray(parsedTasks)) parsedTasks = [false,false,false,false,false]; } catch(e) { parsedTasks = [false,false,false,false,false]; }
 
         const AppState = {
             user: localStorage.getItem('ot_user_pro') || '',
-            lang: localStorage.getItem('ot_lang_pro') || 'ar', // حفظ لغة المستخدم
+            lang: localStorage.getItem('ot_lang_pro') || 'en', 
             streak: parseInt(localStorage.getItem('ot_streak_pro') || '1'),
             lastVisit: localStorage.getItem('ot_visit_pro') || '',
             water: parseInt(localStorage.getItem('ot_water_pro') || '0'),
             waterGoal: parseInt(localStorage.getItem('ot_water_goal') || '2000'),
             waterDate: localStorage.getItem('ot_water_date') || new Date().toDateString(),
             totalWorkouts: parseInt(localStorage.getItem('ot_workouts') || '0'),
+            pomoCount: parseInt(localStorage.getItem('ot_pomo_count') || '0'),
             pomoWorkTime: parseInt(localStorage.getItem('ot_pomo_work') || '25'),
             pomoBreakTime: parseInt(localStorage.getItem('ot_pomo_break') || '5'),
-            weeklyStats: parsedWeekly
+            weeklyStats: parsedWeekly,
+            dailyTasks: parsedTasks
         };
 
         let currentLang = AppState.lang;
 
-        // تحويل نظام الأكواب القديم لنظام المليلتر للمستخدمين القدامى
-        if (AppState.waterGoal < 100) {
-            AppState.waterGoal = 2000;
-            AppState.water = AppState.water * 250;
-            saveStateToLocal();
-        }
+        if (AppState.waterGoal < 100) { AppState.waterGoal = 2000; AppState.water = AppState.water * 250; saveStateToLocal(); }
 
         try {
             if (AppState.waterDate !== new Date().toDateString()) {
-                AppState.water = 0;
-                AppState.waterDate = new Date().toDateString();
-                if (Array.isArray(AppState.weeklyStats)) {
-                    AppState.weeklyStats.shift();
-                    AppState.weeklyStats.push(0);
-                } else {
-                    AppState.weeklyStats = [0,0,0,0,0,0,0];
-                }
+                AppState.water = 0; AppState.dailyTasks = [false,false,false,false,false]; AppState.waterDate = new Date().toDateString();
+                if (Array.isArray(AppState.weeklyStats)) { AppState.weeklyStats.shift(); AppState.weeklyStats.push(0); } else { AppState.weeklyStats = [0,0,0,0,0,0,0]; }
                 saveStateToLocal();
             }
         } catch(e) { console.error('Date reset error', e); }
 
         function saveStateToLocal() {
             try {
-                localStorage.setItem('ot_user_pro', AppState.user);
-                localStorage.setItem('ot_lang_pro', AppState.lang);
-                localStorage.setItem('ot_streak_pro', AppState.streak);
-                localStorage.setItem('ot_visit_pro', AppState.lastVisit);
-                localStorage.setItem('ot_water_pro', AppState.water);
-                localStorage.setItem('ot_water_date', AppState.waterDate);
-                localStorage.setItem('ot_workouts', AppState.totalWorkouts);
-                localStorage.setItem('ot_pomo_work', AppState.pomoWorkTime);
-                localStorage.setItem('ot_pomo_break', AppState.pomoBreakTime);
-                localStorage.setItem('ot_water_goal', AppState.waterGoal);
-                localStorage.setItem('ot_weekly', JSON.stringify(AppState.weeklyStats));
+                localStorage.setItem('ot_user_pro', AppState.user); localStorage.setItem('ot_lang_pro', AppState.lang);
+                localStorage.setItem('ot_streak_pro', AppState.streak); localStorage.setItem('ot_visit_pro', AppState.lastVisit);
+                localStorage.setItem('ot_water_pro', AppState.water); localStorage.setItem('ot_water_date', AppState.waterDate);
+                localStorage.setItem('ot_workouts', AppState.totalWorkouts); localStorage.setItem('ot_pomo_count', AppState.pomoCount);
+                localStorage.setItem('ot_pomo_work', AppState.pomoWorkTime); localStorage.setItem('ot_pomo_break', AppState.pomoBreakTime);
+                localStorage.setItem('ot_water_goal', AppState.waterGoal); localStorage.setItem('ot_weekly', JSON.stringify(AppState.weeklyStats));
+                localStorage.setItem('ot_tasks', JSON.stringify(AppState.dailyTasks));
             } catch (e) { console.error("LocalStorage Save Error:", e); }
         }
 
         let audioCtx = null;
         function getAudioContext() {
-            if (!audioCtx) {
-                const AC = window.AudioContext || window.webkitAudioContext;
-                if(AC) audioCtx = new AC();
-            }
-            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            return audioCtx;
+            if (!audioCtx) { const AC = window.AudioContext || window.webkitAudioContext; if(AC) audioCtx = new AC(); }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); return audioCtx;
         }
 
         function playTick() {
             try {
-                const ctx = getAudioContext();
-                if (!ctx) return;
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
+                const ctx = getAudioContext(); if (!ctx) return;
+                const osc = ctx.createOscillator(); const gain = ctx.createGain();
                 osc.connect(gain); gain.connect(ctx.destination);
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(600, ctx.currentTime);
-                gain.gain.setValueAtTime(0.15, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+                osc.type = 'triangle'; osc.frequency.setValueAtTime(600, ctx.currentTime);
+                gain.gain.setValueAtTime(0.15, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
                 osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.04);
             } catch(e) {}
         }
 
         function playBeep() {
             try {
-                const ctx = getAudioContext();
-                if (!ctx) return;
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
+                const ctx = getAudioContext(); if (!ctx) return;
+                const osc = ctx.createOscillator(); const gain = ctx.createGain();
                 osc.connect(gain); gain.connect(ctx.destination);
                 osc.type = 'sine'; osc.frequency.setValueAtTime(800, ctx.currentTime);
-                gain.gain.setValueAtTime(0.3, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+                gain.gain.setValueAtTime(0.3, ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
                 osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.5);
             } catch(e) {}
         }
 
-        // تم تحسين الصوت ليكون أوضح وأطول عند تشغيل الفيديو
         function playSoftChime() {
             try {
-                const ctx = getAudioContext();
-                if (!ctx) return;
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
+                const ctx = getAudioContext(); if (!ctx) return;
+                const osc = ctx.createOscillator(); const gain = ctx.createGain();
                 osc.connect(gain); gain.connect(ctx.destination);
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(440, ctx.currentTime); // تردد مسموع A4
+                osc.type = 'triangle'; osc.frequency.setValueAtTime(440, ctx.currentTime); 
                 osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1); 
-                gain.gain.setValueAtTime(0, ctx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 0.1); // مستوى صوت أعلى
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 2.0); // استمرار أطول
-                osc.start(ctx.currentTime);
-                osc.stop(ctx.currentTime + 2.0);
-            } catch(e) { console.log("Audio play prevented", e); }
+                gain.gain.setValueAtTime(0, ctx.currentTime); gain.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 0.1); 
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 2.0); 
+                osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 2.0);
+            } catch(e) {}
         }
 
         function showToast(msg) {
-            const hub = document.getElementById('toastHub');
-            if(!hub) return;
-            const t = document.createElement('div');
-            t.className = 'toast-msg';
-            t.innerHTML = `<span>✨</span> ${msg}`;
-            hub.appendChild(t);
+            const hub = document.getElementById('toastHub'); if(!hub) return;
+            const t = document.createElement('div'); t.className = 'toast-msg';
+            t.innerHTML = `<span>✨</span> ${msg}`; hub.appendChild(t);
             setTimeout(() => t.remove(), 4000);
         }
 
-        let currentCategory = '';
-        let count = 0;
-        let currentTDEE = 0;
+        let currentCategory = ''; let count = 0; let currentTDEE = 0;
 
-        // قاموس الترجمة المحدث بالكامل والشامل لكل النصوص
         const langDB = {
             ar: {
-                appName: "العلاج المكتبي برو", loginSub: "اختر لغتك المفضلة وأدخل اسمك للبدء:", btnLogin: "دخول للمنصة",
-                greet: "مرحباً،", navDash: "لوحة التحكم", navEx: "التمارين المكتبية", navPomo: "مؤقت التركيز", navDiet: "الدايت والحاسبة", navWater: "الماء والصحة", navErgo: "الجلسة الصحية", navBreath: "تمرين التنفس", navSet: "الإعدادات",
-                dashStreak: "الأيام المتتالية:", dashWrk: "إجمالي التمارين:", dashTitleEx: "التمارين", dashDescEx: "تخلص من التوتر المكتبي.", dashTitlePo: "التركيز", dashDescPo: "مؤقت بومودورو ذكي.", dashTitleDi: "التغذية", dashDescDi: "حاسبة وجداول صحية.", dashTitleWa: "الماء", dashDescWa: "تتبع شربك وجلستك.", chartTitle: "نشاطك هذا الأسبوع",
-                exMainT: "أقسام التمارين", catN: "الرقبة والأكتاف", catB: "الظهر والجذع", catL: "الساقين والحوض", catE: "إراحة العين (20-20-20)", listAv: "التمارين المتاحة:",
+                appName: "العلاج المكتبي برو", loginSub: "اختر لغتك المفضلة وأدخل اسمك للبدء:", btnLogin: "دخول للمنصة", namePlace: "...اكتب اسمك هنا",
+                greet: "مرحباً،", navDash: "لوحة التحكم", navEx: "التمارين", navErgo: "الجلسة الصحية", navBreath: "التنفس", navEye: "إراحة العين", navWater: "الماء", navPomo: "مؤقت التركيز", navProgress: "التقدم", navAchieve: "الإنجازات", navDietMenu: "التغذية", navSet: "الإعدادات",
+                dashStreak: "الأيام المتتالية:", dashWrk: "التمارين المنجزة:", dashTitleEx: "التمارين", dashDescEx: "تخلص من التوتر المكتبي.", dashTitlePo: "التركيز", dashDescPo: "مؤقت بومودورو ذكي.", dashTitleDi: "التغذية", dashDescDi: "حاسبة وجداول صحية.", dashTitleWa: "الماء", dashDescWa: "تتبع شربك وجلستك.", chartTitle: "نشاطك هذا الأسبوع",
+                exMainT: "التمارين المكتبية", catN: "الرقبة والأكتاف", catB: "الظهر والجذع", catL: "الساقين والحوض", catE: "إراحة العين", listAv: "التمارين المتاحة:",
                 btnBack: "رجوع", btnHome: "الرئيسية",
-                vidReps: "التكرارات المنجزة:", btnAddRep: "+ سجل تكرار", errVidHead: "عذراً، الفيديو غير متوفر", errVidSub: "يرجى التأكد من رفع الفيديو على GitHub بالاسم الصحيح",
+                vidReps: "التكرارات:", btnAddRep: "+ سجل تكرار", errVidHead: "عذراً، الفيديو غير متوفر", errVidSub: "يرجى التأكد من الرفع بالاسم الصحيح",
                 poTitle: "مؤقت التركيز", poSub: "نظم وقتك لزيادة الإنتاجية وتقليل الجهد.", btnW: "العمل", btnB: "استراحة",
                 calcH: "حاسبة السعرات الدقيقة", lG: "الجنس:", m: "ذكر", f: "أنثى", lA: "العمر:", lW: "الوزن (كجم):", lH: "الطول (سم):", lAct: "النشاط:",
-                a1: "خامل (مكتبي فقط)", a2: "خفيف (رياضة 1-3 أيام)", a3: "متوسط (رياضة 3-5 أيام)", a4: "نشط (رياضة يومية)", btnCalc: "احسب السعرات", resT: "النتائج اليومية", rM: "المحافظة على الوزن:", rL: "إنقاص الوزن:", rG: "زيادة الوزن:", mac: "الماكروز المقترح:", lblCarbs: "كارب", lblProtein: "بروتين", lblFats: "دهون",
-                waH: "متتبع شرب الماء 💧", waS: "حافظ على رطوبة جسدك. الهدف الموصى به لعملك المكتبي.", waT: "مل", ergH: "دليل الجلسة الصحية (Ergonomics) 🪑",
+                a1: "خامل (مكتبي فقط)", a2: "خفيف (رياضة 1-3 أيام)", a3: "متوسط (رياضة 3-5 أيام)", a4: "نشط (رياضة يومية)", btnCalc: "احسب السعرات", resT: "النتائج اليومية", rM: "المحافظة:", rL: "إنقاص:", rG: "زيادة:", mac: "الماكروز المقترح:", lblCarbs: "كارب", lblProtein: "بروتين", lblFats: "دهون",
+                waH: "متتبع شرب الماء 💧", waS: "الهدف الموصى به لعملك المكتبي.", waT: "ml", ergH: "دليل الجلسة الصحية 🪑",
                 breathT: "تمرين التنفس العميق 🌬️", breathS: "خذ نفسًا عميقًا لتصفية ذهنك وإرخاء عضلاتك.", breathBtn: "ابدأ التمرين",
-                setH: "إعدادات المنصة ⚙️", sPw: "زمن العمل (بومودورو):", sPb: "زمن الراحة (بومودورو):", sW: "الهدف اليومي للماء (بالمليلتر - ml):", btnS: "حفظ الإعدادات", btnOut: "تسجيل الخروج",
+                setH: "إعدادات المنصة ⚙️", sPw: "زمن العمل (د):", sPb: "زمن الراحة (د):", sW: "الهدف اليومي للماء (ml):", btnS: "حفظ الإعدادات", btnOut: "تسجيل الخروج",
                 toastWelcome: "تم تسجيل الدخول بنجاح!", toastSave: "تم الحفظ بنجاح!", toastWater: "عاش! استمر في شرب الماء.", toastRep: "بطل! استمر.", toastDone: "انتهى الوقت!",
-                mute: "🔇 مكتوم", unmute: "🔊 يعمل", modeWork: "وقت العمل 🔥", modeBreak: "وقت الراحة ☕", btnAddW: "إضافة (ml)", waterInputPlace: "الكمية (مثال: 250)",
-                wiHead: "معلومات تهمك عن الماء 🌊", wiT1: "💧 أنواع مياه الشرب", wiD1: "المياه المعدنية تحتوي أملاح طبيعية مفيدة. المياه المفلترة خالية من الشوائب ومناسبة يومياً.", wiT2: "🧂 انتبه للصوديوم", wiD2: "يُفضل مياه بنسبة صوديوم أقل من 20 ملغ/لتر لتجنب احتباس السوائل وارتفاع الضغط.", wiT3: "⏱️ متى تشرب؟", wiD3: "لا تنتظر العطش، اشرب كوباً (250 مل) كل ساعة أو ساعتين أثناء عملك المكتبي.",
+                modeWork: "وقت العمل 🔥", modeBreak: "وقت الراحة ☕", btnAddW: "إضافة", waterInputPlace: "الكمية (مثال: 250)",
+                wiHead: "معلومات تهمك 🌊", wiT1: "💧 أنواع المياه", wiD1: "المعدنية للأملاح الطبيعية، والمفلترة للاستخدام اليومي.", wiT2: "🧂 انتبه للصوديوم", wiD2: "اختر مياه بنسبة صوديوم أقل من 20 ملغ/لتر.", wiT3: "⏱️ متى تشرب؟", wiD3: "كوب كل ساعة أو ساعتين، لا تنتظر العطش.",
                 eT1: "🖥️ الشاشة", eD1: "الثلث العلوي في مستوى العين وعلى بُعد امتداد الذراع.", eT2: "🪑 الظهر", eD2: "مستقيم ومدعوم بالكامل بمسند الكرسي الخلفي.", eT3: "🤷 الأكتاف والمرفقين", eD3: "الأكتاف مسترخية، والمرفقين بزاوية 90 درجة قريبة من الجسم.", eT4: "👟 القدمين", eD4: "مسطحة على الأرض بالكامل أو على مسند للقدمين.",
-                calcError: "الرجاء إدخال الوزن والطول بشكل صحيح.", quickWork: "عمل (دقائق)", quickBreak: "راحة (دقائق)", quickUpdateBtn: "تحديث"
+                calcError: "الرجاء إدخال الوزن والطول بشكل صحيح.", quickWork: "عمل (د)", quickBreak: "راحة (د)", quickUpdateBtn: "تحديث",
+                goalTitle: "هدف اليوم", goalSub: "نشاطات مكتملة", taskErgo: "🪑 الجلسة الصحية", taskStretch: "🧘 تمارين الإطالة", taskWater: "💧 شرب الماء", taskEye: "👀 إراحة العين", taskMove: "🚶 الحركة والمشي",
+                planTitle: "خطتك لليوم", planTime: "الوقت", planAct: "النشاط", p1: "🧘 إطالة الرقبة", p2: "👀 إراحة العين", p3: "🚶 حركة ومشي", p4: "🪑 ضبط الجلسة",
+                achieveTitle: "الإنجازات 🏆", achStreak: "بطل الاستمرارية (7 أيام)", achWork: "وحش التمارين (50 تمرين)", achPost: "خبير الجلسة (إكمال هدف اليوم)", achWater: "بطل الترطيب (الهدف اليومي)", achFoc: "بطل التركيز (10 جلسات)",
+                progTitle: "التقدم", eyeTitle: "إراحة العين (20-20-20) 👀", eyeSub: "كل 20 دقيقة، انظر لشيء يبعد 20 قدماً، لمدة 20 ثانية.", eyeBtn: "ابدأ 20 ثانية"
             },
             en: {
-                appName: "Office Therapy Pro", loginSub: "Choose your preferred language and enter your name:", btnLogin: "Enter Platform",
-                greet: "Hello,", navDash: "Dashboard", navEx: "Exercises", navPomo: "Focus Timer", navDiet: "Diet Calc", navWater: "Water Tracker", navErgo: "Ergonomics", navBreath: "Breathing", navSet: "Settings",
+                appName: "Office Therapy Pro", loginSub: "Choose your preferred language and enter your name:", btnLogin: "Enter Platform", namePlace: "Enter your name here...",
+                greet: "Hello,", navDash: "Dashboard", navEx: "Exercises", navErgo: "Ergonomics", navBreath: "Breathing", navEye: "Eye Care", navWater: "Water", navPomo: "Focus Timer", navProgress: "Progress", navAchieve: "Achievements", navDietMenu: "Nutrition", navSet: "Settings",
                 dashStreak: "Streak Days:", dashWrk: "Total Workouts:", dashTitleEx: "Exercises", dashDescEx: "Relieve office stress.", dashTitlePo: "Focus", dashDescPo: "Smart Pomodoro timer.", dashTitleDi: "Nutrition", dashDescDi: "Calc & healthy plans.", dashTitleWa: "Water", dashDescWa: "Track hydration & posture.", chartTitle: "Your Weekly Activity",
-                exMainT: "Exercise Categories", catN: "Neck & Shoulders", catB: "Back & Trunk", catL: "Legs & Hips", catE: "Eye Rest (20-20-20)", listAv: "Available Exercises:",
+                exMainT: "Office Exercises", catN: "Neck & Shoulders", catB: "Back & Trunk", catL: "Legs & Hips", catE: "Eye Care", listAv: "Available Exercises:",
                 btnBack: "Back", btnHome: "Home",
                 vidReps: "Completed Reps:", btnAddRep: "+ Add Rep", errVidHead: "Sorry, Video Unavailable", errVidSub: "Ensure the video is uploaded to GitHub with the exact name",
                 poTitle: "Focus Timer", poSub: "Organize time to boost productivity.", btnW: "Work", btnB: "Break",
                 calcH: "Accurate Calorie Calc", lG: "Gender:", m: "Male", f: "Female", lA: "Age:", lW: "Weight (kg):", lH: "Height (cm):", lAct: "Activity Level:",
-                a1: "Sedentary (Office)", a2: "Light (1-3 days)", a3: "Moderate (3-5 days)", a4: "Active (Daily)", btnCalc: "Calculate Calories", resT: "Daily Results", rM: "Maintenance:", rL: "Weight Loss:", rG: "Weight Gain:", mac: "Suggested Macros:", lblCarbs: "Carbs", lblProtein: "Protein", lblFats: "Fats",
-                waH: "Water Tracker 💧", waS: "Keep hydrated. Recommended goal for desk workers.", waT: "ml", ergH: "Ergonomic Guide 🪑",
+                a1: "Sedentary (Office)", a2: "Light (1-3 days)", a3: "Moderate (3-5 days)", a4: "Active (Daily)", btnCalc: "Calculate Calories", resT: "Daily Results", rM: "Maintenance:", rL: "Loss:", rG: "Gain:", mac: "Suggested Macros:", lblCarbs: "Carbs", lblProtein: "Protein", lblFats: "Fats",
+                waH: "Water Tracker 💧", waS: "Recommended goal for desk workers.", waT: "ml", ergH: "Ergonomic Guide 🪑",
                 breathT: "Deep Breathing Exercise 🌬️", breathS: "Take a deep breath to clear your mind and relax muscles.", breathBtn: "Start Exercise",
-                setH: "Platform Settings ⚙️", sPw: "Work Time (Pomodoro):", sPb: "Break Time (Pomodoro):", sW: "Daily Water Goal (ml):", btnS: "Save Settings", btnOut: "Logout",
+                setH: "Platform Settings ⚙️", sPw: "Work Time (min):", sPb: "Break Time (min):", sW: "Daily Water Goal (ml):", btnS: "Save Settings", btnOut: "Logout",
                 toastWelcome: "Logged in successfully!", toastSave: "Saved successfully!", toastWater: "Great! Keep hydrating.", toastRep: "Hero! Keep going.", toastDone: "Time's Up!",
-                mute: "🔇 Muted", unmute: "🔊 Sound On", modeWork: "Focus Time 🔥", modeBreak: "Break Time ☕", btnAddW: "Add (ml)", waterInputPlace: "Amount (e.g. 250)",
-                wiHead: "Important Water Facts 🌊", wiT1: "💧 Types of Water", wiD1: "Mineral water has healthy natural salts. Purified water is clean and good for daily use.", wiT2: "🧂 Watch the Sodium", wiD2: "Prefer water with sodium < 20 mg/L to avoid fluid retention and high blood pressure.", wiT3: "⏱️ When to Drink?", wiD3: "Don't wait for thirst. Drink a cup (250 ml) every 1-2 hours while at your desk.",
+                modeWork: "Focus Time 🔥", modeBreak: "Break Time ☕", btnAddW: "Add", waterInputPlace: "Amount (e.g. 250)",
+                wiHead: "Water Facts 🌊", wiT1: "💧 Types of Water", wiD1: "Mineral water has healthy salts. Purified water is clean for daily use.", wiT2: "🧂 Watch Sodium", wiD2: "Prefer water with sodium < 20 mg/L.", wiT3: "⏱️ When to Drink?", wiD3: "Drink a cup every 1-2 hours, don't wait for thirst.",
                 eT1: "🖥️ Screen", eD1: "Top third at eye level, arm's length away.", eT2: "🪑 Back", eD2: "Straight and fully supported by the backrest.", eT3: "🤷 Shoulders & Elbows", eD3: "Shoulders relaxed, elbows at 90 degrees close to body.", eT4: "👟 Feet", eD4: "Flat on the floor or on a footrest.",
-                calcError: "Please enter weight and height correctly.", quickWork: "Work (min)", quickBreak: "Break (min)", quickUpdateBtn: "Update"
+                calcError: "Please enter weight and height correctly.", quickWork: "Work (min)", quickBreak: "Break (min)", quickUpdateBtn: "Update",
+                goalTitle: "Today's Goal", goalSub: "activities completed", taskErgo: "🪑 Ergonomics Check", taskStretch: "🧘 Stretching", taskWater: "💧 Drink Water", taskEye: "👀 Eye Rest", taskMove: "🚶 Movement",
+                planTitle: "Your Plan Today", planTime: "Time", planAct: "Activity", p1: "🧘 Neck Stretch", p2: "👀 Eye Break", p3: "🚶 Movement", p4: "🪑 Posture Check",
+                achieveTitle: "Achievements 🏆", achStreak: "Consistency Champ (7 days)", achWork: "Workout Beast (50 sets)", achPost: "Posture Master (Completed Daily Goal)", achWater: "Hydration Hero (Met Daily Goal)", achFoc: "Focus Champion (10 Sessions)",
+                progTitle: "Progress", eyeTitle: "Eye Rest (20-20-20) 👀", eyeSub: "Every 20 mins, look 20 feet away for 20 seconds.", eyeBtn: "Start 20 Seconds"
             }
         };
 
@@ -859,50 +885,31 @@
                 { id: 'n1', vid: 'exercise1.mp4', titleAr: 'دوران الرقبة', titleEn: 'Neck Turn', descAr: 'أدر رأسك يميناً ويساراً مع الثبات.', descEn: 'Turn head side to side and hold.' },
                 { id: 'n2', vid: 'nexkexercise2.mp4', titleAr: 'إمالة الرقبة', titleEn: 'Neck Tilt', descAr: 'أمل رأسك نحو كتفك ببطء.', descEn: 'Slowly tilt head toward shoulder.' },
                 { id: 'n3', vid: 'ex-shoulder.mp4', titleAr: 'تحريك الكتفين', titleEn: 'Shoulder Mobility', descAr: 'ارفع كتفيك ثم أنزلهما لإرخاء التوتر.', descEn: 'Lift shoulders and lower to release tension.' },
-                // تم تصحيح اسم الفيديو هنا ليطابق GitHub تماماً
-                { id: 'n4', vid: 'neclroll.mp4', titleAr: 'دوران الرقبة الدائري', titleEn: 'Neck Roll', descAr: 'قم بتدوير رقبتك بحركة دائرية بطيئة ومريحة.', descEn: 'Roll your neck in a slow, comfortable circular motion.' }
+                { id: 'n4', vid: 'neclroll.mp4', titleAr: 'دوران الرقبة الدائري', titleEn: 'Neck Roll', descAr: 'قم بتدوير رقبتك بحركة دائرية بطيئة ومريحة.', descEn: 'Roll your neck in a slow, comfortable circular motion.' },
+                { id: 's1', vid: 'shoulder.mp4', titleAr: 'إطالة الأكتاف', titleEn: 'Shoulder Stretch', descAr: 'قم بإطالة عضلات الكتف لتخفيف الشد والتوتر.', descEn: 'Stretch your shoulder muscles to relieve tension.' }
             ],
-            back: [{ id: 'b1', vid: 'exercise5.mp4', titleAr: 'تمدد الأكتاف', titleEn: 'Shoulder Stretch', descAr: 'مد ذراعيك للأمام وظهرك للخلف.', descEn: 'Stretch arms forward, push back.' }],
-            legs: [{ id: 'l1', vid: 'exercise13.mp4', titleAr: 'تمدد الحوض', titleEn: 'Hip Stretch', descAr: 'ضع كاحلك على ركبتك وانحنِ للأمام.', descEn: 'Place ankle on knee and lean forward.' }],
-            eyes: [{ id: 'e1', vid: '', titleAr: 'تمرين 20-20-20', titleEn: '20-20-20 Rule', descAr: 'أغمض عينيك 20 ثانية لترتاح.', descEn: 'Close eyes for 20s to rest.' }]
+            back: [{ id: 'b1', vid: 'exercise5.mp4', titleAr: 'تمدد الظهر', titleEn: 'Back Stretch', descAr: 'مد ذراعيك للأمام وظهرك للخلف.', descEn: 'Stretch arms forward, push back.' }],
+            legs: [{ id: 'l1', vid: 'exercise13.mp4', titleAr: 'تمدد الحوض', titleEn: 'Hip Stretch', descAr: 'ضع كاحلك على ركبتك وانحنِ للأمام.', descEn: 'Place ankle on knee and lean forward.' }]
         };
 
-        const canvas = document.getElementById('confettiCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let confettiActive = false;
+        const canvas = document.getElementById('confettiCanvas'); const ctx = canvas.getContext('2d');
+        let particles = []; let confettiActive = false;
 
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resizeCanvas); resizeCanvas();
 
         function fireConfetti() {
-            if(confettiActive) return;
-            confettiActive = true; particles = [];
-            const colors = ['#2563eb', '#ef4444', '#10b981', '#f59e0b', '#a855f7'];
+            if(confettiActive) return; confettiActive = true; particles = [];
+            const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6'];
             for(let i=0; i<100; i++) {
-                particles.push({
-                    x: canvas.width/2, y: canvas.height/2, r: Math.random() * 6 + 4,
-                    dx: Math.random() * 10 - 5, dy: Math.random() * -10 - 5,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    tilt: Math.floor(Math.random() * 10) - 10, tiltAngleInc: (Math.random() * 0.07) + 0.05, tiltAngle: 0
-                });
+                particles.push({ x: canvas.width/2, y: canvas.height/2, r: Math.random() * 6 + 4, dx: Math.random() * 10 - 5, dy: Math.random() * -10 - 5, color: colors[Math.floor(Math.random() * colors.length)], tilt: Math.floor(Math.random() * 10) - 10, tiltAngleInc: (Math.random() * 0.07) + 0.05, tiltAngle: 0 });
             }
-            animateConfetti();
-            setTimeout(() => { confettiActive = false; ctx.clearRect(0,0,canvas.width,canvas.height); }, 3000);
+            animateConfetti(); setTimeout(() => { confettiActive = false; ctx.clearRect(0,0,canvas.width,canvas.height); }, 3000);
         }
 
         function animateConfetti() {
-            if(!confettiActive) return;
-            requestAnimationFrame(animateConfetti);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.tiltAngle += p.tiltAngleInc;
-                p.y += (Math.cos(p.tiltAngle) + 1 + p.r / 2) / 2;
-                p.x += Math.sin(p.tiltAngle) * 2; p.dy += 0.1;
-                p.x += p.dx; p.y += p.dy;
-                ctx.beginPath(); ctx.lineWidth = p.r; ctx.strokeStyle = p.color;
-                ctx.moveTo(p.x + p.tilt + p.r, p.y); ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r); ctx.stroke();
-            });
+            if(!confettiActive) return; requestAnimationFrame(animateConfetti); ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.tiltAngle += p.tiltAngleInc; p.y += (Math.cos(p.tiltAngle) + 1 + p.r / 2) / 2; p.x += Math.sin(p.tiltAngle) * 2; p.dy += 0.1; p.x += p.dx; p.y += p.dy; ctx.beginPath(); ctx.lineWidth = p.r; ctx.strokeStyle = p.color; ctx.moveTo(p.x + p.tilt + p.r, p.y); ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r); ctx.stroke(); });
         }
 
         function toggleSidebar() { document.getElementById('mainSidebar').classList.toggle('sidebar-hidden'); }
@@ -910,55 +917,40 @@
         function navigateTo(screenId) {
             document.querySelectorAll('.screen-container').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
-            
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            const navMap = {
-                'dashboardScreen': 'navDash', 'exercisesScreen': 'navEx', 'videoScreen': 'navEx',
-                'pomoScreen': 'navPomo', 'dietScreen': 'navDiet', 'waterScreen': 'navWater', 'ergoScreen': 'navErgo', 'breathScreen': 'navBreath', 'settingsScreen': 'navSettings'
-            };
+            
+            const navMap = { 'dashboardScreen': 'navDash', 'exercisesScreen': 'navEx', 'videoScreen': 'navEx', 'pomoScreen': 'navPomo', 'dietScreen': 'navDiet', 'waterScreen': 'navWater', 'ergoScreen': 'navErgo', 'breathScreen': 'navBreath', 'settingsScreen': 'navSettings', 'progressScreen': 'navProgress', 'achieveScreen': 'navAchieve', 'eyeScreen': 'navEye' };
             if(navMap[screenId]) document.getElementById(navMap[screenId]).classList.add('active');
             if(window.innerWidth <= 768) document.getElementById('mainSidebar').classList.add('sidebar-hidden');
             
             try {
-                if(screenId === 'dashboardScreen') drawChart();
+                if(screenId === 'progressScreen') { drawChart(); document.getElementById('progStreakVal').innerText = AppState.streak; document.getElementById('progWrkVal').innerText = AppState.totalWorkouts; }
+                if(screenId === 'achieveScreen') checkAchievements();
                 if(screenId === 'waterScreen') renderWater();
                 if(screenId !== 'videoScreen') document.getElementById('workoutVideo').pause();
             } catch(e) {}
         }
 
-        // اختيار اللغة يعمل فقط قبل تسجيل الدخول
         function preSelectLang(lang) {
             currentLang = lang;
             document.getElementById('html-tag').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-            if(lang === 'ar') {
-                document.getElementById('optLangAr').classList.add('selected');
-                document.getElementById('optLangEn').classList.remove('selected');
-            } else {
-                document.getElementById('optLangEn').classList.add('selected');
-                document.getElementById('optLangAr').classList.remove('selected');
-            }
+            if(lang === 'ar') { document.getElementById('optLangAr').classList.add('selected'); document.getElementById('optLangEn').classList.remove('selected'); } 
+            else { document.getElementById('optLangEn').classList.add('selected'); document.getElementById('optLangAr').classList.remove('selected'); }
             applyTranslations();
         }
 
         function toggleDarkMode() {
             const html = document.documentElement;
-            if (html.getAttribute("data-theme") === "dark") {
-                html.removeAttribute("data-theme"); localStorage.setItem("theme", "light");
-                if(document.getElementById("btnDark")) document.getElementById("btnDark").innerText = "🌙";
-            } else {
-                html.setAttribute("data-theme", "dark"); localStorage.setItem("theme", "dark");
-                if(document.getElementById("btnDark")) document.getElementById("btnDark").innerText = "☀️";
-            }
-            try { if(document.getElementById('dashboardScreen').classList.contains('active')) drawChart(); } catch(e){}
+            if (html.getAttribute("data-theme") === "dark") { html.removeAttribute("data-theme"); localStorage.setItem("theme", "light"); if(document.getElementById("btnDark")) document.getElementById("btnDark").innerText = "🌙"; } 
+            else { html.setAttribute("data-theme", "dark"); localStorage.setItem("theme", "dark"); if(document.getElementById("btnDark")) document.getElementById("btnDark").innerText = "☀️"; }
+            try { if(document.getElementById('progressScreen').classList.contains('active')) drawChart(); } catch(e){}
         }
 
         function appLogin() {
             const name = document.getElementById('inputName').value.trim();
             if(!name) return showToast(langDB[currentLang].loginSub);
             
-            AppState.user = name;
-            AppState.lang = currentLang; // تثبيت اللغة عند الدخول
-            
+            AppState.user = name; AppState.lang = currentLang;
             let today = new Date().toDateString();
             if(AppState.lastVisit !== today) {
                 let yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
@@ -967,196 +959,140 @@
             }
             saveStateToLocal();
             
-            try {
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbycyOEfQfDToRbMvNuIc24LThOp3M3A_g6tWvIxpo7qAcsvT5Y4lY5T7jjlaZvHxpZd/exec';
-                new Image().src = scriptURL + '?name=' + encodeURIComponent(AppState.user);
-            } catch(e) {}
+            try { const scriptURL = 'https://script.google.com/macros/s/AKfycbycyOEfQfDToRbMvNuIc24LThOp3M3A_g6tWvIxpo7qAcsvT5Y4lY5T7jjlaZvHxpZd/exec'; new Image().src = scriptURL + '?name=' + encodeURIComponent(AppState.user); } catch(e) {}
             
-            initApp();
-            showToast(langDB[currentLang].toastWelcome);
+            initApp(); showToast(langDB[currentLang].toastWelcome);
         }
 
-        document.getElementById('inputName').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') appLogin();
-        });
+        document.getElementById('inputName').addEventListener('keypress', function (e) { if (e.key === 'Enter') appLogin(); });
 
-        function logoutUser() {
-            AppState.user = ''; saveStateToLocal();
-            document.getElementById('mainHeader').style.display = 'none';
-            document.getElementById('mainSidebar').classList.add('sidebar-hidden');
-            navigateTo('loginScreen');
-        }
+        function logoutUser() { AppState.user = ''; saveStateToLocal(); document.getElementById('mainHeader').style.display = 'none'; document.getElementById('mainSidebar').classList.add('sidebar-hidden'); navigateTo('loginScreen'); }
 
         function initApp() {
-            currentLang = AppState.lang; // استرجاع اللغة المثبتة
-            document.getElementById('html-tag').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-            
-            applyTranslations();
-            document.getElementById('mainHeader').style.display = 'flex';
+            currentLang = AppState.lang; document.getElementById('html-tag').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            applyTranslations(); document.getElementById('mainHeader').style.display = 'flex';
             if(window.innerWidth > 768) document.getElementById('mainSidebar').classList.remove('sidebar-hidden');
             
-            document.getElementById('inpSetWork').value = AppState.pomoWorkTime;
-            document.getElementById('inpSetBreak').value = AppState.pomoBreakTime;
-            document.getElementById('quickPomoWork').value = AppState.pomoWorkTime;
-            document.getElementById('quickPomoBreak').value = AppState.pomoBreakTime;
+            document.getElementById('inpSetWork').value = AppState.pomoWorkTime; document.getElementById('inpSetBreak').value = AppState.pomoBreakTime;
+            document.getElementById('quickPomoWork').value = AppState.pomoWorkTime; document.getElementById('quickPomoBreak').value = AppState.pomoBreakTime;
             document.getElementById('inpSetWater').value = AppState.waterGoal;
-            
             document.getElementById("quoteBox").innerText = `💡 "${quotes[currentLang][Math.floor(Math.random() * quotes[currentLang].length)]}"`;
             
+            renderDailyGoal();
             navigateTo('dashboardScreen');
+        }
+
+        // Daily Goals Logic
+        function renderDailyGoal() {
+            let completed = 0;
+            for(let i=0; i<5; i++) {
+                let row = document.getElementById(`taskRow${i}`);
+                if(AppState.dailyTasks[i]) { row.classList.add('completed'); completed++; document.getElementById(`check${i}`).innerHTML = '✓'; } 
+                else { row.classList.remove('completed'); document.getElementById(`check${i}`).innerHTML = ''; }
+            }
+            let progress = (completed / 5) * 100;
+            document.getElementById('dailyProgressBar').style.width = progress + '%';
+            document.getElementById('lblGoalSub').innerText = `${completed} / 5 ${langDB[currentLang].goalSub}`;
+            if(completed === 5 && !document.getElementById('taskRow0').classList.contains('celebrated')) { fireConfetti(); document.getElementById('taskRow0').classList.add('celebrated'); }
+        }
+        function toggleTask(index) { AppState.dailyTasks[index] = !AppState.dailyTasks[index]; saveStateToLocal(); renderDailyGoal(); }
+
+        // Achievements Logic
+        function checkAchievements() {
+            if(AppState.streak >= 7) document.getElementById('badgeStreak').classList.add('unlocked');
+            if(AppState.totalWorkouts >= 50) document.getElementById('badgeWorkout').classList.add('unlocked');
+            if(AppState.water >= AppState.waterGoal && AppState.waterGoal > 0) document.getElementById('badgeWater').classList.add('unlocked');
+            if(AppState.pomoCount >= 10) document.getElementById('badgeFocus').classList.add('unlocked');
+            if(AppState.dailyTasks.every(Boolean)) document.getElementById('badgePosture').classList.add('unlocked');
         }
 
         function drawChart() {
             try {
-                const svg = document.getElementById('activityChart');
-                if(!svg) return;
+                const svg = document.getElementById('activityChart'); if(!svg) return;
                 while (svg.lastChild) { svg.removeChild(svg.lastChild); }
-                
                 const data = Array.isArray(AppState.weeklyStats) ? AppState.weeklyStats : [0,0,0,0,0,0,0];
                 const maxVal = Math.max(...data, 5); 
-                
-                const width = 800; const height = 250;
-                const barWidth = 40; const gap = (width - (7 * barWidth)) / 8;
+                const width = 800; const height = 250; const barWidth = 40; const gap = (width - (7 * barWidth)) / 8;
                 const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                const barColor = isDark ? '#3b82f6' : '#2563eb';
-                const textColor = isDark ? '#94a3b8' : '#64748b';
-
-                const daysAr = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-                const daysEn = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                const barColor = isDark ? '#3b82f6' : '#2563eb'; const textColor = isDark ? '#94a3b8' : '#64748b';
+                const daysAr = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت']; const daysEn = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
                 
                 let labels = [];
-                for(let i=6; i>=0; i--) {
-                    let d = new Date(); d.setDate(d.getDate() - i);
-                    labels.push(currentLang === 'ar' ? daysAr[d.getDay()] : daysEn[d.getDay()]);
-                }
+                for(let i=6; i>=0; i--) { let d = new Date(); d.setDate(d.getDate() - i); labels.push(currentLang === 'ar' ? daysAr[d.getDay()] : daysEn[d.getDay()]); }
 
                 for(let i=0; i<7; i++) {
-                    let h = (data[i] / maxVal) * (height - 50);
-                    let x = gap + i * (barWidth + gap); let y = height - 30 - h;
-                    
+                    let h = (data[i] / maxVal) * (height - 50); let x = gap + i * (barWidth + gap); let y = height - 30 - h;
                     let rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                    rect.setAttribute('x', x); rect.setAttribute('y', y);
-                    rect.setAttribute('width', barWidth); rect.setAttribute('height', h);
-                    rect.setAttribute('fill', barColor); rect.setAttribute('rx', '4');
-                    
+                    rect.setAttribute('x', x); rect.setAttribute('y', y); rect.setAttribute('width', barWidth); rect.setAttribute('height', h); rect.setAttribute('fill', barColor); rect.setAttribute('rx', '4');
                     let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                    text.setAttribute('x', x + barWidth/2); text.setAttribute('y', height - 10);
-                    text.setAttribute('text-anchor', 'middle'); text.setAttribute('fill', textColor);
-                    text.setAttribute('font-size', '14'); text.textContent = labels[i];
-
+                    text.setAttribute('x', x + barWidth/2); text.setAttribute('y', height - 10); text.setAttribute('text-anchor', 'middle'); text.setAttribute('fill', textColor); text.setAttribute('font-size', '14'); text.textContent = labels[i];
                     if(data[i] > 0) {
-                        let valText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                        valText.setAttribute('x', x + barWidth/2); valText.setAttribute('y', y - 5);
-                        valText.setAttribute('text-anchor', 'middle'); valText.setAttribute('fill', barColor);
-                        valText.setAttribute('font-weight', 'bold'); valText.textContent = data[i];
-                        svg.appendChild(valText);
+                        let valText = document.createElementNS('http://www.w3.org/2000/svg', 'text'); valText.setAttribute('x', x + barWidth/2); valText.setAttribute('y', y - 5); valText.setAttribute('text-anchor', 'middle'); valText.setAttribute('fill', barColor); valText.setAttribute('font-weight', 'bold'); valText.textContent = data[i]; svg.appendChild(valText);
                     }
                     svg.appendChild(rect); svg.appendChild(text);
                 }
-            } catch(e) { console.error('Chart Error', e); }
+            } catch(e) {}
         }
 
         function loadCategory(cat) {
-            currentCategory = cat;
-            const list = document.getElementById('dynamicExerciseList');
-            list.innerHTML = '';
+            currentCategory = cat; const list = document.getElementById('dynamicExerciseList'); list.innerHTML = '';
             dbExercises[cat].forEach(ex => {
-                let btn = document.createElement('button');
-                btn.className = 'fancy-btn'; btn.style.background = 'var(--bg-glass)'; btn.style.color = 'var(--primary)';
-                btn.style.border = '1px solid var(--border-heavy)'; btn.style.boxShadow = 'var(--shadow-sm)';
-                btn.innerText = currentLang === 'ar' ? ex.titleAr : ex.titleEn;
-                btn.onclick = () => { playTick(); openVideoPlayer(ex); };
-                list.appendChild(btn);
+                let btn = document.createElement('button'); btn.className = 'fancy-btn'; btn.style.background = 'var(--bg-glass)'; btn.style.color = 'var(--primary)'; btn.style.border = '1px solid var(--border-heavy)'; btn.style.boxShadow = 'var(--shadow-sm)';
+                btn.innerText = currentLang === 'ar' ? ex.titleAr : ex.titleEn; btn.onclick = () => { playTick(); openVideoPlayer(ex); }; list.appendChild(btn);
             });
             document.getElementById('exerciseListArea').style.display = 'block';
         }
 
         function openVideoPlayer(ex) {
             document.getElementById('vidTitle').innerText = currentLang === 'ar' ? ex.titleAr : ex.titleEn;
-            
-            const descElement = document.getElementById('vidDesc');
-            if (descElement) {
-                descElement.innerText = currentLang === 'ar' ? ex.descAr : ex.descEn;
-            }
-            
-            const vidPlayer = document.getElementById('workoutVideo');
-            const errOverlay = document.getElementById('vidErrorOverlay');
-            errOverlay.style.display = 'none';
-            count = 0; document.getElementById('repCounterDisplay').innerText = count;
+            const descElement = document.getElementById('vidDesc'); if (descElement) { descElement.innerText = currentLang === 'ar' ? ex.descAr : ex.descEn; }
+            const vidPlayer = document.getElementById('workoutVideo'); const errOverlay = document.getElementById('vidErrorOverlay');
+            errOverlay.style.display = 'none'; count = 0; document.getElementById('repCounterDisplay').innerText = count;
 
             if(ex.vid !== '') {
-                document.getElementById('videoBoxWrapper').style.display = 'block';
-                vidPlayer.src = ex.vid;
-                vidPlayer.load();
-                
-                // تشغيل الصوت عند تشغيل الفيديو بنجاح
-                vidPlayer.onplay = () => { playSoftChime(); };
-                
-                vidPlayer.play().catch(e => console.log("Autoplay handled", e));
-
-                vidPlayer.onerror = function() {
-                    errOverlay.style.display = 'flex';
-                    document.getElementById('expectedFileName').innerText = ex.vid;
-                };
-            } else {
-                document.getElementById('videoBoxWrapper').style.display = 'none';
-            }
+                document.getElementById('videoBoxWrapper').style.display = 'block'; vidPlayer.src = ex.vid; vidPlayer.load();
+                vidPlayer.onplay = () => { playSoftChime(); }; vidPlayer.play().catch(e => console.log("Autoplay handled", e));
+                vidPlayer.onerror = function() { errOverlay.style.display = 'flex'; document.getElementById('expectedFileName').innerText = ex.vid; };
+            } else { document.getElementById('videoBoxWrapper').style.display = 'none'; }
             navigateTo('videoScreen');
         }
 
-        function recordRep() {
-            count++; document.getElementById('repCounterDisplay').innerText = count;
-            AppState.totalWorkouts++; AppState.weeklyStats[6]++;
-            saveStateToLocal(); fireConfetti(); showToast(langDB[currentLang].toastRep);
-        }
+        function recordRep() { count++; document.getElementById('repCounterDisplay').innerText = count; AppState.totalWorkouts++; AppState.weeklyStats[6]++; saveStateToLocal(); fireConfetti(); showToast(langDB[currentLang].toastRep); }
 
-        let pomoInterval;
-        let isPomoRunning = false;
-        let currentPomoMode = 'work';
-        let pomoTimeLeft = AppState.pomoWorkTime * 60;
+        let pomoInterval; let isPomoRunning = false; let currentPomoMode = 'work'; let pomoTimeLeft = AppState.pomoWorkTime * 60;
 
         function updateQuickPomo() {
-            let workInp = parseInt(document.getElementById('quickPomoWork').value);
-            let breakInp = parseInt(document.getElementById('quickPomoBreak').value);
+            let workInp = parseInt(document.getElementById('quickPomoWork').value); let breakInp = parseInt(document.getElementById('quickPomoBreak').value);
             if(workInp > 0 && breakInp > 0) {
-                AppState.pomoWorkTime = workInp;
-                AppState.pomoBreakTime = breakInp;
-                document.getElementById('inpSetWork').value = workInp;
-                document.getElementById('inpSetBreak').value = breakInp;
-                saveStateToLocal();
-                setTimerMode('work');
-                showToast(langDB[currentLang].toastSave);
+                AppState.pomoWorkTime = workInp; AppState.pomoBreakTime = breakInp;
+                document.getElementById('inpSetWork').value = workInp; document.getElementById('inpSetBreak').value = breakInp;
+                saveStateToLocal(); setTimerMode('work'); showToast(langDB[currentLang].toastSave);
             }
         }
         
         function setTimerMode(mode) {
-            clearInterval(pomoInterval); isPomoRunning = false; currentPomoMode = mode;
-            pomoTimeLeft = (mode === 'work' ? AppState.pomoWorkTime : AppState.pomoBreakTime) * 60;
-            document.getElementById('btnTimerPlay').innerText = "▶️";
-            document.getElementById('timerProgress').style.stroke = mode === 'work' ? 'var(--accent)' : 'var(--success)';
+            clearInterval(pomoInterval); isPomoRunning = false; currentPomoMode = mode; pomoTimeLeft = (mode === 'work' ? AppState.pomoWorkTime : AppState.pomoBreakTime) * 60;
+            document.getElementById('btnTimerPlay').innerText = "▶️"; document.getElementById('timerProgress').style.stroke = mode === 'work' ? 'var(--accent)' : 'var(--success)';
             document.getElementById('timerModeText').innerText = langDB[currentLang][mode === 'work' ? 'modeWork' : 'modeBreak'];
-            document.getElementById('btnModeWork').innerText = `${langDB[currentLang].btnW} (${AppState.pomoWorkTime})`;
-            document.getElementById('btnModeBreak').innerText = `${langDB[currentLang].btnB} (${AppState.pomoBreakTime})`;
+            document.getElementById('btnModeWork').innerText = langDB[currentLang].btnW; document.getElementById('btnModeBreak').innerText = langDB[currentLang].btnB;
             updatePomoDisplay();
         }
 
         function updatePomoDisplay() {
-            let m = Math.floor(pomoTimeLeft / 60).toString().padStart(2, '0');
-            let s = (pomoTimeLeft % 60).toString().padStart(2, '0');
-            document.getElementById('timerClock').innerText = `${m}:${s}`;
-            const total = (currentPomoMode === 'work' ? AppState.pomoWorkTime : AppState.pomoBreakTime) * 60;
+            let m = Math.floor(pomoTimeLeft / 60).toString().padStart(2, '0'); let s = (pomoTimeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('timerClock').innerText = `${m}:${s}`; const total = (currentPomoMode === 'work' ? AppState.pomoWorkTime : AppState.pomoBreakTime) * 60;
             document.getElementById('timerProgress').style.strokeDashoffset = 879 - (pomoTimeLeft / total) * 879;
         }
 
         function toggleTimer() {
-            if(isPomoRunning) {
-                clearInterval(pomoInterval); isPomoRunning = false; document.getElementById('btnTimerPlay').innerText = "▶️";
-            } else {
+            if(isPomoRunning) { clearInterval(pomoInterval); isPomoRunning = false; document.getElementById('btnTimerPlay').innerText = "▶️"; } 
+            else {
                 isPomoRunning = true; document.getElementById('btnTimerPlay').innerText = "⏸️";
                 pomoInterval = setInterval(() => {
                     if(pomoTimeLeft > 0) { pomoTimeLeft--; updatePomoDisplay(); } 
                     else {
                         clearInterval(pomoInterval); isPomoRunning = false; playBeep(); showToast(langDB[currentLang].toastDone);
+                        if(currentPomoMode === 'work') { AppState.pomoCount++; saveStateToLocal(); }
                         setTimerMode(currentPomoMode === 'work' ? 'break' : 'work');
                     }
                 }, 1000);
@@ -1166,80 +1102,53 @@
 
         let breathInterval;
         function startBreathing() {
-            const circle = document.getElementById('breathCircle');
-            const btn = document.getElementById('btnStartBreath');
-            btn.disabled = true;
-            
-            let phase = 0;
-            const phasesAr = ["استنشق ببطء...", "امسك الهواء...", "ازفر بهدوء..."];
-            const phasesEn = ["Inhale slowly...", "Hold breath...", "Exhale gently..."];
-            
-            circle.style.transform = 'scale(1.4)';
-            circle.style.background = 'rgba(14, 165, 233, 0.4)';
-            circle.innerText = currentLang === 'ar' ? phasesAr[0] : phasesEn[0];
-            
+            const circle = document.getElementById('breathCircle'); const btn = document.getElementById('btnStartBreath'); btn.disabled = true;
+            let phase = 0; const phasesAr = ["استنشق ببطء...", "امسك الهواء...", "ازفر بهدوء..."]; const phasesEn = ["Inhale slowly...", "Hold breath...", "Exhale gently..."];
+            circle.style.transform = 'scale(1.4)'; circle.style.background = 'rgba(14, 165, 233, 0.4)'; circle.innerText = currentLang === 'ar' ? phasesAr[0] : phasesEn[0];
             breathInterval = setInterval(() => {
-                phase = (phase + 1) % 3;
-                circle.innerText = currentLang === 'ar' ? phasesAr[phase] : phasesEn[phase];
-                if(phase === 2) {
-                    circle.style.transform = 'scale(1)';
-                    circle.style.background = 'rgba(14, 165, 233, 0.15)';
-                } else if(phase === 0) {
-                    circle.style.transform = 'scale(1.4)';
-                    circle.style.background = 'rgba(14, 165, 233, 0.4)';
-                }
+                phase = (phase + 1) % 3; circle.innerText = currentLang === 'ar' ? phasesAr[phase] : phasesEn[phase];
+                if(phase === 2) { circle.style.transform = 'scale(1)'; circle.style.background = 'rgba(14, 165, 233, 0.15)'; } 
+                else if(phase === 0) { circle.style.transform = 'scale(1.4)'; circle.style.background = 'rgba(14, 165, 233, 0.4)'; }
             }, 4000);
         }
 
+        // Eye Timer
+        let eyeInt; let eyeTime = 20;
+        function startEyeTimer() {
+            clearInterval(eyeInt); eyeTime = 20; document.getElementById('eyeTimerDisplay').innerText = eyeTime;
+            document.getElementById('btnStartEye').disabled = true;
+            eyeInt = setInterval(() => {
+                eyeTime--; document.getElementById('eyeTimerDisplay').innerText = eyeTime;
+                if(eyeTime <= 0) { clearInterval(eyeInt); playBeep(); document.getElementById('btnStartEye').disabled = false; document.getElementById('eyeTimerDisplay').innerText = "20"; showToast(langDB[currentLang].toastDone); }
+            }, 1000);
+        }
+
         function executeCalc() {
-            const age = parseFloat(document.getElementById('inpAge').value);
-            const w = parseFloat(document.getElementById('inpWeight').value);
-            const h = parseFloat(document.getElementById('inpHeight').value);
+            const age = parseFloat(document.getElementById('inpAge').value); const w = parseFloat(document.getElementById('inpWeight').value); const h = parseFloat(document.getElementById('inpHeight').value);
             if(!w || !h) return showToast(langDB[currentLang].calcError);
-
-            const gen = document.getElementById('inpGender').value;
-            const act = parseFloat(document.getElementById('inpActivity').value);
-            
-            let bmr = gen === 'male' ? (10*w)+(6.25*h)-(5*age)+5 : (10*w)+(6.25*h)-(5*age)-161;
-            let tdee = Math.round(bmr * act);
-
-            document.getElementById('valMaint').innerText = tdee;
-            document.getElementById('valLoss').innerText = tdee - 500;
-            document.getElementById('valGain').innerText = tdee + 500;
-            
-            document.getElementById('valC').innerText = Math.round((tdee*0.4)/4) + "g";
-            document.getElementById('valP').innerText = Math.round((tdee*0.3)/4) + "g";
-            document.getElementById('valF').innerText = Math.round((tdee*0.3)/9) + "g";
+            const gen = document.getElementById('inpGender').value; const act = parseFloat(document.getElementById('inpActivity').value);
+            let bmr = gen === 'male' ? (10*w)+(6.25*h)-(5*age)+5 : (10*w)+(6.25*h)-(5*age)-161; let tdee = Math.round(bmr * act);
+            document.getElementById('valMaint').innerText = tdee; document.getElementById('valLoss').innerText = tdee - 500; document.getElementById('valGain').innerText = tdee + 500;
+            document.getElementById('valC').innerText = Math.round((tdee*0.4)/4) + "g"; document.getElementById('valP').innerText = Math.round((tdee*0.3)/4) + "g"; document.getElementById('valF').innerText = Math.round((tdee*0.3)/9) + "g";
             document.getElementById('calcResultsBox').style.display = 'block';
         }
 
-        // دالة إضافة الماء من الحقل المخصص
         function addCustomWater() {
-            playTick();
-            const inputVal = parseInt(document.getElementById('customWaterInput').value);
-            if(!inputVal || inputVal <= 0) return;
-            
+            playTick(); const inputVal = parseInt(document.getElementById('customWaterInput').value); if(!inputVal || inputVal <= 0) return;
             AppState.water += inputVal;
-            if(AppState.water >= AppState.waterGoal && (AppState.water - inputVal) < AppState.waterGoal) {
-                fireConfetti(); showToast(langDB[currentLang].toastWater);
-            }
-            document.getElementById('customWaterInput').value = '';
-            saveStateToLocal(); renderWater();
+            if(AppState.water >= AppState.waterGoal && (AppState.water - inputVal) < AppState.waterGoal) { fireConfetti(); showToast(langDB[currentLang].toastWater); }
+            document.getElementById('customWaterInput').value = ''; saveStateToLocal(); renderWater();
         }
 
         function renderWater() {
             document.getElementById('waterTotalText').innerText = `${AppState.water} / ${AppState.waterGoal} ${langDB[currentLang].waT}`;
-            let progress = (AppState.water / AppState.waterGoal) * 100;
-            if(progress > 100) progress = 100;
+            let progress = (AppState.water / AppState.waterGoal) * 100; if(progress > 100) progress = 100;
             document.getElementById('glassWaterLiquid').style.height = progress + '%';
         }
 
         function saveSettings() {
-            AppState.pomoWorkTime = parseInt(document.getElementById('inpSetWork').value) || 25;
-            AppState.pomoBreakTime = parseInt(document.getElementById('inpSetBreak').value) || 5;
-            document.getElementById('quickPomoWork').value = AppState.pomoWorkTime;
-            document.getElementById('quickPomoBreak').value = AppState.pomoBreakTime;
-            
+            AppState.pomoWorkTime = parseInt(document.getElementById('inpSetWork').value) || 25; AppState.pomoBreakTime = parseInt(document.getElementById('inpSetBreak').value) || 5;
+            document.getElementById('quickPomoWork').value = AppState.pomoWorkTime; document.getElementById('quickPomoBreak').value = AppState.pomoBreakTime;
             AppState.waterGoal = parseInt(document.getElementById('inpSetWater').value) || 2000;
             saveStateToLocal(); setTimerMode('work'); showToast(langDB[currentLang].toastSave); navigateTo('dashboardScreen');
         }
@@ -1247,91 +1156,47 @@
         function applyTranslations() {
             try {
                 const t = langDB[currentLang];
-                document.getElementById('txtLoginTitle').innerText = t.appName; document.getElementById('txtLoginSub').innerText = t.loginSub;
-                document.getElementById('txtStartBtn').innerText = t.btnLogin; document.getElementById('headerGreeting').innerText = `${t.greet} ${AppState.user}`;
+                document.getElementById('inputName').placeholder = t.namePlace;
+                document.getElementById('txtLoginTitle').innerText = t.appName; document.getElementById('txtLoginSub').innerText = t.loginSub; document.getElementById('txtStartBtn').innerText = t.btnLogin; 
+                document.getElementById('headerGreeting').innerText = `${t.greet} ${AppState.user}`;
                 
-                document.getElementById('txtNavDash').innerText = t.navDash;
-                document.getElementById('txtNavEx').innerText = t.navEx;
-                document.getElementById('txtNavPomo').innerText = t.navPomo;
-                document.getElementById('txtNavDiet').innerText = t.navDiet;
-                document.getElementById('txtNavWater').innerText = t.navWater;
-                document.getElementById('txtNavErgo').innerText = t.navErgo;
-                document.getElementById('txtNavBreath').innerText = t.navBreath;
-                document.getElementById('txtNavSet').innerText = t.navSet;
+                document.getElementById('txtNavDash').innerText = t.navDash; document.getElementById('txtNavEx').innerText = t.navEx; document.getElementById('txtNavPomo').innerText = t.navPomo; document.getElementById('txtNavDietMenu').innerText = t.navDietMenu; document.getElementById('txtNavWater').innerText = t.navWater; document.getElementById('txtNavErgo').innerText = t.navErgo; document.getElementById('txtNavBreath').innerText = t.navBreath; document.getElementById('txtNavEye').innerText = t.navEye; document.getElementById('txtNavSet').innerText = t.navSet; document.getElementById('txtNavProgress').innerText = t.navProgress; document.getElementById('txtNavAchieve').innerText = t.navAchieve;
                 
-                document.querySelectorAll('.btn-txt-home').forEach(e => e.innerText = t.btnHome);
-                document.querySelectorAll('.btn-txt-back').forEach(e => e.innerText = t.btnBack);
+                document.querySelectorAll('.btn-txt-home').forEach(e => e.innerText = t.btnHome); document.querySelectorAll('.btn-txt-back').forEach(e => e.innerText = t.btnBack);
 
-                document.getElementById('txtStreak').innerText = `${t.dashStreak} ${AppState.streak}`;
-                document.getElementById('txtTotalWorkouts').innerText = `${t.dashWrk} ${AppState.totalWorkouts}`;
-                document.getElementById('dashExerTitle').innerText = t.dashTitleEx; document.getElementById('dashExerDesc').innerText = t.dashDescEx;
-                document.getElementById('dashPomoTitle').innerText = t.dashTitlePo; document.getElementById('dashPomoDesc').innerText = t.dashDescPo;
-                document.getElementById('dashDietTitle').innerText = t.dashTitleDi; document.getElementById('dashDietDesc').innerText = t.dashDescDi;
-                document.getElementById('dashWaterTitle').innerText = t.dashTitleWa; document.getElementById('dashWaterDesc').innerText = t.dashDescWa;
-                document.getElementById('chartTitle').innerText = t.chartTitle;
+                document.getElementById('txtStreak').innerText = `${t.dashStreak} ${AppState.streak}`; document.getElementById('txtTotalWorkouts').innerText = `${t.dashWrk} ${AppState.totalWorkouts}`;
+                document.getElementById('dashExerTitle').innerText = t.dashTitleEx; document.getElementById('dashExerDesc').innerText = t.dashDescEx; document.getElementById('dashPomoTitle').innerText = t.dashTitlePo; document.getElementById('dashPomoDesc').innerText = t.dashDescPo; document.getElementById('dashDietTitle').innerText = t.dashTitleDi; document.getElementById('dashDietDesc').innerText = t.dashDescDi; document.getElementById('dashWaterTitle').innerText = t.dashTitleWa; document.getElementById('dashWaterDesc').innerText = t.dashDescWa; document.getElementById('chartTitle').innerText = t.chartTitle;
                 
-                document.getElementById('exerMainTitle').innerText = t.exMainT;
-                document.getElementById('catNeck').innerText = t.catN; document.getElementById('catBack').innerText = t.catB;
-                document.getElementById('catLegs').innerText = t.catL; document.getElementById('catEyes').innerText = t.catE;
-                document.getElementById('lblAvailableExer').innerText = t.listAv;
+                document.getElementById('lblGoalTitle').innerText = t.goalTitle; document.getElementById('lblTaskErgo').innerText = t.taskErgo; document.getElementById('lblTaskStretch').innerText = t.taskStretch; document.getElementById('lblTaskWater').innerText = t.taskWater; document.getElementById('lblTaskEye').innerText = t.taskEye; document.getElementById('lblTaskMove').innerText = t.taskMove; renderDailyGoal();
                 
-                document.getElementById('lblReps').innerHTML = `${t.vidReps} <span id="repCounterDisplay" style="color: var(--success); font-size: 28px;">0</span>`;
-                document.getElementById('btnAddRep').innerText = t.btnAddRep;
-                document.getElementById('errVidH').innerText = t.errVidHead;
-                document.getElementById('errVidP').innerHTML = `${t.errVidSub} <br><strong id="expectedFileName" style="color:var(--accent);"></strong>`;
-                
-                document.getElementById('lblTimerTitle').innerText = t.poTitle; document.getElementById('lblTimerSub').innerText = t.poSub;
-                document.getElementById('btnModeWork').innerText = `${t.btnW} (${AppState.pomoWorkTime})`;
-                document.getElementById('btnModeBreak').innerText = `${t.btnB} (${AppState.pomoBreakTime})`;
-                document.getElementById('timerModeText').innerText = t[currentPomoMode === 'work' ? 'modeWork' : 'modeBreak'];
-                document.getElementById('lblSetWorkQuick').innerText = t.quickWork;
-                document.getElementById('lblSetBreakQuick').innerText = t.quickBreak;
-                document.getElementById('btnUpdateTimer').innerText = t.quickUpdateBtn;
-                
-                document.getElementById('lblCalcHead').innerText = t.calcH;
-                document.getElementById('lblGen').innerText = t.lG; document.getElementById('optM').innerText = t.m; document.getElementById('optF').innerText = t.f;
-                document.getElementById('lblAgeInp').innerText = t.lA; document.getElementById('lblW').innerText = t.lW; document.getElementById('lblH').innerText = t.lH; document.getElementById('lblAct').innerText = t.lAct;
-                document.getElementById('act1').innerText = t.a1; document.getElementById('act2').innerText = t.a2; document.getElementById('act3').innerText = t.a3; document.getElementById('act4').innerText = t.a4;
-                document.getElementById('btnDoCalc').innerText = t.btnCalc;
-                document.getElementById('lblResTitle').innerText = t.resT;
-                document.getElementById('lblMaint').innerText = t.rM; document.getElementById('lblLoss').innerText = t.rL; document.getElementById('lblGain').innerText = t.rG;
-                document.getElementById('lblMacros').innerText = t.mac; document.getElementById('lblC').innerText = t.lblCarbs; document.getElementById('lblP').innerText = t.lblProtein; document.getElementById('lblF').innerText = t.lblFats;
-                
-                // تحديث قسم الماء
-                document.getElementById('lblWaterHead').innerText = t.waH; document.getElementById('lblWaterSub').innerText = t.waS;
-                document.getElementById('btnAddWater').innerText = t.btnAddW;
-                document.getElementById('customWaterInput').placeholder = t.waterInputPlace;
-                
-                // تحديث معلومات الماء
-                document.getElementById('lblWaterInfoHead').innerText = t.wiHead;
-                document.getElementById('wiTypeTitle').innerText = t.wiT1; document.getElementById('wiTypeDesc').innerText = t.wiD1;
-                document.getElementById('wiSodTitle').innerText = t.wiT2; document.getElementById('wiSodDesc').innerText = t.wiD2;
-                document.getElementById('wiFreqTitle').innerText = t.wiT3; document.getElementById('wiFreqDesc').innerText = t.wiD3;
+                document.getElementById('lblPlanTitle').innerText = t.planTitle; document.getElementById('lblPlanTime').innerText = t.planTime; document.getElementById('lblPlanAct').innerText = t.planAct;
+                document.getElementById('planItem1').innerText = t.p1; document.getElementById('planItem2').innerText = t.p2; document.getElementById('planItem3').innerText = t.p3; document.getElementById('planItem4').innerText = t.p4;
 
-                // تحديث الجلسة الصحية
-                document.getElementById('lblErgoHead').innerText = t.ergH;
-                document.getElementById('ergo1Title').innerText = t.eT1; document.getElementById('ergo1Desc').innerText = t.eD1;
-                document.getElementById('ergo2Title').innerText = t.eT2; document.getElementById('ergo2Desc').innerText = t.eD2;
-                document.getElementById('ergo3Title').innerText = t.eT3; document.getElementById('ergo3Desc').innerText = t.eD3;
-                document.getElementById('ergo4Title').innerText = t.eT4; document.getElementById('ergo4Desc').innerText = t.eD4;
-
-                document.getElementById('breathTitle').innerText = t.breathT;
-                document.getElementById('breathSub').innerText = t.breathS;
-                document.getElementById('btnStartBreath').innerText = t.breathBtn;
+                document.getElementById('exerMainTitle').innerText = t.exMainT; document.getElementById('catNeck').innerText = t.catN; document.getElementById('catBack').innerText = t.catB; document.getElementById('catLegs').innerText = t.catL; document.getElementById('lblAvailableExer').innerText = t.listAv;
+                document.getElementById('lblReps').innerHTML = `${t.vidReps} <span id="repCounterDisplay" style="color: var(--success); font-size: 24px;">0</span>`; document.getElementById('btnAddRep').innerText = t.btnAddRep; document.getElementById('errVidH').innerText = t.errVidHead; document.getElementById('errVidP').innerHTML = `${t.errVidSub} <br><strong id="expectedFileName" style="color:var(--accent);"></strong>`;
                 
-                document.getElementById('lblSetHead').innerText = t.setH;
-                document.getElementById('lblSetPomoWork').innerText = t.sPw; document.getElementById('lblSetPomoBreak').innerText = t.sPb;
-                document.getElementById('lblSetWater').innerText = t.sW; document.getElementById('btnSaveSet').innerText = t.btnS; document.getElementById('btnLogout').innerText = t.btnOut;
+                document.getElementById('lblTimerTitle').innerText = t.poTitle; document.getElementById('lblTimerSub').innerText = t.poSub; document.getElementById('btnModeWork').innerText = t.btnW; document.getElementById('btnModeBreak').innerText = t.btnB; document.getElementById('timerModeText').innerText = t[currentPomoMode === 'work' ? 'modeWork' : 'modeBreak']; document.getElementById('lblSetWorkQuick').innerText = t.quickWork; document.getElementById('lblSetBreakQuick').innerText = t.quickBreak; document.getElementById('btnUpdateTimer').innerText = t.quickUpdateBtn;
+                
+                document.getElementById('lblCalcHead').innerText = t.calcH; document.getElementById('lblGen').innerText = t.lG; document.getElementById('optM').innerText = t.m; document.getElementById('optF').innerText = t.f; document.getElementById('lblAgeInp').innerText = t.lA; document.getElementById('lblW').innerText = t.lW; document.getElementById('lblH').innerText = t.lH; document.getElementById('lblAct').innerText = t.lAct; document.getElementById('act1').innerText = t.a1; document.getElementById('act2').innerText = t.a2; document.getElementById('act3').innerText = t.a3; document.getElementById('act4').innerText = t.a4; document.getElementById('btnDoCalc').innerText = t.btnCalc; document.getElementById('lblResTitle').innerText = t.resT; document.getElementById('lblMaint').innerText = t.rM; document.getElementById('lblLoss').innerText = t.rL; document.getElementById('lblGain').innerText = t.rG; document.getElementById('lblMacros').innerText = t.mac; document.getElementById('lblC').innerText = t.lblCarbs; document.getElementById('lblP').innerText = t.lblProtein; document.getElementById('lblF').innerText = t.lblFats;
+                
+                document.getElementById('lblWaterHead').innerText = t.waH; document.getElementById('lblWaterSub').innerText = t.waS; document.getElementById('btnAddWater').innerText = t.btnAddW; document.getElementById('customWaterInput').placeholder = t.waterInputPlace;
+                document.getElementById('lblWaterInfoHead').innerText = t.wiHead; document.getElementById('wiTypeTitle').innerText = t.wiT1; document.getElementById('wiTypeDesc').innerText = t.wiD1; document.getElementById('wiSodTitle').innerText = t.wiT2; document.getElementById('wiSodDesc').innerText = t.wiD2; document.getElementById('wiFreqTitle').innerText = t.wiT3; document.getElementById('wiFreqDesc').innerText = t.wiD3;
+
+                document.getElementById('lblErgoHead').innerText = t.ergH; document.getElementById('ergo1Title').innerText = t.eT1; document.getElementById('ergo1Desc').innerText = t.eD1; document.getElementById('ergo2Title').innerText = t.eT2; document.getElementById('ergo2Desc').innerText = t.eD2; document.getElementById('ergo3Title').innerText = t.eT3; document.getElementById('ergo3Desc').innerText = t.eD3; document.getElementById('ergo4Title').innerText = t.eT4; document.getElementById('ergo4Desc').innerText = t.eD4;
+                document.getElementById('breathTitle').innerText = t.breathT; document.getElementById('breathSub').innerText = t.breathS; document.getElementById('btnStartBreath').innerText = t.breathBtn;
+                document.getElementById('eyeTitle').innerText = t.eyeTitle; document.getElementById('eyeSub').innerText = t.eyeSub; document.getElementById('btnStartEye').innerText = t.eyeBtn;
+                
+                document.getElementById('achieveMainTitle').innerText = t.achieveTitle; document.getElementById('achieveStreak').innerText = t.achStreak; document.getElementById('achieveWorkout').innerText = t.achWork; document.getElementById('achievePosture').innerText = t.achPost; document.getElementById('achieveWater').innerText = t.achWater; document.getElementById('achieveFocus').innerText = t.achFoc;
+                document.getElementById('progTitle').innerText = t.progTitle;
+                
+                document.getElementById('lblSetHead').innerText = t.setH; document.getElementById('lblSetPomoWork').innerText = t.sPw; document.getElementById('lblSetPomoBreak').innerText = t.sPb; document.getElementById('lblSetWater').innerText = t.sW; document.getElementById('btnSaveSet').innerText = t.btnS; document.getElementById('btnLogout').innerText = t.btnOut;
                 
                 if(currentCategory !== '') loadCategory(currentCategory);
                 if(document.getElementById('waterScreen').classList.contains('active')) renderWater();
-            } catch (e) { console.error('Translation sync err', e); }
+            } catch (e) {}
         }
 
-        window.onload = () => {
-            if(localStorage.getItem("theme") === "dark") toggleDarkMode();
-            if(AppState.user) initApp();
-        };
+        window.onload = () => { if(localStorage.getItem("theme") === "dark") toggleDarkMode(); if(AppState.user) initApp(); };
     </script>
 </body>
 </html>
