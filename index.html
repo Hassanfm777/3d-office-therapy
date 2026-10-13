@@ -338,6 +338,9 @@
                 <div class="nav-item" onclick="playTick(); navigateTo('dietScreen')" id="navDiet">
                     <svg viewBox="0 0 24 24"><path d="M18 4H6v2h12V4zm0 4H6v2h12V8zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zm-7 4H6v2h5v-2zm7 0h-5v2h5v-2zM19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> <span id="txtNavDietMenu">التغذية</span>
                 </div>
+                <div class="nav-item" onclick="playTick(); navigateTo('gymScreen')" id="navGym">
+                    <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg> <span id="txtNavGym">خطة الجيم</span>
+                </div>
 
                 <div class="nav-divider"></div>
 
@@ -767,6 +770,15 @@
             </div>
 
             <!-- Settings Screen -->
+            <div id="gymScreen" class="screen-container">
+                <div class="top-action-bar">
+                    <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span id="gpHome">الرئيسية</span></button>
+                    <h2 id="gpTitle" style="color: var(--primary); margin: 0; font-size: 20px;"></h2>
+                    <div style="width: 100px;"></div>
+                </div>
+                <div id="gymContent"></div>
+            </div>
+
             <div id="settingsScreen" class="screen-container">
                 <div class="top-action-bar">
                     <button class="back-btn-top" onclick="playTick(); navigateTo('dashboardScreen')">🔙 <span class="btn-txt-home">الرئيسية</span></button>
@@ -1336,5 +1348,115 @@
 
         window.onload = () => { if(localStorage.getItem("theme") === "dark") toggleDarkMode(); if(AppState.user) initApp(); };
     </script>
+
+<style>
+.gp-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:6px}
+.gp-num{background:var(--bg-surface);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:14px 8px;text-align:center}
+.gp-num b{display:block;font-size:24px;color:var(--primary)}.gp-num span{font-size:12px;color:var(--text-muted)}
+.gp-t{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}
+.gp-t th{background:var(--primary);color:#fff;padding:7px;text-align:start}
+.gp-t td{padding:7px;border-bottom:1px solid var(--border-light);color:var(--text-main)}
+.gp-t tr.gym td{background:rgba(76,154,99,.15);font-weight:700}
+.gp-t tr.key td{background:rgba(219,154,60,.18)}
+.gp-card{margin-bottom:16px}.gp-card h3{color:var(--primary);margin-bottom:8px}
+.gp-card p,.gp-card li{font-size:13.5px;color:var(--text-main)}
+.gp-formula{background:rgba(76,154,99,.15);border:1px solid var(--primary);border-radius:var(--radius-md);padding:12px;text-align:center;font-weight:700;font-size:14px;line-height:1.9}
+.gp-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:6px;margin:8px 0}
+.gp-row input{margin:0!important;padding:8px!important;min-width:0}
+.gp-btn{background:var(--primary);color:#fff;border:0;border-radius:var(--radius-sm);padding:8px 14px;font-family:inherit;cursor:pointer;font-weight:700}
+.gp-bar{height:10px;background:var(--border-light);border-radius:9px;overflow:hidden;margin:6px 0}.gp-bar i{display:block;height:100%;background:var(--primary-light)}
+@media(max-width:600px){.gp-row{grid-template-columns:1fr 1fr}.gp-t{font-size:12px}}
+</style>
+<script>
+(function(){
+const TARGET={kcal:2250,prot:141};
+const D={
+en:{nav:"Gym Plan",home:"Home",title:"My Gym Plan",
+ nums:["calories / day","g protein (min)","liters water / day"],
+ weekH:"Your week",days:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+ act:["GYM 6-7 PM","Walk 30-40 min","GYM 6-7 PM","Walk 30-40 min","GYM 6-7 PM","Rest","Walk 30-40 min"],
+ wkNote:"Starts Monday 19 Oct 2026. Alternate A / B each session (A, B, A one week, B, A, B the next).",
+ ex:["Exercise","Sets","Reps","Start kg"],
+ note:"Pick a weight where you could do about 2 more reps. Rest 60-75 sec. Add 2.5-5 kg (machines) or 1-2 kg (dumbbells) when all sets feel easy twice in a row.",
+ neckH:"Neck and lower back",
+ neck:"<b>Neck holds:</b> palm on forehead, push head into hand at half effort, no movement, hold 10 sec. Repeat with hands behind head and on each side. 2 rounds. Never jerk. Stop if dizzy, numb or tingling.",
+ back:"<b>Back extension:</b> hips at the pad edge, arms crossed, lower slowly with a straight back, lift until your body is one straight line (do not arch higher). Body weight only for 4 weeks. <b>Bird-dog:</b> hands and knees, opposite arm and leg out, hold 2 sec, 8 per side. Sharp pain = stop.",
+ calcH:"How to count calories",
+ steps:["Weigh the food in grams (kitchen scale).","Find calories per 100 g (label or a free calorie app).","Calories = grams x calories per 100 g / 100. Same for protein.","Add it below right after you eat. Aim for 2,150-2,350 kcal."],
+ how:"Calories = grams x kcal per 100 g / 100",
+ ph:["Food","Grams","kcal/100g","Protein/100g"],add:"Add",tot:"Today",left:"left",reset:"Clear today",
+ appCalc:"Open the app's own calorie calculator",
+ wH:"Weekly weight (Monday morning)",wCols:["Week","Date","Expected","Mine (kg)"],start:"Start",
+ adjust:"Every 3 weeks: if weight did not drop, eat 150 kcal less per day. If you lose more than 1 kg/week or feel weak, eat 150 kcal more.",
+ disc:"General guidance, not medical advice. Stop and see a doctor if you feel chest pain, dizziness or sharp pain."},
+ar:{nav:"خطة الجيم",home:"الرئيسية",title:"خطتي في الجيم",
+ nums:["سعرة حرارية / يوم","غرام بروتين (حد أدنى)","لتر ماء / يوم"],
+ weekH:"أسبوعك",days:["الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت","الأحد"],
+ act:["جيم 6-7 مساءً","مشي 30-40 دقيقة","جيم 6-7 مساءً","مشي 30-40 دقيقة","جيم 6-7 مساءً","راحة","مشي 30-40 دقيقة"],
+ wkNote:"تبدأ يوم الإثنين 19 أكتوبر 2026. بدّل بين A و B في كل جلسة (A, B, A في أسبوع ثم B, A, B في الأسبوع التالي).",
+ ex:["التمرين","المجموعات","التكرار","الوزن (كجم)"],
+ note:"اختر وزناً تستطيع معه أداء تكرارين إضافيين تقريباً. استرح 60-75 ثانية. زد 2.5-5 كجم (الأجهزة) أو 1-2 كجم (الدمبل) عندما تصبح كل المجموعات سهلة جلستين متتاليتين.",
+ neckH:"الرقبة وأسفل الظهر",
+ neck:"<b>ثبات الرقبة:</b> ضع كفك على جبهتك وادفع رأسك نحو يدك بنصف الجهد دون حركة لمدة 10 ثوانٍ. كرر بوضع اليدين خلف الرأس وعلى كل جانب. جولتان. لا تهزّ رقبتك أبداً. توقف عند الدوار أو التنميل أو الوخز.",
+ back:"<b>تمديد الظهر:</b> الورك عند حافة الوسادة والذراعان متقاطعتان، انزل ببطء بظهر مستقيم وارتفع حتى يصبح جسمك خطاً مستقيماً (لا تقوّس أكثر). بوزن الجسم فقط لمدة 4 أسابيع. <b>بيرد دوج:</b> على اليدين والركبتين، مدّ ذراعاً وساقاً متقابلتين، ثبّت ثانيتين، 8 مرات لكل جانب. الألم الحاد = توقف.",
+ calcH:"كيف تحسب السعرات",
+ steps:["زن الطعام بالغرام (ميزان مطبخ).","اعرف السعرات لكل 100 غ (من الملصق أو تطبيق مجاني).","السعرات = الغرامات × السعرات لكل 100 غ ÷ 100. وكذلك البروتين.","سجّلها بالأسفل بعد الأكل مباشرة. الهدف 2,150-2,350 سعرة."],
+ how:"السعرات = الغرامات × السعرات لكل 100 غ ÷ 100",
+ ph:["الطعام","غرام","سعرات/100غ","بروتين/100غ"],add:"إضافة",tot:"اليوم",left:"متبقي",reset:"مسح اليوم",
+ appCalc:"افتح حاسبة السعرات الخاصة بالتطبيق",
+ wH:"الوزن الأسبوعي (صباح الإثنين)",wCols:["الأسبوع","التاريخ","المتوقع","وزني (كجم)"],start:"البداية",
+ adjust:"كل 3 أسابيع: إذا لم ينزل وزنك، قلل 150 سعرة يومياً. وإذا خسرت أكثر من 1 كجم أسبوعياً أو شعرت بالضعف، زد 150 سعرة.",
+ disc:"إرشادات عامة وليست نصيحة طبية. توقف وراجع الطبيب عند ألم الصدر أو الدوار أو الألم الحاد."}};
+const WA=[["Leg press","ضغط الأرجل (جهاز)",3,"10-12","50"],["Chest press machine","جهاز ضغط الصدر",3,"10-12","25"],["Seated cable row","سحب الكيبل جالساً",3,"10-12","30"],["Back extension","تمديد الظهر",3,"10-12","Body"],["Dumbbell biceps curl","بايسبس بالدمبل",2,"12","6 x2"],["Neck holds","ثبات الرقبة",2,"4 x 10s","Body"],["Plank","بلانك",3,"20-30s","Body"]];
+const WB=[["Goblet squat","سكوات بدمبل",3,"10","10"],["Lat pulldown","سحب علوي",3,"10-12","35"],["Dumbbell shoulder press","ضغط الكتف بالدمبل",3,"10","7 x2"],["Leg curl machine","جهاز ثني الأرجل",3,"12","25"],["Back extension","تمديد الظهر",3,"10-12","Body"],["Cable triceps pushdown","ضغط الترايسبس بالكيبل",2,"12","15"],["Neck holds","ثبات الرقبة",2,"4 x 10s","Body"],["Bird-dog","بيرد دوج",3,"8/side","Body"]];
+const K="gymPlanData";
+let S={log:{},w:{}};
+try{S=Object.assign(S,JSON.parse(localStorage.getItem(K)||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const today=()=>new Date().toISOString().slice(0,10);
+const L=()=>D[(typeof currentLang!=="undefined"&&currentLang==="ar")?"ar":"en"];
+const isAr=()=>L()===D.ar;
+function wt(title,rows,t){return `<table class="gp-t"><tr><th>${title}</th>${t.ex.slice(1).map(x=>`<th>${x}</th>`).join("")}</tr>${rows.map(r=>`<tr><td>${isAr()?r[1]:r[0]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join("")}</table>`}
+function render(){
+ const t=L(),el=document.getElementById("gymContent");if(!el)return;
+ const n=document.getElementById("txtNavGym");if(n)n.innerText=t.nav;
+ const h=document.getElementById("gpHome");if(h)h.innerText=t.home;
+ const ti=document.getElementById("gpTitle");if(ti)ti.innerText=t.title;
+ const loc=isAr()?"ar-AE":"en-GB",start=new Date(2026,9,19);
+ let wrows="";for(let i=0;i<=12;i++){const d=new Date(start);d.setDate(d.getDate()+7*i);const k="w"+i;
+  wrows+=`<tr><td>${i?i:t.start}</td><td>${d.toLocaleDateString(loc,{day:"numeric",month:"short"})}</td><td>${(101-0.45*i).toFixed(1)}</td><td><input type="number" step="0.1" class="fancy-input" style="margin:0;padding:6px;width:90px" data-w="${k}" value="${S.w[k]!==undefined?S.w[k]:(i?"":101)}"></td></tr>`}
+ el.innerHTML=`
+ <div class="section-card gp-card"><div class="gp-nums">${[TARGET.kcal.toLocaleString("en"),TARGET.prot,"3"].map((v,i)=>`<div class="gp-num"><b>${v}</b><span>${t.nums[i]}</span></div>`).join("")}</div></div>
+ <div class="section-card gp-card"><h3>${t.weekH}</h3><table class="gp-t">${t.days.map((d,i)=>`<tr class="${i%2==0&&i<5?"gym":""}"><td>${d}</td><td>${t.act[i]}</td></tr>`).join("")}</table><p>${t.wkNote}</p></div>
+ <div class="section-card gp-card">${wt("Workout A",WA,t)}${wt("Workout B",WB,t)}<p>${t.note}</p></div>
+ <div class="section-card gp-card"><h3>${t.neckH}</h3><p>${t.neck}</p><p style="margin-top:8px">${t.back}</p></div>
+ <div class="section-card gp-card"><h3>${t.calcH}</h3><ol style="padding-inline-start:20px;margin-bottom:10px">${t.steps.map(x=>`<li>${x}</li>`).join("")}</ol>
+  <div class="gp-formula">${t.how}</div>
+  <div class="gp-row"><input id="gpF" class="fancy-input" placeholder="${t.ph[0]}"><input id="gpG" type="number" class="fancy-input" placeholder="${t.ph[1]}"><input id="gpK" type="number" class="fancy-input" placeholder="${t.ph[2]}"><input id="gpP" type="number" class="fancy-input" placeholder="${t.ph[3]}"><button class="gp-btn" id="gpAdd">${t.add}</button></div>
+  <div id="gpList"></div>
+  <p style="margin-top:10px"><a href="#" id="gpApp" style="color:var(--primary);font-weight:700">${t.appCalc}</a></p></div>
+ <div class="section-card gp-card"><h3>${t.wH}</h3><table class="gp-t"><tr>${t.wCols.map(c=>`<th>${c}</th>`).join("")}</tr>${wrows}</table><p>${t.adjust}</p></div>
+ <p style="font-size:12px;color:var(--text-muted);margin-bottom:20px">${t.disc}</p>`;
+ el.querySelectorAll("[data-w]").forEach(i=>i.onchange=()=>{S.w[i.dataset.w]=i.value;save()});
+ document.getElementById("gpAdd").onclick=()=>{const g=+gpG.value,k=+gpK.value,p=+gpP.value||0;if(!g||!k)return;
+  (S.log[today()]=S.log[today()]||[]).push({f:gpF.value||"-",g,k,p});save();gpF.value=gpG.value=gpK.value=gpP.value="";list()};
+ document.getElementById("gpApp").onclick=e=>{e.preventDefault();navigateTo("dietScreen")};
+ list();
+}
+function list(){
+ const t=L(),a=S.log[today()]||[],box=document.getElementById("gpList");if(!box)return;
+ const kc=a.reduce((x,r)=>x+r.g*r.k/100,0),pr=a.reduce((x,r)=>x+r.g*r.p/100,0),pct=Math.min(100,kc/TARGET.kcal*100);
+ box.innerHTML=(a.length?`<table class="gp-t">${a.map((r,i)=>`<tr><td>${r.f}</td><td>${r.g} g</td><td>${Math.round(r.g*r.k/100)} kcal</td><td>${(r.g*r.p/100).toFixed(1)} g</td><td><a href="#" data-d="${i}">x</a></td></tr>`).join("")}</table>`:"")+
+ `<div class="gp-bar"><i style="width:${pct}%"></i></div><p><b>${t.tot}: ${Math.round(kc)} / ${TARGET.kcal} kcal</b> (${Math.round(TARGET.kcal-kc)} ${t.left}) · ${pr.toFixed(0)} / ${TARGET.prot} g</p>${a.length?`<a href="#" id="gpClr" style="font-size:12px;color:var(--accent)">${t.reset}</a>`:""}`;
+ box.querySelectorAll("[data-d]").forEach(x=>x.onclick=e=>{e.preventDefault();S.log[today()].splice(+x.dataset.d,1);save();list()});
+ const c=document.getElementById("gpClr");if(c)c.onclick=e=>{e.preventDefault();S.log[today()]=[];save();list()};
+}
+const nt=navigateTo;
+navigateTo=function(id){nt(id);if(id==="gymScreen"){const n=document.getElementById("navGym");if(n)n.classList.add("active");render()}};
+const at=applyTranslations;
+applyTranslations=function(){at.apply(this,arguments);render()};
+render();
+})();
+</script>
 </body>
 </html>
