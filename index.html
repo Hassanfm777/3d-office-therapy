@@ -1369,13 +1369,13 @@
 </style>
 <script>
 (function(){
-const TARGET={kcal:2250,prot:141};
+let TARGET={kcal:2250,prot:141,water:"3.0"};
 const D={
 en:{nav:"Gym Plan",home:"Home",title:"My Gym Plan",
  nums:["calories / day","g protein (min)","liters water / day"],
  weekH:"Your week",days:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
  act:["GYM 6-7 PM","Walk 30-40 min","GYM 6-7 PM","Walk 30-40 min","GYM 6-7 PM","Rest","Walk 30-40 min"],
- wkNote:"Starts Monday 19 Oct 2026. Alternate A / B each session (A, B, A one week, B, A, B the next).",
+ wkNote:"Alternate A / B each session (A, B, A one week, B, A, B the next).",
  ex:["Exercise","Sets","Reps","Start kg"],
  note:"Pick a weight where you could do about 2 more reps. Rest 60-75 sec. Add 2.5-5 kg (machines) or 1-2 kg (dumbbells) when all sets feel easy twice in a row.",
  neckH:"Neck and lower back",
@@ -1393,7 +1393,7 @@ ar:{nav:"خطة الجيم",home:"الرئيسية",title:"خطتي في الج�
  nums:["سعرة حرارية / يوم","غرام بروتين (حد أدنى)","لتر ماء / يوم"],
  weekH:"أسبوعك",days:["الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت","الأحد"],
  act:["جيم 6-7 مساءً","مشي 30-40 دقيقة","جيم 6-7 مساءً","مشي 30-40 دقيقة","جيم 6-7 مساءً","راحة","مشي 30-40 دقيقة"],
- wkNote:"تبدأ يوم الإثنين 19 أكتوبر 2026. بدّل بين A و B في كل جلسة (A, B, A في أسبوع ثم B, A, B في الأسبوع التالي).",
+ wkNote:"بدّل بين A و B في كل جلسة (A, B, A في أسبوع ثم B, A, B في الأسبوع التالي).",
  ex:["التمرين","المجموعات","التكرار","الوزن (كجم)"],
  note:"اختر وزناً تستطيع معه أداء تكرارين إضافيين تقريباً. استرح 60-75 ثانية. زد 2.5-5 كجم (الأجهزة) أو 1-2 كجم (الدمبل) عندما تصبح كل المجموعات سهلة جلستين متتاليتين.",
  neckH:"الرقبة وأسفل الظهر",
@@ -1407,28 +1407,43 @@ ar:{nav:"خطة الجيم",home:"الرئيسية",title:"خطتي في الج�
  wH:"الوزن الأسبوعي (صباح الإثنين)",wCols:["الأسبوع","التاريخ","المتوقع","وزني (كجم)"],start:"البداية",
  adjust:"كل 3 أسابيع: إذا لم ينزل وزنك، قلل 150 سعرة يومياً. وإذا خسرت أكثر من 1 كجم أسبوعياً أو شعرت بالضعف، زد 150 سعرة.",
  disc:"إرشادات عامة وليست نصيحة طبية. توقف وراجع الطبيب عند ألم الصدر أو الدوار أو الألم الحاد."}};
+const D2={en:{prof:"My details",sex:"Sex",m:"Male",f:"Female",age:"Age",h:"Height (cm)",w:"Weight (kg)",af:"Activity",afo:["Desk job, no exercise","Desk job + 3 gym days","Very active"],def:"Daily deficit (kcal)",st:"Start date",rst:"Reset plan to default",addEx:"+ Add exercise",wkSel:["GYM","Walk","Rest"],auto:"Everything below updates automatically when you change your details. All fields are editable.",low:"Calories were raised to the minimum safe level.",delc:"Delete"},
+ar:{prof:"بياناتي",sex:"الجنس",m:"ذكر",f:"أنثى",age:"العمر",h:"الطول (سم)",w:"الوزن (كجم)",af:"النشاط",afo:["عمل مكتبي بدون رياضة","عمل مكتبي + 3 أيام جيم","نشاط عالٍ"],def:"العجز اليومي (سعرة)",st:"تاريخ البدء",rst:"إعادة الخطة للافتراضي",addEx:"+ إضافة تمرين",wkSel:["جيم","مشي","راحة"],auto:"كل ما بالأسفل يتحدث تلقائياً عند تغيير بياناتك. جميع الحقول قابلة للتعديل.",low:"تم رفع السعرات إلى الحد الأدنى الآمن.",delc:"حذف"}};
+Object.assign(D.en,D2.en);Object.assign(D.ar,D2.ar);
 const WA=[["Leg press","ضغط الأرجل (جهاز)",3,"10-12","50"],["Chest press machine","جهاز ضغط الصدر",3,"10-12","25"],["Seated cable row","سحب الكيبل جالساً",3,"10-12","30"],["Back extension","تمديد الظهر",3,"10-12","Body"],["Dumbbell biceps curl","بايسبس بالدمبل",2,"12","6 x2"],["Neck holds","ثبات الرقبة",2,"4 x 10s","Body"],["Plank","بلانك",3,"20-30s","Body"]];
 const WB=[["Goblet squat","سكوات بدمبل",3,"10","10"],["Lat pulldown","سحب علوي",3,"10-12","35"],["Dumbbell shoulder press","ضغط الكتف بالدمبل",3,"10","7 x2"],["Leg curl machine","جهاز ثني الأرجل",3,"12","25"],["Back extension","تمديد الظهر",3,"10-12","Body"],["Cable triceps pushdown","ضغط الترايسبس بالكيبل",2,"12","15"],["Neck holds","ثبات الرقبة",2,"4 x 10s","Body"],["Bird-dog","بيرد دوج",3,"8/side","Body"]];
 const K="gymPlanData";
 let S={log:{},w:{}};
 try{S=Object.assign(S,JSON.parse(localStorage.getItem(K)||"{}"))}catch(e){}
 const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const mk=a=>a.map(r=>({n:{en:r[0],ar:r[1]},s:r[2],r:r[3],k:r[4]}));
+const DEF=()=>({p:{sex:"m",age:32,h:176,w:101,af:1.4,def:500,start:"2026-10-19"},days:[0,1,0,1,0,2,1],A:mk(WA),B:mk(WB)});
+{const d=DEF();for(const k in d)if(!S[k])S[k]=d[k]}
+function calc(){const p=S.p,b=10*p.w+6.25*p.h-5*p.age+(p.sex==="m"?5:-161),fl=p.sex==="m"?1800:1500;let k=Math.round((b*p.af-p.def)/50)*50;const low=k<fl;k=Math.max(k,fl);TARGET={kcal:k,prot:Math.round(1.4*p.w),water:(0.03*p.w).toFixed(1),low}}
+calc();
 const today=()=>new Date().toISOString().slice(0,10);
 const L=()=>D[(typeof currentLang!=="undefined"&&currentLang==="ar")?"ar":"en"];
 const isAr=()=>L()===D.ar;
-function wt(title,rows,t){return `<table class="gp-t"><tr><th>${title}</th>${t.ex.slice(1).map(x=>`<th>${x}</th>`).join("")}</tr>${rows.map(r=>`<tr><td>${isAr()?r[1]:r[0]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join("")}</table>`}
+const nm=r=>r.n[isAr()?"ar":"en"]||r.n.en||r.n.ar||"";
+function exT(key,title,t){return `<table class="gp-t"><tr><th>${title}</th><th>${t.ex[1]}</th><th>${t.ex[2]}</th><th>${t.ex[3]}</th><th></th></tr>${S[key].map((r,i)=>{const c=(f,v,w)=>`<td><input class="fancy-input" style="margin:0;padding:5px;width:${w}" data-k="${key}" data-i="${i}" data-f="${f}" value="${String(v).replace(/"/g,"&quot;")}"></td>`;return `<tr>${c("n",nm(r),"100%")}${c("s",r.s,"46px")}${c("r",r.r,"70px")}${c("k",r.k,"64px")}<td><a href="#" data-x="${key},${i}" title="${t.delc}" style="color:var(--accent)">x</a></td></tr>`}).join("")}</table><button class="gp-btn" data-add="${key}" style="margin-bottom:10px">${t.addEx}</button>`}
 function render(){
  const t=L(),el=document.getElementById("gymContent");if(!el)return;
  const n=document.getElementById("txtNavGym");if(n)n.innerText=t.nav;
  const h=document.getElementById("gpHome");if(h)h.innerText=t.home;
  const ti=document.getElementById("gpTitle");if(ti)ti.innerText=t.title;
- const loc=isAr()?"ar-AE":"en-GB",start=new Date(2026,9,19);
+ const loc=isAr()?"ar-AE":"en-GB",p=S.p,start=new Date(p.start+"T00:00:00"),loss=p.def*7/7700;
  let wrows="";for(let i=0;i<=12;i++){const d=new Date(start);d.setDate(d.getDate()+7*i);const k="w"+i;
-  wrows+=`<tr><td>${i?i:t.start}</td><td>${d.toLocaleDateString(loc,{day:"numeric",month:"short"})}</td><td>${(101-0.45*i).toFixed(1)}</td><td><input type="number" step="0.1" class="fancy-input" style="margin:0;padding:6px;width:90px" data-w="${k}" value="${S.w[k]!==undefined?S.w[k]:(i?"":101)}"></td></tr>`}
+  wrows+=`<tr><td>${i?i:t.start}</td><td>${d.toLocaleDateString(loc,{day:"numeric",month:"short"})}</td><td>${(p.w-loss*i).toFixed(1)}</td><td><input type="number" step="0.1" class="fancy-input" style="margin:0;padding:6px;width:90px" data-w="${k}" value="${S.w[k]!==undefined?S.w[k]:(i?"":p.w)}"></td></tr>`}
+ const pf=(f,l,v,type)=>`<div><label style="font-size:12px;color:var(--text-muted)">${l}</label><input class="fancy-input" style="margin:0;padding:8px" type="${type||"number"}" step="any" data-p="${f}" value="${v}"></div>`;
+ const sel=(f,l,opts,v)=>`<div><label style="font-size:12px;color:var(--text-muted)">${l}</label><select class="fancy-input" style="margin:0;padding:8px" data-p="${f}">${opts.map(o=>`<option value="${o[0]}" ${String(o[0])===String(v)?"selected":""}>${o[1]}</option>`).join("")}</select></div>`;
  el.innerHTML=`
- <div class="section-card gp-card"><div class="gp-nums">${[TARGET.kcal.toLocaleString("en"),TARGET.prot,"3"].map((v,i)=>`<div class="gp-num"><b>${v}</b><span>${t.nums[i]}</span></div>`).join("")}</div></div>
- <div class="section-card gp-card"><h3>${t.weekH}</h3><table class="gp-t">${t.days.map((d,i)=>`<tr class="${i%2==0&&i<5?"gym":""}"><td>${d}</td><td>${t.act[i]}</td></tr>`).join("")}</table><p>${t.wkNote}</p></div>
- <div class="section-card gp-card">${wt("Workout A",WA,t)}${wt("Workout B",WB,t)}<p>${t.note}</p></div>
+ <div class="section-card gp-card"><h3>${t.prof}</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+  ${sel("sex",t.sex,[["m",t.m],["f",t.f]],p.sex)}${pf("age",t.age,p.age)}${pf("h",t.h,p.h)}${pf("w",t.w,p.w)}
+  ${sel("af",t.af,[[1.2,t.afo[0]],[1.4,t.afo[1]],[1.55,t.afo[2]]],p.af)}${pf("def",t.def,p.def)}${pf("start",t.st,p.start,"date")}</div>
+  <p style="margin-top:8px;font-size:12px;color:var(--text-muted)">${t.auto}</p></div>
+ <div class="section-card gp-card"><div class="gp-nums">${[TARGET.kcal.toLocaleString("en"),TARGET.prot,TARGET.water].map((v,i)=>`<div class="gp-num"><b>${v}</b><span>${t.nums[i]}</span></div>`).join("")}</div>${TARGET.low?`<p style="color:var(--accent)">${t.low}</p>`:""}</div>
+ <div class="section-card gp-card"><h3>${t.weekH}</h3><table class="gp-t">${t.days.map((d,i)=>`<tr class="${S.days[i]===0?"gym":""}"><td>${d}</td><td><select class="fancy-input" style="margin:0;padding:6px" data-d="${i}">${t.wkSel.map((o,j)=>`<option value="${j}" ${S.days[i]===j?"selected":""}>${o}</option>`).join("")}</select></td></tr>`).join("")}</table><p>${t.wkNote}</p></div>
+ <div class="section-card gp-card">${exT("A","Workout A",t)}${exT("B","Workout B",t)}<p>${t.note}</p></div>
  <div class="section-card gp-card"><h3>${t.neckH}</h3><p>${t.neck}</p><p style="margin-top:8px">${t.back}</p></div>
  <div class="section-card gp-card"><h3>${t.calcH}</h3><ol style="padding-inline-start:20px;margin-bottom:10px">${t.steps.map(x=>`<li>${x}</li>`).join("")}</ol>
   <div class="gp-formula">${t.how}</div>
@@ -1436,10 +1451,17 @@ function render(){
   <div id="gpList"></div>
   <p style="margin-top:10px"><a href="#" id="gpApp" style="color:var(--primary);font-weight:700">${t.appCalc}</a></p></div>
  <div class="section-card gp-card"><h3>${t.wH}</h3><table class="gp-t"><tr>${t.wCols.map(c=>`<th>${c}</th>`).join("")}</tr>${wrows}</table><p>${t.adjust}</p></div>
+ <button class="gp-btn" id="gpRst" style="background:var(--accent);margin-bottom:12px">${t.rst}</button>
  <p style="font-size:12px;color:var(--text-muted);margin-bottom:20px">${t.disc}</p>`;
  el.querySelectorAll("[data-w]").forEach(i=>i.onchange=()=>{S.w[i.dataset.w]=i.value;save()});
- document.getElementById("gpAdd").onclick=()=>{const g=+gpG.value,k=+gpK.value,p=+gpP.value||0;if(!g||!k)return;
-  (S.log[today()]=S.log[today()]||[]).push({f:gpF.value||"-",g,k,p});save();gpF.value=gpG.value=gpK.value=gpP.value="";list()};
+ el.querySelectorAll("[data-p]").forEach(i=>i.onchange=()=>{const f=i.dataset.p;S.p[f]=(f==="sex"||f==="start")?i.value:(+i.value||S.p[f]);calc();save();render()});
+ el.querySelectorAll("[data-d]").forEach(i=>i.onchange=()=>{S.days[+i.dataset.d]=+i.value;save();render()});
+ el.querySelectorAll("[data-f]").forEach(i=>i.onchange=()=>{const r=S[i.dataset.k][+i.dataset.i],f=i.dataset.f;if(f==="n")r.n[isAr()?"ar":"en"]=i.value;else r[f]=f==="s"?(+i.value||r.s):i.value;save()});
+ el.querySelectorAll("[data-x]").forEach(x=>x.onclick=e=>{e.preventDefault();const[k,i]=x.dataset.x.split(",");S[k].splice(+i,1);save();render()});
+ el.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{S[b.dataset.add].push({n:{en:"New exercise",ar:"تمرين جديد"},s:3,r:"10",k:"Body"});save();render()});
+ document.getElementById("gpRst").onclick=()=>{if(!confirm(isAr()?"إعادة الخطة للافتراضي؟":"Reset the plan to default?"))return;const d=DEF();["p","days","A","B"].forEach(k=>S[k]=d[k]);calc();save();render()};
+ document.getElementById("gpAdd").onclick=()=>{const g=+gpG.value,k=+gpK.value,pp=+gpP.value||0;if(!g||!k)return;
+  (S.log[today()]=S.log[today()]||[]).push({f:gpF.value||"-",g,k,p:pp});save();gpF.value=gpG.value=gpK.value=gpP.value="";list()};
  document.getElementById("gpApp").onclick=e=>{e.preventDefault();navigateTo("dietScreen")};
  list();
 }
